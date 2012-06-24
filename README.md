@@ -1,5 +1,5 @@
-FeedBundle - A Symfony bundle to build RSS feeds from your entities
-===================================================================
+EkoFeedBundle - A bundle to build RSS feeds from entities
+=========================================================
 
 CURRENTLY IN DEVELOPMENT, CAN'T BE USED.
 
@@ -18,13 +18,13 @@ Configuration
 ### Edit app/config.yml
 
 ```
-    ekofeed:
-        feeds:
-            article:
-                title:       'My articles/posts'
-                description: 'Latests articles'
-                link:        'http://vincent.composieux.fr'
-                entity:      MyBundle\Entity\Article
+ekofeed:
+    feeds:
+        article:
+            title:       'My articles/posts'
+            description: 'Latests articles'
+            link:        'http://vincent.composieux.fr'
+            entity:      MyBundle\Entity\Article
 ```
 
 Author :

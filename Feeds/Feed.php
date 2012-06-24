@@ -8,18 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Manager;
-
-use Symfony\Component\DependencyInjection\ContainerAware;
+namespace Eko\FeedBundle\Feeds;
 
 /**
- * FeedManager
+ * Feed
  *
- * This class manage feeds specified in configuration file
+ * This is the main feed class
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedManager extends ContainerAware
+class Feed
 {
     /**
      * @var array

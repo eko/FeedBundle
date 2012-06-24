@@ -40,5 +40,4 @@ class EkoFeedExtension extends Extension
 
         $container->setParameter('ekofeed.config', $config);
     }
-
 }
