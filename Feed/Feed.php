@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Feeds;
+namespace Eko\FeedBundle\Feed;
 
 /**
  * Feed

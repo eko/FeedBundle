@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Feeds;
+namespace Eko\FeedBundle\Feed;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 
@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class Manager extends ContainerAware
+class FeedManager extends ContainerAware
 {
     /**
      * @var array
