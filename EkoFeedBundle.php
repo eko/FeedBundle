@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the EkoFeedBundle Symfony bundle.
+ * This file is part of the Eko\FeedBundle Symfony bundle.
  *
  * (c) Vincent Composieux <vincent.composieux@gmail.com>
  *

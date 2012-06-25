@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the EkoFeedBundle Symfony bundle.
+ * This file is part of the Eko\FeedBundle Symfony bundle.
  *
  * (c) Vincent Composieux <vincent.composieux@gmail.com>
  *
@@ -32,12 +32,11 @@ class EkoFeedExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration(new Configuration(), $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $container->setParameter('ekofeed.config', $config);
+        $container->setParameter('eko_feed.config', $config);
     }
 }

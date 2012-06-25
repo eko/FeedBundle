@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the EkoFeedBundle Symfony bundle.
+ * This file is part of the Eko\FeedBundle Symfony bundle.
  *
  * (c) Vincent Composieux <vincent.composieux@gmail.com>
  *
@@ -30,5 +30,28 @@ class Feed
     public function __construct(array $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * Set or redefine a configuration value
+     *
+     * @param string $parameter  A configuration parameter name
+     * @param mixed  $value      A value
+     */
+    public function set($parameter, $value)
+    {
+        $this->config[$parameter] = $value;
+    }
+
+    /**
+     * Returns config parameter value
+     *
+     * @param string     $parameter  A configuration parameter name
+     * @param mixed|null $default    A default value if not found
+     * @return mixed
+     */
+    public function get($parameter, $default = null)
+    {
+        return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
     }
 }

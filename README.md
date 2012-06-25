@@ -20,7 +20,7 @@ Configuration (only 3 quick steps!)
 The following configuration lines are required:
 
 ```yaml
-ekofeed:
+eko_feed:
     feeds:
         article:
             title:       'My articles/posts'
@@ -52,15 +52,12 @@ class Article implements ItemInterface
 
 In this same entity, just implement those required methods:
 
- * `public function getFeedItemTitle();` : this method returns entity item title
+ * `public function getFeedItemTitle() { … }` : this method returns entity item title
+ * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
+ * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
+ * `public function getFeedItemPubdate() { … }` : this method returns entity item publication date
 
- * `public function getFeedItemDescription();` : this method returns entity item description (or content)
-
- * `public function getFeedItemLink();` : this method returns entity item link (URL)
-
- * `public function getFeedItemPubdate();` : this method returns entity item publication date
-
-### Generate the feed!
+### 3) Generate the feed!
 
 ...
 
