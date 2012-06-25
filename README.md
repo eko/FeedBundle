@@ -12,10 +12,10 @@ Features
  * Based on your entities
  * Easy to use
 
-Configuration
--------------
+Configuration (only 3 quick steps!)
+-----------------------------------
 
-### Edit app/config.yml
+### 1) Edit app/config.yml
 
 The following configuration lines are required:
 
@@ -29,7 +29,7 @@ ekofeed:
             entity:      MyBundle\Entity\Article
 ```
 
-### Implement the ItemInterface
+### 2) Implement the ItemInterface
 
 Each entities you will use to generate an RSS feed needs to implement the `Eko\FeedBundle\Item\ItemInterface` interface as follow in this example for an `Article` entity of a blog:
 
@@ -52,13 +52,13 @@ class Article implements ItemInterface
 
 In this same entity, just implement those required methods:
 
-`public function getFeedItemTitle();` : This method returns entity item title
+ * `public function getFeedItemTitle();` : this method returns entity item title
 
-`public function getFeedItemDescription();` : This method returns entity item description (or content)
+ * `public function getFeedItemDescription();` : this method returns entity item description (or content)
 
-`public function getFeedItemLink();` : This method returns entity item link (URL)
+ * `public function getFeedItemLink();` : this method returns entity item link (URL)
 
-`public function getFeedItemPubdate();` : This method returns entity item publication date
+ * `public function getFeedItemPubdate();` : this method returns entity item publication date
 
 ### Generate the feed!
 
