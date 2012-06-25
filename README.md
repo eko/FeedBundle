@@ -52,21 +52,13 @@ class Article implements ItemInterface
 
 In this same entity, just implement those required methods:
 
-```php public function getFeedItemTitle();```
+`public function getFeedItemTitle();` : This method returns entity item title
 
-This method returns entity item title
+`public function getFeedItemDescription();` : This method returns entity item description (or content)
 
-```php public function getFeedItemDescription();```
+`public function getFeedItemLink();` : This method returns entity item link (URL)
 
-This method returns entity item description (or content)
-
-```php public function getFeedItemLink();```
-
-This method returns entity item link (URL)
-
-```php public function getFeedItemPubdate();```
-
-This method returns entity item publication date
+`public function getFeedItemPubdate();` : This method returns entity item publication date
 
 ### Generate the feed!
 
