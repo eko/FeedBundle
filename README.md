@@ -99,7 +99,7 @@ class BlogController extends Controller
             $feed->add($article);
         }
 
-        return new Response($feed->render('rss')); // You can specify Atom, or create another formatter!
+        return new Response($feed->render('rss')); // or Atom, or a new formatter!
     }
 }
 ```
