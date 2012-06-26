@@ -10,6 +10,8 @@
 
 namespace Eko\FeedBundle\Feed;
 
+use Eko\FeedBundle\Item\ItemInterface;
+
 /**
  * Feed
  *
@@ -20,9 +22,14 @@ namespace Eko\FeedBundle\Feed;
 class Feed
 {
     /**
-     * @var array
+     * @var array $config  Configuration settings
      */
     protected $config;
+
+    /**
+     * @var array $items  Items of the feed
+     */
+    protected $items = array();
 
     /**
      * @param array $config  Configuration settings
@@ -53,5 +60,25 @@ class Feed
     public function get($parameter, $default = null)
     {
         return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
+    }
+
+    /**
+     * Add an item (an entity which implements ItemInterface instance)
+     *
+     * @param ItemInterface $item  An entity instance
+     */
+    public function add(ItemInterface $item)
+    {
+        $this->items[] = $item;
+    }
+
+    /**
+     * Returns feed items
+     *
+     * @return array
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

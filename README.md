@@ -28,7 +28,6 @@ eko_feed:
             title:       'My articles/posts'
             description: 'Latests articles'
             link:        'http://vincent.composieux.fr'
-            entity:      MyBundle\Entity\Article
 ```
 
 ### 2) Implement the ItemInterface
