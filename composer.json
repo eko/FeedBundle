@@ -18,5 +18,5 @@
     "autoload": {
         "psr-0": { "Eko\\FeedBundle": "" }
     },
-    "target-dir": "Eko/FeedBundle",
+    "target-dir": "Eko/FeedBundle"
 }
