@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Item\ItemInterface;
 
 /**
  * RSS formatter
@@ -47,7 +48,9 @@ class RssFormatter implements FormatterInterface
      */
     public function initialize()
     {
-        $this->dom = new \DOMDocument('1.0', 'utf-8');
+        $encoding = $this->feed->get('encoding');
+
+        $this->dom = new \DOMDocument('1.0', $encoding);
 
         $root = $this->dom->createElement('rss');
         $root->setAttribute('version', '2.0');
@@ -55,6 +58,58 @@ class RssFormatter implements FormatterInterface
 
         $channel = $this->dom->createElement('channel');
         $channel = $root->appendChild($channel);
+
+        $title = $this->dom->createElement('title', $this->feed->get('title'));
+        $description = $this->dom->createElement('description', $this->feed->get('description'));
+        $link = $this->dom->createElement('link', $this->feed->get('link'));
+
+        $date = new \DateTime();
+        $lastBuildDate = $this->dom->createElement('lastBuildDate', $date->format(\DateTime::RSS));
+
+        $channel->appendChild($title);
+        $channel->appendChild($description);
+        $channel->appendChild($link);
+        $channel->appendChild($lastBuildDate);
+
+        $items = $this->feed->getItems();
+
+        foreach ($items as $item) {
+            $this->addItem($channel, $item);
+        }
+    }
+
+    /**
+     * Add an entity item to the feed
+     *
+     * @param \DOMElement   $channel  The channel DOM element
+     * @param ItemInterface $item     An entity object
+     */
+    public function addItem(\DOMElement $channel, ItemInterface $item)
+    {
+        $node = $this->dom->createElement('item');
+        $node = $channel->appendChild($node);
+
+        $title = $this->dom->createCDATASection($item->getFeedItemTitle());
+
+        $element = $this->dom->createElement('title');
+        $element->appendChild($title);
+
+        $node->appendChild($title);
+
+        $description = $this->dom->createCDATASection($item->getFeedItemDescription());
+
+        $element = $this->dom->createElement('description');
+        $element->appendChild($description);
+
+        $node->appendChild($description);
+
+        $link = $this->dom->createElement('link', $item->getFeedItemLink());
+        $node->appendChild($link);
+
+        $date = $item->getFeedItemPubDate()->format(\DateTime::RSS);
+
+        $pubDate = $this->dom->createElement('pubDate', $date);
+        $node->appendChild($pubDate);
     }
 
     /**
@@ -64,6 +119,8 @@ class RssFormatter implements FormatterInterface
      */
     public function render()
     {
+        $this->dom->formatOutput = true;
+
         return $this->dom->saveXml();
     }
 }

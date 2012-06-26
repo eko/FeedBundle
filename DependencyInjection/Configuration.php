@@ -42,6 +42,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('title')->isRequired()->end()
                             ->scalarNode('description')->isRequired()->end()
                             ->scalarNode('link')->isRequired()->end()
+                            ->scalarNode('encoding')->isRequired()->end()
                         ->end()
                     ->end()
                 ->end()

@@ -47,7 +47,7 @@ interface ItemInterface
      * This method returns item publication date
      *
      * @abstract
-     * @return string
+     * @return \DateTime
      */
-    public function getFeedItemPubdate();
+    public function getFeedItemPubDate();
 }

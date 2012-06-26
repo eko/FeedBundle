@@ -26,6 +26,7 @@ eko_feed:
             title:       'My articles/posts'
             description: 'Latests articles'
             link:        'http://vincent.composieux.fr'
+            encoding:    'utf-8'
 ```
 
 ### 2) Implement the ItemInterface
@@ -55,7 +56,7 @@ In this same entity, just implement those required methods:
  * `public function getFeedItemTitle() { … }` : this method returns entity item title
  * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
  * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
- * `public function getFeedItemPubdate() { … }` : this method returns entity item publication date
+ * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
 
 ### 3) Generate the feed!
 
