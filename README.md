@@ -3,8 +3,6 @@ FeedBundle - A bundle to build RSS feeds from entities
 
 [![Build Status](https://secure.travis-ci.org/eko/FeedBundle.png?branch=master)](http://travis-ci.org/eko/FeedBundle)
 
-CURRENTLY IN DEVELOPMENT, CAN'T BE USED.
-
 Version 1.0
 
 Features
@@ -36,6 +34,7 @@ Each entities you will use to generate an RSS feed needs to implement the `Eko\F
 
 ```php
 <?php
+
 namespace Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -60,7 +59,53 @@ In this same entity, just implement those required methods:
 
 ### 3) Generate the feed!
 
-...
+The action now takes place in your controller. Just declare a new action with those examples lines:
+
+```php
+<?php
+
+namespace Bundle\BlogBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+class BlogController extends Controller
+{
+    /**
+     * Generate the article feed
+     *
+     * @Route("/feed", name="feed")
+     * @Template()
+     * @Cache(expires="+2 days")
+     */
+    public function feedAction()
+    {
+        // Get articles from my Article repository
+        $repository = $this->getDoctrine()->getRepository('BundleBlogBundle:Article');
+
+        $articles = $repository->findAll();
+
+        // Retrieve article feed declared in config and add articles to the feed
+        $manager = $this->get('eko_feed.feed.manager');
+        $feed = $manager->get('article');
+
+        foreach ($articles as $article) {
+            $feed->add($article);
+        }
+
+        return new Response($feed->render('rss')); // You can specify Atom, or create another formatter!
+    }
+}
+```
+
+Please note that for better performances you can add a cache control.
+
+For any question, do not hesitate to contact me and/or participate.
 
 Author :
 --------

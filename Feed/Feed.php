@@ -10,6 +10,9 @@
 
 namespace Eko\FeedBundle\Feed;
 
+use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\RssFormatter;
+
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
@@ -80,5 +83,34 @@ class Feed
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Render the feed in specified format
+     *
+     * @param string $format  A format (RSS, Atom, ...)
+     * @return string
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function render($format)
+    {
+        switch ($format) {
+            case 'rss':
+                $formatter = new RssFormatter($this);
+                break;
+
+            case 'atom':
+                $formatter = new AtomFormatter($this);
+                break;
+
+            default:
+                throw new \InvalidArgumentException(
+                    sprintf("Format '%s' is not available. Please see documentation.", $format)
+                );
+                break;
+        }
+
+        return $formatter->render();
     }
 }

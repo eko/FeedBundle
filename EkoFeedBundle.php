@@ -12,6 +12,13 @@ namespace Eko\FeedBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * EkoFeedBundle
+ *
+ * This is the main bundle class
+ *
+ * @author Vincent Composieux <vincent.composieux@gmail.com>
+ */
 class EkoFeedBundle extends Bundle {
 
 }

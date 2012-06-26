@@ -13,13 +13,13 @@ namespace Eko\FeedBundle\Formatter;
 use Eko\FeedBundle\Feed\Feed;
 
 /**
- * RSS formatter
+ * Atom formatter
  *
- * This class provides an RSS formatter
+ * This class provides an Atom formatter
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class RssFormatter implements FormatterInterface
+class AtomFormatter implements FormatterInterface
 {
     /**
      * @var Feed $feed  A feed instance
@@ -48,13 +48,6 @@ class RssFormatter implements FormatterInterface
     public function initialize()
     {
         $this->dom = new \DOMDocument('1.0', 'utf-8');
-
-        $root = $this->dom->createElement('rss');
-        $root->setAttribute('version', '2.0');
-        $root = $this->dom->appendChild($root);
-
-        $channel = $this->dom->createElement('channel');
-        $channel = $root->appendChild($channel);
     }
 
     /**
