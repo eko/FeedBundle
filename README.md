@@ -1,6 +1,8 @@
 FeedBundle - A bundle to build RSS feeds from entities
 =========================================================
 
+[![Build Status](https://secure.travis-ci.org/eko/FeedBundle.png?branch=master)](http://travis-ci.org/eko/FeedBundle)
+
 CURRENTLY IN DEVELOPMENT, CAN'T BE USED.
 
 Version 1.0
