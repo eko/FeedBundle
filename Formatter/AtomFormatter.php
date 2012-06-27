@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Item\ItemInterface;
 
 /**
  * Atom formatter
@@ -38,6 +39,12 @@ class AtomFormatter implements FormatterInterface
      */
     public function __construct(Feed $feed)
     {
+        $author = $feed->get('author');
+
+        if (empty($author)) {
+            throw new \InvalidArgumentException('Atom formatter requires to fill an "author" parameter in configuration.');
+        }
+
         $this->feed = $feed;
         $this->initialize();
     }
@@ -47,7 +54,79 @@ class AtomFormatter implements FormatterInterface
      */
     public function initialize()
     {
-        $this->dom = new \DOMDocument('1.0', 'utf-8');
+        $encoding = $this->feed->get('encoding');
+
+        $this->dom = new \DOMDocument('1.0', $encoding);
+
+        $root = $this->dom->createElement('feed');
+        $root->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
+        $root = $this->dom->appendChild($root);
+
+        $identifier = $this->dom->createElement('id', $this->feed->get('link'));
+        $title = $this->dom->createElement('title', $this->feed->get('title'));
+        $subtitle = $this->dom->createElement('subtitle', $this->feed->get('description'));
+        $name = $this->dom->createElement('name', $this->feed->get('author'));
+
+        $link = $this->dom->createElement('link');
+        $link->setAttribute('href', $this->feed->get('link'));
+
+        $date = new \DateTime();
+        $updated = $this->dom->createElement('updated', $date->format(\DateTime::ATOM));
+
+        $author = $this->dom->createElement('author');
+        $author->appendChild($name);
+
+        $root->appendChild($title);
+        $root->appendChild($subtitle);
+        $root->appendChild($link);
+        $root->appendChild($updated);
+        $root->appendChild($identifier);
+        $root->appendChild($author);
+
+        $items = $this->feed->getItems();
+
+        foreach ($items as $item) {
+            $this->addItem($root, $item);
+        }
+    }
+
+    /**
+     * Add an entity item to the feed
+     *
+     * @param \DOMElement   $root     The root (feed) DOM element
+     * @param ItemInterface $item     An entity object
+     */
+    public function addItem(\DOMElement $root, ItemInterface $item)
+    {
+        $node = $this->dom->createElement('entry');
+        $node = $root->appendChild($node);
+
+        $identifier = $this->dom->createElement('id', $item->getFeedItemLink());
+        $node->appendChild($identifier);
+
+        $title = $this->dom->createCDATASection($item->getFeedItemTitle());
+
+        $element = $this->dom->createElement('title');
+        $element->appendChild($title);
+
+        $node->appendChild($element);
+
+        $summary = $this->dom->createCDATASection($item->getFeedItemDescription());
+
+        $element = $this->dom->createElement('summary');
+        $element->appendChild($summary);
+
+        $node->appendChild($element);
+
+        $link = $this->dom->createElement('link');
+        $link->setAttribute('href', $item->getFeedItemLink());
+
+        $node->appendChild($link);
+
+        $date = $item->getFeedItemPubDate()->format(\DateTime::ATOM);
+
+        $updated = $this->dom->createElement('updated', $date);
+        $node->appendChild($updated);
     }
 
     /**
@@ -57,6 +136,8 @@ class AtomFormatter implements FormatterInterface
      */
     public function render()
     {
+        $this->dom->formatOutput = true;
+
         return $this->dom->saveXml();
     }
 }

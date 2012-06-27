@@ -8,9 +8,10 @@ Version 1.0
 Features
 --------
 
- * Generate RSS feed
+ * Generate XML RSS feeds (RSS & Atom formats)
  * Based on your entities
- * Easy to use
+ * Easy to configurate & use
+ * Available on packagist (to install via composer)
 
 Configuration (only 3 quick steps!)
 -----------------------------------
@@ -27,6 +28,7 @@ eko_feed:
             description: 'Latests articles'
             link:        'http://vincent.composieux.fr'
             encoding:    'utf-8'
+            author:      'Vincent Composieux' # Only required for Atom feeds
 ```
 
 ### 2) Implement the ItemInterface
@@ -56,6 +58,7 @@ In this same entity, just implement those required methods:
  * `public function getFeedItemTitle() { … }` : this method returns entity item title
  * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
  * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
+ * `public function getFeedItemAuthor() { … }` : this method returns entity item author name
  * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
 
 ### 3) Generate the feed!

@@ -94,14 +94,14 @@ class RssFormatter implements FormatterInterface
         $element = $this->dom->createElement('title');
         $element->appendChild($title);
 
-        $node->appendChild($title);
+        $node->appendChild($element);
 
         $description = $this->dom->createCDATASection($item->getFeedItemDescription());
 
         $element = $this->dom->createElement('description');
         $element->appendChild($description);
 
-        $node->appendChild($description);
+        $node->appendChild($element);
 
         $link = $this->dom->createElement('link', $item->getFeedItemLink());
         $node->appendChild($link);
