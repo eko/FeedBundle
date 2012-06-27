@@ -42,7 +42,7 @@ class AtomFormatter implements FormatterInterface
         $author = $feed->get('author');
 
         if (empty($author)) {
-            throw new \InvalidArgumentException('Atom formatter requires to fill an "author" parameter in configuration.');
+            throw new \InvalidArgumentException('Atom formatter requires an "author" parameter in configuration.');
         }
 
         $this->feed = $feed;
