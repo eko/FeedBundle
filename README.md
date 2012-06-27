@@ -89,20 +89,15 @@ class BlogController extends Controller
      */
     public function feedAction()
     {
-        // Get articles from my Article repository
-        $repository = $this->getDoctrine()->getRepository('BundleBlogBundle:Article');
+        $articles = $this->getDoctrine()->getRepository('BundleBlogBundle:Article')->findAll();
 
-        $articles = $repository->findAll();
-
-        // Retrieve article feed declared in config and add articles to the feed
-        $manager = $this->get('eko_feed.feed.manager');
-        $feed = $manager->get('article');
+        $feed = $this->get('eko_feed.feed.manager')->get('article');
 
         foreach ($articles as $article) {
             $feed->add($article);
         }
 
-        return new Response($feed->render('rss')); // or Atom, or a new formatter!
+        return new Response($feed->render('rss')); // or 'atom'
     }
 }
 ```
