@@ -42,7 +42,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testHasFeed()
     {
         $manager = new FeedManager($this->config);
-        
+
         $this->assertTrue($manager->has('article'));
     }
 
@@ -52,7 +52,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testFeedDoNotExists()
     {
         $manager = new FeedManager($this->config);
-        
+
         $this->assertFalse($manager->has('fake_feed_name'));
     }
 
@@ -63,7 +63,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $manager = new FeedManager($this->config);
         $feed = $manager->get('article');
-        
+
         $this->assertEquals('My articles/posts', $feed->get('title'));
         $this->assertEquals('Latests articles', $feed->get('description'));
         $this->assertEquals('http://github.com/eko/FeedBundle', $feed->get('link'));

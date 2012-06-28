@@ -95,12 +95,12 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     public function testRenderValidXML()
     {
         $fakeArticle = new RSSFakeArticle();
-        
+
         $manager = new FeedManager($this->config);
-        
+
         $feed = $manager->get('article');
         $feed->add($fakeArticle);
-        
-        $this->assertEquals('rss version="2.0"', $feed->render('rss'));
+
+        $this->assertContains('<rss version="2.0">', $feed->render('rss'));
     }
 }

@@ -95,9 +95,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testNoItem()
     {
         $manager = new FeedManager($this->config);
-        
+
         $feed = $manager->get('article');
-        
+
         $this->assertEquals(0, count($feed->getItems()));
     }
 
@@ -107,12 +107,12 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testAdditem()
     {
         $fakeArticle = new FakeArticle();
-        
+
         $manager = new FeedManager($this->config);
-        
+
         $feed = $manager->get('article');
         $feed->add($fakeArticle);
-        
+
         $this->assertEquals(1, count($feed->getItems()));
     }
 }
