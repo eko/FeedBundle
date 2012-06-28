@@ -22,28 +22,35 @@ use Eko\FeedBundle\Feed\FeedManager;
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array $config  Configuration settings
+     * @var FeedManager $manager  A feed manager instance
      */
-    protected $config = array(
-        'feeds' => array(
-            'article' => array(
-                'title'       => 'My articles/posts',
-                'description' => 'Latests articles',
-                'link'        => 'http://github.com/eko/FeedBundle',
-                'encoding'    => 'utf-8',
-                'author'      => 'Vincent Composieux'
+    protected $manager;
+
+    /**
+     * Construct elements used in test case
+     */
+    public function __construct() {
+        $config = array(
+            'feeds' => array(
+                'article' => array(
+                    'title'       => 'My articles/posts',
+                    'description' => 'Latests articles',
+                    'link'        => 'http://github.com/eko/FeedBundle',
+                    'encoding'    => 'utf-8',
+                    'author'      => 'Vincent Composieux'
+                )
             )
-        )
-    );
+        );
+
+        $this->manager = new FeedManager($config);
+    }
 
     /**
      * Check if feed is correctly inserted
      */
     public function testHasFeed()
     {
-        $manager = new FeedManager($this->config);
-
-        $this->assertTrue($manager->has('article'));
+        $this->assertTrue($this->manager->has('article'));
     }
 
     /**
@@ -51,9 +58,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testFeedDoNotExists()
     {
-        $manager = new FeedManager($this->config);
-
-        $this->assertFalse($manager->has('fake_feed_name'));
+        $this->assertFalse($this->manager->has('fake_feed_name'));
     }
 
     /**
@@ -61,8 +66,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFeedData()
     {
-        $manager = new FeedManager($this->config);
-        $feed = $manager->get('article');
+        $feed = $this->manager->get('article');
 
         $this->assertEquals('My articles/posts', $feed->get('title'));
         $this->assertEquals('Latests articles', $feed->get('description'));

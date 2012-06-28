@@ -75,32 +75,58 @@ class RSSFakeArticle implements ItemInterface
 class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array $config  Configuration settings
+     * @var FeedManager $manager  A feed manager instance
      */
-    protected $config = array(
-        'feeds' => array(
-            'article' => array(
-                'title'       => 'My articles/posts',
-                'description' => 'Latests articles',
-                'link'        => 'http://github.com/eko/FeedBundle',
-                'encoding'    => 'utf-8',
-                'author'      => 'Vincent Composieux'
+    protected $manager;
+
+    /**
+     * Construct elements used in test case
+     */
+    public function __construct() {
+        $config = array(
+            'feeds' => array(
+                'article' => array(
+                    'title'       => 'My articles/posts',
+                    'description' => 'Latests articles',
+                    'link'        => 'http://github.com/eko/FeedBundle',
+                    'encoding'    => 'utf-8',
+                    'author'      => 'Vincent Composieux'
+                )
             )
-        )
-    );
+        );
+
+        $this->manager = new FeedManager($config);
+    }
 
     /**
      * Check if RSS formatter output a valid XML
      */
     public function testRenderValidXML()
     {
-        $fakeArticle = new RSSFakeArticle();
+        $feed = $this->manager->get('article');
+        $feed->add(new RSSFakeArticle());
 
-        $manager = new FeedManager($this->config);
+        $output = $feed->render('rss');
 
-        $feed = $manager->get('article');
-        $feed->add($fakeArticle);
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadXML($output);
 
-        $this->assertContains('<rss version="2.0">', $feed->render('rss'));
+        $this->assertEquals(0, count(libxml_get_errors()));
+        $this->assertContains('<rss version="2.0">', $output);
+    }
+
+    /**
+     * Check if RSS formatter output item
+     */
+    public function testRenderItem()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new RSSFakeArticle());
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
+        $this->assertContains('<description><![CDATA[Fake description or content]]></description>', $output);
+        $this->assertContains('<link>http://github.com/eko/FeedBundle/article/fake/url</link>', $output);
     }
 }

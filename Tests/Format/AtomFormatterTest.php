@@ -21,7 +21,7 @@ use Eko\FeedBundle\Item\ItemInterface;
  * @ORM\Table(name="article")
  * @ORM\Entity
  */
-class FakeArticle implements ItemInterface
+class AtomFakeArticle implements ItemInterface
 {
     /**
      * Returns a fake title
@@ -66,13 +66,13 @@ class FakeArticle implements ItemInterface
 }
 
 /**
- * FeedTest
+ * AtomFormatterTest
  *
- * This is the feed test class
+ * This is the Atom formatter test class
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedTest extends \PHPUnit_Framework_TestCase
+class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FeedManager $manager  A feed manager instance
@@ -99,23 +99,34 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if there is no item inserted during feed creation
+     * Check if RSS formatter output a valid XML
      */
-    public function testNoItem()
+    public function testRenderValidXML()
     {
         $feed = $this->manager->get('article');
+        $feed->add(new AtomFakeArticle());
 
-        $this->assertEquals(0, count($feed->getItems()));
+        $output = $feed->render('atom');
+
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->loadXML($output);
+
+        $this->assertEquals(0, count(libxml_get_errors()));
+        $this->assertContains('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
     }
 
     /**
-     * Check if items are correctly added
+     * Check if RSS formatter output item
      */
-    public function testAdditem()
+    public function testRenderItem()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeArticle());
+        $feed->add(new AtomFakeArticle());
 
-        $this->assertEquals(1, count($feed->getItems()));
+        $output = $feed->render('atom');
+
+        $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
+        $this->assertContains('<summary><![CDATA[Fake description or content]]></summary>', $output);
+        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url"/>', $output);
     }
 }
