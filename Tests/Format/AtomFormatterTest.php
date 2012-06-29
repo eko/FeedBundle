@@ -47,6 +47,37 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if exception is an \InvalidArgumentException is thrown
+     * when 'author' config parameter is not set or empty
+     */
+    public function testAuthorEmptyException()
+    {
+        $config = array(
+            'feeds' => array(
+                'article' => array(
+                    'title'       => 'My title',
+                    'description' => 'My description',
+                    'link'        => 'http://github.com/eko/FeedBundle',
+                    'encoding'    => 'utf-8',
+                    'author'      => ''
+                )
+            )
+        );
+
+        $manager = new FeedManager($config);
+
+        $feed = $manager->get('article');
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Atom formatter requires an "author" parameter in configuration.'
+        );
+
+        $feed->set('author', null);
+        $feed->render('atom');
+    }
+
+    /**
      * Check if RSS formatter output a valid XML
      */
     public function testRenderValidXML()

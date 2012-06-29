@@ -1,15 +1,13 @@
-FeedBundle - A bundle to build RSS feeds from entities
+FeedBundle - A bundle to build RSS/Atom feeds from entities
 =========================================================
 
 [![Build Status](https://secure.travis-ci.org/eko/FeedBundle.png?branch=master)](http://travis-ci.org/eko/FeedBundle)
 
-Version 1.0
-
 Features
 --------
 
- * Generate XML RSS feeds (RSS & Atom formats)
- * Based on your entities
+ * Generate XML feeds (RSS & Atom formats)
+ * Items based on your entities
  * Easy to configurate & use
  * Available on packagist (to install via composer)
 
@@ -105,7 +103,8 @@ Please note that for better performances you can add a cache control.
 
 For any question, do not hesitate to contact me and/or participate.
 
-Author :
---------
+Authors
+-------
 
  * Vincent Composieux <vincent.composieux@gmail.com> (Twitter: @vcomposieux)
+ * Anyone want to contribute ? Do not hesitate, you will be listed here!
