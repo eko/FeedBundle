@@ -67,20 +67,6 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($feed->getItems()));
     }
 
-
-    /**
-     * Check if multiple items are correctly loaded
-     */
-    public function testSetItems()
-    {
-        $feed = $this->manager->get('article');
-
-        $items = array(new FakeEntity(), new FakeEntity());
-        $feed->addFromArray($items);
-
-        $this->assertEquals(2, count($feed->getItems()));
-    }
-
     /**
      * Check if an \InvalidArgumentException is thrown
      * when formatter asked for rendering does not exists
