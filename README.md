@@ -104,6 +104,7 @@ Go further with your feeds
 You can add custom fields for your entities nodes by adding them this way:
 
 ```php
+<?php
 $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add(new FakeEntity());
 $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
@@ -114,6 +115,7 @@ Of course, `getFeedItemCustom()` method needs to be declared in your entity.
 Moreover, entities objects can be added separatly with add method:
 
 ```php
+<?php
 $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add($article);
 ```
