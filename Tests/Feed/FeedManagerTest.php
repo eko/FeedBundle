@@ -62,6 +62,20 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if an \InvalidArgumentException is thrown
+     * if requested feed does not exists
+     */
+    public function testNonExistantFeedException()
+    {
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            "Specified feed 'unknown_feed_name' is not defined in your configuration."
+        );
+
+        $this->manager->get('unknown_feed_name');
+    }
+
+    /**
      * Check if the feed data are properly loaded from configuration settings
      */
     public function testGetFeedData()

@@ -91,10 +91,7 @@ class BlogController extends Controller
         $articles = $this->getDoctrine()->getRepository('BundleBlogBundle:Article')->findAll();
 
         $feed = $this->get('eko_feed.feed.manager')->get('article');
-
-        foreach ($articles as $article) {
-            $feed->add($article);
-        }
+        $feed->addFromArray($articles);
 
         return new Response($feed->render('rss')); // or 'atom'
     }
@@ -102,6 +99,26 @@ class BlogController extends Controller
 ```
 
 Please note that for better performances you can add a cache control.
+
+Go further with your feeds
+--------------------------
+
+You can add custom fields for your entities nodes by adding them this way:
+
+```php
+$feed = $this->get('eko_feed.feed.manager')->get('article');
+$feed->add(new FakeEntity());
+$feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+```
+
+Of course, `getFeedItemCustom()` method needs to be declared in your entity.
+
+Moreover, entities objects can be added separatly with add method:
+
+```php
+$feed = $this->get('eko_feed.feed.manager')->get('article');
+$feed->add($article);
+```
 
 For any question, do not hesitate to contact me and/or participate.
 

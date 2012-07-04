@@ -12,7 +12,7 @@ namespace Eko\FeedBundle\Feed;
 
 use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
-
+use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
@@ -33,6 +33,11 @@ class Feed
      * @var array $items  Items of the feed
      */
     protected $items = array();
+
+    /**
+     * @var array $fields  Contain Field instances for this formatter
+     */
+    protected $fields = array();
 
     /**
      * @param array $config  Configuration settings
@@ -76,6 +81,16 @@ class Feed
     }
 
     /**
+     * Set items from array
+     *
+     * @param array $items  Array of items to add to the feed
+     */
+    public function addFromArray(array $items)
+    {
+        $this->items = $items;
+    }
+
+    /**
      * Returns feed items
      *
      * @return array
@@ -83,6 +98,26 @@ class Feed
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Add a new field to render
+     *
+     * @param Field $field  A Field instance
+     */
+    public function addField(Field $field)
+    {
+        $this->fields[] = $field;
+    }
+
+    /**
+     * Return custom fields which will be added to the feed
+     *
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 
     /**

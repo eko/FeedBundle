@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
+use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Tests\Entity\FakeEntity;
 
 /**
@@ -47,6 +48,37 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if exception is an \InvalidArgumentException is thrown
+     * when 'author' config parameter is not set or empty
+     */
+    public function testAuthorEmptyException()
+    {
+        $config = array(
+            'feeds' => array(
+                'article' => array(
+                    'title'       => 'My title',
+                    'description' => 'My description',
+                    'link'        => 'http://github.com/eko/FeedBundle',
+                    'encoding'    => 'utf-8',
+                    'author'      => ''
+                )
+            )
+        );
+
+        $manager = new FeedManager($config);
+
+        $feed = $manager->get('article');
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Atom formatter requires an "author" parameter in configuration.'
+        );
+
+        $feed->set('author', null);
+        $feed->render('atom');
+    }
+
+    /**
      * Check if RSS formatter output a valid XML
      */
     public function testRenderValidXML()
@@ -76,5 +108,19 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
         $this->assertContains('<summary><![CDATA[Fake description or content]]></summary>', $output);
         $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url"/>', $output);
+    }
+
+    /**
+     * Check if a custom field is properly rendered
+     */
+    public function testAddCustomField()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeEntity());
+        $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
     }
 }

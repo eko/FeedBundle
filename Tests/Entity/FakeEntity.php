@@ -61,4 +61,14 @@ class FakeEntity implements ItemInterface
     {
         return new \DateTime();
     }
+
+    /**
+     * Returns a fake custom field
+     *
+     * @return string
+     */
+    public function getFeedItemCustom()
+    {
+        return 'My custom field';
+    }
 }

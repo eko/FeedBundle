@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
+use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Tests\Entity\FakeEntity;
 
 /**
@@ -76,5 +77,19 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
         $this->assertContains('<description><![CDATA[Fake description or content]]></description>', $output);
         $this->assertContains('<link>http://github.com/eko/FeedBundle/article/fake/url</link>', $output);
+    }
+
+    /**
+     * Check if a custom field is properly rendered
+     */
+    public function testAddCustomField()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeEntity());
+        $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
     }
 }

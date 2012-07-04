@@ -8,6 +8,7 @@
         <parameter key="eko_feed.feed.manager.class">Eko\FeedBundle\Feed\FeedManager</parameter>
         <parameter key="eko_feed.feed.class">Eko\FeedBundle\Feed\Feed</parameter>
         <parameter key="eko_feed.formatter.rss.class">Eko\EkoBundle\Formatter\RssFormatter</parameter>
+        <parameter key="eko_feed.formatter.atom.class">Eko\EkoBundle\Formatter\AtomFormatter</parameter>
     </parameters>
 
     <services>
@@ -23,6 +24,10 @@
         </service>
 
         <service id="eko_feed.formatter.rss" class="%eko_feed.formatter.rss.class%">
+            <argument type="service" id="eko_feed.feed" />
+        </service>
+
+        <service id="eko_feed.formatter.atom" class="%eko_feed.formatter.atom.class%">
             <argument type="service" id="eko_feed.feed" />
         </service>
     </services>

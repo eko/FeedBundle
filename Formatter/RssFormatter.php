@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
@@ -20,18 +21,8 @@ use Eko\FeedBundle\Item\ItemInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class RssFormatter implements FormatterInterface
+class RssFormatter extends Formatter implements FormatterInterface
 {
-    /**
-     * @var Feed $feed  A feed instance
-     */
-    protected $feed;
-
-    /**
-     * @var DOMDocument $dom  XML DOMDocument
-     */
-    protected $dom;
-
     /**
      * Construct a formatter with given feed
      *
@@ -39,7 +30,30 @@ class RssFormatter implements FormatterInterface
      */
     public function __construct(Feed $feed)
     {
-        $this->feed = $feed;
+        $this->fields = array(
+            new Field(
+                'title',
+                'getFeedItemTitle',
+                array('cdata' => true)
+            ),
+            new Field(
+                'description',
+                'getFeedItemDescription',
+                array('cdata' => true)
+            ),
+            new Field(
+                'link',
+                'getFeedItemLink'
+            ),
+            new Field(
+                'pubDate',
+                'getFeedItemPubDate',
+                array('date_format' => \DateTime::RSS)
+            ),
+        );
+
+        parent::__construct($feed);
+
         $this->initialize();
     }
 
@@ -59,16 +73,16 @@ class RssFormatter implements FormatterInterface
         $channel = $this->dom->createElement('channel');
         $channel = $root->appendChild($channel);
 
-        $title = $this->dom->createElement('title', $this->feed->get('title'));
-        $description = $this->dom->createElement('description', $this->feed->get('description'));
-        $link = $this->dom->createElement('link', $this->feed->get('link'));
+        $fields = array('title', 'description', 'link');
+
+        foreach ($fields as $field) {
+            $element = $this->dom->createElement($field, $this->feed->get($field));
+            $channel->appendChild($element);
+        }
 
         $date = new \DateTime();
         $lastBuildDate = $this->dom->createElement('lastBuildDate', $date->format(\DateTime::RSS));
 
-        $channel->appendChild($title);
-        $channel->appendChild($description);
-        $channel->appendChild($link);
         $channel->appendChild($lastBuildDate);
 
         $items = $this->feed->getItems();
@@ -89,38 +103,9 @@ class RssFormatter implements FormatterInterface
         $node = $this->dom->createElement('item');
         $node = $channel->appendChild($node);
 
-        $title = $this->dom->createCDATASection($item->getFeedItemTitle());
-
-        $element = $this->dom->createElement('title');
-        $element->appendChild($title);
-
-        $node->appendChild($element);
-
-        $description = $this->dom->createCDATASection($item->getFeedItemDescription());
-
-        $element = $this->dom->createElement('description');
-        $element->appendChild($description);
-
-        $node->appendChild($element);
-
-        $link = $this->dom->createElement('link', $item->getFeedItemLink());
-        $node->appendChild($link);
-
-        $date = $item->getFeedItemPubDate()->format(\DateTime::RSS);
-
-        $pubDate = $this->dom->createElement('pubDate', $date);
-        $node->appendChild($pubDate);
-    }
-
-    /**
-     * This method render the given feed transforming the DOMDocument to XML
-     *
-     * @return string
-     */
-    public function render()
-    {
-        $this->dom->formatOutput = true;
-
-        return $this->dom->saveXml();
+        foreach ($this->fields as $field) {
+            $element = $this->format($field, $item);
+            $node->appendChild($element);
+        }
     }
 }

@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
@@ -20,18 +21,8 @@ use Eko\FeedBundle\Item\ItemInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class AtomFormatter implements FormatterInterface
+class AtomFormatter extends Formatter implements FormatterInterface
 {
-    /**
-     * @var Feed $feed  A feed instance
-     */
-    protected $feed;
-
-    /**
-     * @var DOMDocument $dom  XML DOMDocument
-     */
-    protected $dom;
-
     /**
      * Construct a formatter with given feed
      *
@@ -39,13 +30,42 @@ class AtomFormatter implements FormatterInterface
      */
     public function __construct(Feed $feed)
     {
+        $this->fields = array(
+            new Field(
+                'id',
+                'getFeedItemLink',
+                array('cdata' => false)
+            ),
+            new Field(
+                'title',
+                'getFeedItemTitle',
+                array('cdata' => true)
+            ),
+            new Field(
+                'summary',
+                'getFeedItemDescription',
+                array('cdata' => true)
+            ),
+            new Field(
+                'link',
+                'getFeedItemLink',
+                array('attribute' => true, 'attribute_name' => 'href')
+            ),
+            new Field(
+                'updated',
+                'getFeedItemPubDate',
+                array('date_format' => \DateTime::ATOM)
+            ),
+        );
+
         $author = $feed->get('author');
 
         if (empty($author)) {
             throw new \InvalidArgumentException('Atom formatter requires an "author" parameter in configuration.');
         }
 
-        $this->feed = $feed;
+        parent::__construct($feed);
+
         $this->initialize();
     }
 
@@ -101,43 +121,9 @@ class AtomFormatter implements FormatterInterface
         $node = $this->dom->createElement('entry');
         $node = $root->appendChild($node);
 
-        $identifier = $this->dom->createElement('id', $item->getFeedItemLink());
-        $node->appendChild($identifier);
-
-        $title = $this->dom->createCDATASection($item->getFeedItemTitle());
-
-        $element = $this->dom->createElement('title');
-        $element->appendChild($title);
-
-        $node->appendChild($element);
-
-        $summary = $this->dom->createCDATASection($item->getFeedItemDescription());
-
-        $element = $this->dom->createElement('summary');
-        $element->appendChild($summary);
-
-        $node->appendChild($element);
-
-        $link = $this->dom->createElement('link');
-        $link->setAttribute('href', $item->getFeedItemLink());
-
-        $node->appendChild($link);
-
-        $date = $item->getFeedItemPubDate()->format(\DateTime::ATOM);
-
-        $updated = $this->dom->createElement('updated', $date);
-        $node->appendChild($updated);
-    }
-
-    /**
-     * This method render the given feed transforming the DOMDocument to XML
-     *
-     * @return string
-     */
-    public function render()
-    {
-        $this->dom->formatOutput = true;
-
-        return $this->dom->saveXml();
+        foreach ($this->fields as $field) {
+            $element = $this->format($field, $item);
+            $node->appendChild($element);
+        }
     }
 }
