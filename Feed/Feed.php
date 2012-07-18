@@ -81,11 +81,23 @@ class Feed
     }
 
     /**
-     * Set items from array
+     * Add items from array
      *
-     * @param array $items  Array of items to add to the feed
+     * @param array|ItemInterface[] $items  Array of items to add to the feed
      */
     public function addFromArray(array $items)
+    {
+        foreach ($items as $item) {
+            $this->add($item);
+        }
+    }
+
+    /**
+     * Set items from array. Note that this method will override any existing items
+     *
+     * @param array|ItemInterface[] $items  Array of items to set
+     */
+    public function setItems(array $items)
     {
         $this->items = $items;
     }
