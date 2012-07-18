@@ -68,14 +68,55 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if multiple items are correctly loaded
+     * Check if items are correctly added
      */
-    public function testSetItems()
+    public function testAdditemsFromEmpty()
     {
         $feed = $this->manager->get('article');
 
         $items = array(new FakeEntity(), new FakeEntity());
         $feed->addFromArray($items);
+
+        $this->assertEquals(2, count($feed->getItems()));
+    }
+
+    /**
+     * Check if items are correctly added
+     */
+    public function testAdditemsWithExistingItem()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeEntity());
+
+        $items = array(new FakeEntity(), new FakeEntity());
+        $feed->addFromArray($items);
+
+        $this->assertEquals(3, count($feed->getItems()));
+    }
+
+    /**
+     * Check if multiple items are correctly loaded
+     */
+    public function testSetItemsFromEmpty()
+    {
+        $feed = $this->manager->get('article');
+
+        $items = array(new FakeEntity(), new FakeEntity());
+        $feed->setItems($items);
+
+        $this->assertEquals(2, count($feed->getItems()));
+    }
+
+    /**
+     * Check if multiple items are correctly loaded
+     */
+    public function testSetItemsWithExistingItem()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeEntity());
+
+        $items = array(new FakeEntity(), new FakeEntity());
+        $feed->setItems($items);
 
         $this->assertEquals(2, count($feed->getItems()));
     }
