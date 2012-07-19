@@ -31,7 +31,9 @@ eko_feed:
 
 ### 2) Implement the ItemInterface
 
-Each entities you will use to generate an RSS feed needs to implement the `Eko\FeedBundle\Item\ItemInterface` interface as follow in this example for an `Article` entity of a blog:
+Each entities you will use to generate an RSS feed needs to implement `Eko\FeedBundle\Item\ItemInterface` or `Eko\FeedBundle\Item\RoutedItemInterface` as demonstrated in this example for an `Article` entity of a blog:
+
+#### Option A: Eko\FeedBundle\Item\ItemInterface
 
 ```php
 <?php
@@ -57,6 +59,37 @@ In this same entity, just implement those required methods:
  * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
  * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
  * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
+
+#### Option B: Eko\FeedBundle\Item\RoutedItemInterface
+
+Alternatively, if you need to make use of the router service to generate the link for your entity you can use the following interface. You don't need to worry about injecting the router to your entity.
+
+```php
+<?php
+
+namespace Bundle\BlogBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Eko\FeedBundle\Item\RoutedItemInterface;
+
+/**
+ * Bundle\BlogBundle\Entity\Article
+ *
+ * @ORM\Table(name="article")
+ * @ORM\Entity
+ */
+class Article implements RoutedItemInterface
+{
+```
+
+In this entity, you'll need to implement the following methods:
+
+ * `public function getFeedItemTitle() { … }` : this method returns entity item title
+ * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
+ * `public function getFeedItemRouteName() { … }` : this method returns the name of the route
+ * `public function getFeedItemRouteParameters() { … }` : this method must return an array with the parameters that are required for the route
+ * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
+
 
 ### 3) Generate the feed!
 

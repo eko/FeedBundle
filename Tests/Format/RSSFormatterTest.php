@@ -44,7 +44,20 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
+        $container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\Container')
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $container
+            ->expects($this->any())
+            ->method('get')
+            ->with($this->equalTo('router'))
+            ->will($this->returnValue($this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false)))
+        ;
+
         $this->manager = new FeedManager($config);
+        $this->manager->setContainer($container);
     }
 
     /**

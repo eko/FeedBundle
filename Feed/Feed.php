@@ -11,9 +11,12 @@
 namespace Eko\FeedBundle\Feed;
 
 use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Item\ProxyItem;
+use Eko\FeedBundle\Item\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Feed
@@ -24,6 +27,11 @@ use Eko\FeedBundle\Item\ItemInterface;
  */
 class Feed
 {
+    /**
+     * @var Router
+     */
+    protected $router;
+
     /**
      * @var array $config  Configuration settings
      */
@@ -45,6 +53,16 @@ class Feed
     public function __construct(array $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * Set the router service
+     *
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
     }
 
     /**
@@ -73,10 +91,19 @@ class Feed
     /**
      * Add an item (an entity which implements ItemInterface instance)
      *
-     * @param ItemInterface $item  An entity instance
+     * @param ItemInterface|RoutedItemInterface $item An entity instance
+     * @throws \RuntimeException
      */
     public function add(ItemInterface $item)
     {
+        if ($item instanceof RoutedItemInterface) {
+            $item = new ProxyItem($item, $this->router);
+        }
+
+        if (!$item instanceof ItemInterface) {
+            throw new \RuntimeException("Invalid item type");
+        }
+
         $this->items[] = $item;
     }
 

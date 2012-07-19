@@ -21,6 +21,9 @@
 
         <service id="eko_feed.feed" class="%eko_feed.feed.class%">
             <argument />
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
         </service>
 
         <service id="eko_feed.formatter.rss" class="%eko_feed.formatter.rss.class%">
