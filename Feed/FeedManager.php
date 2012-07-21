@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Feed;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Manager
@@ -32,6 +33,7 @@ class FeedManager extends ContainerAware
     protected $feeds;
 
     /**
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      * @param array $config  Configuration settings
      */
     public function __construct(array $config)
@@ -67,6 +69,7 @@ class FeedManager extends ContainerAware
 
         if (!isset($this->feeds[$feed])) {
             $this->feeds[$feed] = new Feed($this->config['feeds'][$feed]);
+            $this->feeds[$feed]->setRouter($this->container->get('router'));
         }
 
         return $this->feeds[$feed];
