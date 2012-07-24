@@ -71,7 +71,7 @@ class ProxyItem implements ItemInterface
     {
         $parameters = $this->item->getFeedItemRouteParameters() ?: array();
 
-        return $this->router->generate($this->item->getFeedItemRouteName(), $parameters);
+        return $this->router->generate($this->item->getFeedItemRouteName(), $parameters, true);
     }
 
     /**

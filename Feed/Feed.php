@@ -70,10 +70,13 @@ class Feed
      *
      * @param string $parameter  A configuration parameter name
      * @param mixed  $value      A value
+     * @return \Eko\FeedBundle\Feed\Feed
      */
     public function set($parameter, $value)
     {
         $this->config[$parameter] = $value;
+
+        return $this;
     }
 
     /**
@@ -92,9 +95,10 @@ class Feed
      * Add an item (an entity which implements ItemInterface instance)
      *
      * @param ItemInterface|RoutedItemInterface $item An entity instance
+     * @return \Eko\FeedBundle\Feed\Feed
      * @throws \RuntimeException
      */
-    public function add(ItemInterface $item)
+    public function add($item)
     {
         if ($item instanceof RoutedItemInterface) {
             $item = new ProxyItem($item, $this->router);
@@ -105,28 +109,36 @@ class Feed
         }
 
         $this->items[] = $item;
+
+        return $this;
     }
 
     /**
      * Add items from array
      *
      * @param array|ItemInterface[] $items  Array of items to add to the feed
+     * @return \Eko\FeedBundle\Feed\Feed
      */
     public function addFromArray(array $items)
     {
         foreach ($items as $item) {
             $this->add($item);
         }
+
+        return $this;
     }
 
     /**
      * Set items from array. Note that this method will override any existing items
      *
      * @param array|ItemInterface[] $items  Array of items to set
+     * @return \Eko\FeedBundle\Feed\Feed
      */
     public function setItems(array $items)
     {
-        $this->items = $items;
+        $this->items = array();
+
+        return $this->addFromArray($items);
     }
 
     /**
@@ -143,10 +155,13 @@ class Feed
      * Add a new field to render
      *
      * @param Field $field  A Field instance
+     * @return \Eko\FeedBundle\Feed\Feed
      */
     public function addField(Field $field)
     {
         $this->fields[] = $field;
+
+        return $this;
     }
 
     /**
