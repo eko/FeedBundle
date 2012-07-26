@@ -40,14 +40,10 @@ Each entities you will use to generate an RSS feed needs to implement `Eko\FeedB
 
 namespace Bundle\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
  * Bundle\BlogBundle\Entity\Article
- *
- * @ORM\Table(name="article")
- * @ORM\Entity
  */
 class Article implements ItemInterface
 {
@@ -57,8 +53,8 @@ In this same entity, just implement those required methods:
 
  * `public function getFeedItemTitle() { … }` : this method returns entity item title
  * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
- * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
  * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
+ * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
 
 #### Option B: Eko\FeedBundle\Item\RoutedItemInterface
 
@@ -69,14 +65,10 @@ Alternatively, if you need to make use of the router service to generate the lin
 
 namespace Bundle\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Eko\FeedBundle\Item\RoutedItemInterface;
 
 /**
  * Bundle\BlogBundle\Entity\Article
- *
- * @ORM\Table(name="article")
- * @ORM\Entity
  */
 class Article implements RoutedItemInterface
 {
@@ -86,9 +78,9 @@ In this entity, you'll need to implement the following methods:
 
  * `public function getFeedItemTitle() { … }` : this method returns entity item title
  * `public function getFeedItemDescription() { … }` : this method returns entity item description (or content)
+ * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
  * `public function getFeedItemRouteName() { … }` : this method returns the name of the route
  * `public function getFeedItemRouteParameters() { … }` : this method must return an array with the parameters that are required for the route
- * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
 
 
 ### 3) Generate the feed!
@@ -104,18 +96,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 class BlogController extends Controller
 {
     /**
      * Generate the article feed
      *
-     * @Route("/feed", name="feed")
-     * @Template()
-     * @Cache(expires="+2 days")
+     * @return Response XML Feed
      */
     public function feedAction()
     {
@@ -155,8 +141,10 @@ $feed->add($article);
 
 For any question, do not hesitate to contact me and/or participate.
 
-Authors
--------
+Contributors
+------------
 
  * Vincent Composieux <vincent.composieux@gmail.com> (Twitter: @vcomposieux)
+ * Rob Masters <mastahuk@gmail.com>
+
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
