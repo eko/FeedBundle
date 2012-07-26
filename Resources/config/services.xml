@@ -13,10 +13,8 @@
 
     <services>
         <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%">
+            <argument type="service" id="router" />
             <argument>%eko_feed.config%</argument>
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
         </service>
 
         <service id="eko_feed.feed" class="%eko_feed.feed.class%">

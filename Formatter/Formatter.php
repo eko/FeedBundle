@@ -15,7 +15,7 @@ use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
 
 /**
- * Formatter main class (abstract)
+ * Formatter
  *
  * This class provides formatter methods
  *
@@ -24,24 +24,24 @@ use Eko\FeedBundle\Item\ItemInterface;
 class Formatter
 {
     /**
-     * @var Feed $feed  A feed instance
+     * @var Feed $feed A feed instance
      */
     protected $feed;
 
     /**
-     * @var DOMDocument $dom  XML DOMDocument
+     * @var DOMDocument $dom XML DOMDocument
      */
     protected $dom;
 
     /**
-     * @var array $fields  Contain Field instances for this formatter
+     * @var array $fields Contain Field instances for this formatter
      */
     protected $fields = array();
 
     /**
      * Construct a formatter with given feed
      *
-     * @param Feed $feed  A feed instance
+     * @param Feed $feed A feed instance
      */
     public function __construct(Feed $feed)
     {
@@ -59,8 +59,9 @@ class Formatter
     /**
      * Format field
      *
-     * @param Field         $field  A field instance
-     * @param ItemInterface $item   An entity instance
+     * @param Field         $field A field instance
+     * @param ItemInterface $item  An entity instance
+     * 
      * @return string
      */
     protected function format(Field $field, ItemInterface $item)

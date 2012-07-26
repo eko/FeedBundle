@@ -27,8 +27,8 @@ class EkoFeedExtension extends Extension
     /**
      * Configuration extension loader
      *
-     * @param array            $configs    An array of configuration settings
-     * @param ContainerBuilder $container  A container builder instance
+     * @param array            $configs   An array of configuration settings
+     * @param ContainerBuilder $container A container builder instance
      */
     public function load(array $configs, ContainerBuilder $container)
     {

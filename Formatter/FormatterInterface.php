@@ -22,7 +22,7 @@ use Eko\FeedBundle\Item\ItemInterface;
 interface FormatterInterface
 {
     /**
-     * Initialize formatter XML format
+     * Initialize XML DOMDocument
      *
      * @abstract
      */
@@ -31,8 +31,8 @@ interface FormatterInterface
     /**
      * Add an entity item to the feed
      *
-     * @param \DOMElement   $channel  The channel DOM element
-     * @param ItemInterface $item     An entity object
+     * @param \DOMElement   $channel The channel DOM element
+     * @param ItemInterface $item    An entity object
      */
     public function addItem(\DOMElement $channel, ItemInterface $item);
 }

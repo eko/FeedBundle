@@ -20,26 +20,26 @@ namespace Eko\FeedBundle\Item;
 class Field
 {
     /**
-     * @var string $name  Field name
+     * @var string $name Field name
      */
     protected $name;
 
     /**
-     * @var string $method  Item method name
+     * @var string $method Item method name
      */
     protected $method;
 
     /**
-     * @var array $options  Options array (required, cdata, ...)
+     * @var array $options Options array (required, cdata, ...)
      */
     protected $options;
 
     /**
      * Constructor
      *
-     * @param string $name     A field name
-     * @param string $method   An item method name
-     * @param array  $options  An options array
+     * @param string $name    A field name
+     * @param string $method  An item method name
+     * @param array  $options An options array
      */
     public function __construct($name, $method, $options = array())
     {
@@ -74,8 +74,9 @@ class Field
     /**
      * Returns option value
      *
-     * @param string $option   An option name
-     * @param mixed  $default  A default value
+     * @param string $option  An option name
+     * @param mixed  $default A default value
+     *
      * @return mixed
      */
     public function get($option, $default = false)

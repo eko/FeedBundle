@@ -16,8 +16,7 @@ use Eko\FeedBundle\Item\ItemInterface;
 /**
  * Fake
  *
- * @ORM\Table(name="fake")
- * @ORM\Entity
+ * A fake entity for tests
  */
 class FakeEntity implements ItemInterface
 {

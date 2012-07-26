@@ -23,6 +23,7 @@ interface ItemInterface
      * This method returns feed item title
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemTitle();
@@ -31,6 +32,7 @@ interface ItemInterface
      * This method returns feed item description (or content)
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemDescription();
@@ -39,6 +41,7 @@ interface ItemInterface
      * This method returns feed item URL link
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemLink();
@@ -47,6 +50,7 @@ interface ItemInterface
      * This method returns item publication date
      *
      * @abstract
+     *
      * @return \DateTime
      */
     public function getFeedItemPubDate();

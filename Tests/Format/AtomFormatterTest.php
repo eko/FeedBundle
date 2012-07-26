@@ -24,7 +24,7 @@ use Eko\FeedBundle\Tests\Entity\FakeEntity;
 class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FeedManager $manager  A feed manager instance
+     * @var FeedManager $manager A feed manager instance
      */
     protected $manager;
 
@@ -44,8 +44,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->manager = new FeedManager($config);
-        $this->manager->setContainer($this->getMockContainer());
+        $this->manager = new FeedManager($this->getMockRouter(), $config);
     }
 
     /**
@@ -66,8 +65,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $manager = new FeedManager($config);
-        $manager->setContainer($this->getMockContainer());
+        $manager = new FeedManager($this->getMockRouter(), $config);
 
         $feed = $manager->get('article');
 
@@ -127,22 +125,12 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns Router mock
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getMockContainer()
+    private function getMockRouter()
     {
-        $container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\Container')
-            ->setMethods(array('get'))
-            ->getMock()
-        ;
-
-        $container
-            ->expects($this->any())
-            ->method('get')
-            ->with($this->equalTo('router'))
-            ->will($this->returnValue($this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false)))
-        ;
-
-        return $container;
+        return $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
     }
 }

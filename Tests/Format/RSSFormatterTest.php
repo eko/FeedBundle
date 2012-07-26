@@ -24,7 +24,7 @@ use Eko\FeedBundle\Tests\Entity\FakeEntity;
 class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FeedManager $manager  A feed manager instance
+     * @var FeedManager $manager A feed manager instance
      */
     protected $manager;
 
@@ -44,20 +44,9 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\Container')
-            ->setMethods(array('get'))
-            ->getMock()
-        ;
+        $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
 
-        $container
-            ->expects($this->any())
-            ->method('get')
-            ->with($this->equalTo('router'))
-            ->will($this->returnValue($this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false)))
-        ;
-
-        $this->manager = new FeedManager($config);
-        $this->manager->setContainer($container);
+        $this->manager = new FeedManager($router, $config);
     }
 
     /**

@@ -26,7 +26,7 @@ class RssFormatter extends Formatter implements FormatterInterface
     /**
      * Construct a formatter with given feed
      *
-     * @param Feed $feed  A feed instance
+     * @param Feed $feed A feed instance
      */
     public function __construct(Feed $feed)
     {
@@ -58,7 +58,7 @@ class RssFormatter extends Formatter implements FormatterInterface
     }
 
     /**
-     * Initialize XML DOMDocument
+     * Initialize XML DOMDocument nodes and call addItem on all items
      */
     public function initialize()
     {
@@ -95,8 +95,8 @@ class RssFormatter extends Formatter implements FormatterInterface
     /**
      * Add an entity item to the feed
      *
-     * @param \DOMElement   $channel  The channel DOM element
-     * @param ItemInterface $item     An entity object
+     * @param \DOMElement   $channel The channel DOM element
+     * @param ItemInterface $item    An entity object
      */
     public function addItem(\DOMElement $channel, ItemInterface $item)
     {

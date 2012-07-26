@@ -28,27 +28,27 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 class Feed
 {
     /**
-     * @var Router
+     * @var Router Router service
      */
     protected $router;
 
     /**
-     * @var array $config  Configuration settings
+     * @var array $config Configuration settings
      */
     protected $config;
 
     /**
-     * @var array $items  Items of the feed
+     * @var array $items Items of the feed
      */
     protected $items = array();
 
     /**
-     * @var array $fields  Contain Field instances for this formatter
+     * @var array $fields Contain Field instances for this formatter
      */
     protected $fields = array();
 
     /**
-     * @param array $config  Configuration settings
+     * @param array $config Configuration settings
      */
     public function __construct(array $config)
     {
@@ -68,8 +68,9 @@ class Feed
     /**
      * Set or redefine a configuration value
      *
-     * @param string $parameter  A configuration parameter name
-     * @param mixed  $value      A value
+     * @param mixed  $parameter A configuration parameter name
+     * @param mixed  $value     A value
+     *
      * @return \Eko\FeedBundle\Feed\Feed
      */
     public function set($parameter, $value)
@@ -82,8 +83,9 @@ class Feed
     /**
      * Returns config parameter value
      *
-     * @param string     $parameter  A configuration parameter name
-     * @param mixed|null $default    A default value if not found
+     * @param mixed      $parameter A configuration parameter name
+     * @param mixed|null $default   A default value if not found
+     *
      * @return mixed
      */
     public function get($parameter, $default = null)
@@ -94,18 +96,20 @@ class Feed
     /**
      * Add an item (an entity which implements ItemInterface instance)
      *
-     * @param ItemInterface|RoutedItemInterface $item An entity instance
+     * @param mixed $item An entity item (implements ItemInterface or RoutedItemInterface)
+     *
      * @return \Eko\FeedBundle\Feed\Feed
-     * @throws \RuntimeException
+     *
+     * @throws \InvalidArgumentException if item does not implement ItemInterface or RoutedItemInterface
      */
     public function add($item)
     {
-        if ($item instanceof RoutedItemInterface) {
-            $item = new ProxyItem($item, $this->router);
+        if (!$item instanceof ItemInterface && !$item instanceof RoutedItemInterface) {
+            throw new \InvalidArgumentException('Item must implement ItemInterface or RoutedItemInterface');
         }
 
-        if (!$item instanceof ItemInterface) {
-            throw new \RuntimeException("Invalid item type");
+        if ($item instanceof RoutedItemInterface) {
+            $item = new ProxyItem($item, $this->router);
         }
 
         $this->items[] = $item;
@@ -116,7 +120,8 @@ class Feed
     /**
      * Add items from array
      *
-     * @param array|ItemInterface[] $items  Array of items to add to the feed
+     * @param array $items Array of items (implementing ItemInterface or RoutedItemInterface) to add
+     *
      * @return \Eko\FeedBundle\Feed\Feed
      */
     public function addFromArray(array $items)
@@ -131,7 +136,8 @@ class Feed
     /**
      * Set items from array. Note that this method will override any existing items
      *
-     * @param array|ItemInterface[] $items  Array of items to set
+     * @param array $items Array of items (implementing ItemInterface or RoutedItemInterface) to set
+     *
      * @return \Eko\FeedBundle\Feed\Feed
      */
     public function setItems(array $items)
@@ -154,7 +160,8 @@ class Feed
     /**
      * Add a new field to render
      *
-     * @param Field $field  A Field instance
+     * @param Field $field A custom Field instance
+     *
      * @return \Eko\FeedBundle\Feed\Feed
      */
     public function addField(Field $field)
@@ -165,7 +172,7 @@ class Feed
     }
 
     /**
-     * Return custom fields which will be added to the feed
+     * Returns custom fields
      *
      * @return array
      */
@@ -177,10 +184,11 @@ class Feed
     /**
      * Render the feed in specified format
      *
-     * @param string $format  A format (RSS, Atom, ...)
+     * @param string $format The format to render (RSS, Atom, ...)
+     *
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException if given format formatter does not exists
      */
     public function render($format)
     {

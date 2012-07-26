@@ -32,8 +32,9 @@ class ProxyItem implements ItemInterface
      */
     protected $router;
 
-
     /**
+     * Constructor
+     *
      * @param RoutedItemInterface $item
      */
     public function __construct(RoutedItemInterface $item, Router $router)

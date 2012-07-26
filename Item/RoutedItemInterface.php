@@ -23,6 +23,7 @@ interface RoutedItemInterface
      * This method returns feed item title
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemTitle();
@@ -31,6 +32,7 @@ interface RoutedItemInterface
      * This method returns feed item description (or content)
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemDescription();
@@ -39,6 +41,7 @@ interface RoutedItemInterface
      * This method returns the name of the route
      *
      * @abstract
+     *
      * @return string
      */
     public function getFeedItemRouteName();
@@ -47,6 +50,7 @@ interface RoutedItemInterface
      * This method returns the parameters for the route.
      *
      * @abstract
+     *
      * @return array
      */
     public function getFeedItemRouteParameters();
@@ -55,6 +59,7 @@ interface RoutedItemInterface
      * This method returns item publication date
      *
      * @abstract
+     *
      * @return \DateTime
      */
     public function getFeedItemPubDate();
