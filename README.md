@@ -11,6 +11,39 @@ Features
  * Easy to configurate & use
  * Available on packagist (to install via composer)
 
+Installation
+-----------------------------------
+
+Add this to deps
+```
+[EkoFeedBundle]
+    git=https://github.com/eko/FeedBundle.git
+    target=/bundles/Eko/FeedBundle
+```
+Add this to app/AppKernel.php
+```php
+<?php
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new Eko\FeedBundle\EkoFeedBundle(),
+        );
+
+        ...
+
+        return $bundles;
+    }
+```
+
+Add this to app/autoload.php
+```php
+<?php
+$loader->registerNamespaces(array(
+   ...
+    'Eko'             => __DIR__.'/../vendor/bundles'
+));
+```
 Configuration (only 3 quick steps!)
 -----------------------------------
 
