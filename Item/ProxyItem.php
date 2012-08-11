@@ -44,6 +44,21 @@ class ProxyItem implements ItemInterface
     }
 
     /**
+     * Returns item custom fields methods if exists in entity
+     *
+     * @param string $method Method name
+     * @param array  $args   Arguments array
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        if (method_exists($this->item, $method)) {
+            return call_user_func_array(array($this->item, $method), $args);
+        }
+    }
+
+    /**
      * This method returns feed item title
      *
      * @return string
