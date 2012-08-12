@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
-use Eko\FeedBundle\Tests\Entity\FakeEntity;
+use Eko\FeedBundle\Tests\Entity\FakeItemInterfaceEntity;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -65,7 +65,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testAdditem()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
         $this->assertEquals(1, count($feed->getItems()));
     }
@@ -77,7 +77,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     {
         $feed = $this->manager->get('article');
 
-        $items = array(new FakeEntity(), new FakeEntity());
+        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
         $feed->addFromArray($items);
 
         $this->assertEquals(2, count($feed->getItems()));
@@ -89,9 +89,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testAdditemsWithExistingItem()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
-        $items = array(new FakeEntity(), new FakeEntity());
+        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
         $feed->addFromArray($items);
 
         $this->assertEquals(3, count($feed->getItems()));
@@ -104,7 +104,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     {
         $feed = $this->manager->get('article');
 
-        $items = array(new FakeEntity(), new FakeEntity());
+        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
         $feed->setItems($items);
 
         $this->assertEquals(2, count($feed->getItems()));
@@ -116,9 +116,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testSetItemsWithExistingItem()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
-        $items = array(new FakeEntity(), new FakeEntity());
+        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
         $feed->setItems($items);
 
         $this->assertEquals(2, count($feed->getItems()));
@@ -131,7 +131,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testFormatterNotFoundException()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
         $this->setExpectedException(
             'InvalidArgumentException',

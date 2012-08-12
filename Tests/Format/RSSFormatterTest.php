@@ -12,7 +12,8 @@ namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Item\Field;
-use Eko\FeedBundle\Tests\Entity\FakeEntity;
+use Eko\FeedBundle\Tests\Entity\FakeItemInterfaceEntity;
+use Eko\FeedBundle\Tests\Entity\FakeRoutedItemInterfaceEntity;
 
 /**
  * RSSFormatterTest
@@ -55,7 +56,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     public function testRenderValidXML()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
         $output = $feed->render('rss');
 
@@ -72,7 +73,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     public function testRenderItem()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
 
         $output = $feed->render('rss');
 
@@ -82,16 +83,47 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom field is properly rendered
+     * Check if a custom field is properly rendered with ItemInterface
      */
-    public function testAddCustomField()
+    public function testAddCustomFieldWithItemInterface()
     {
         $feed = $this->manager->get('article');
-        $feed->add(new FakeEntity());
+        $feed->add(new FakeItemInterfaceEntity());
         $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
 
         $output = $feed->render('rss');
 
         $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+    }
+
+    /**
+     * Check if a custom field is properly rendered with RoutedItemInterface
+     */
+    public function testAddCustomFieldWithRoutedItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeRoutedItemInterfaceEntity());
+        $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+    }
+
+    /**
+     * Check if an exception is thrown when trying to render a non-existant method with RoutedItemInterface
+     */
+    public function testNonExistantCustomFieldWithRoutedItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeRoutedItemInterfaceEntity());
+        $feed->addField(new Field('fake_custom', 'getFeedDoNotExistsItemCustomMethod'));
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Method "getFeedDoNotExistsItemCustomMethod" should be defined in your entity.'
+        );
+
+        $feed->render('rss');
     }
 }

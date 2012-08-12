@@ -16,9 +16,9 @@ use Eko\FeedBundle\Item\ItemInterface;
 /**
  * Fake
  *
- * A fake entity for tests
+ * A fake entity implementing ItemInterface for tests
  */
-class FakeEntity implements ItemInterface
+class FakeItemInterfaceEntity implements ItemInterface
 {
     /**
      * Returns a fake title

@@ -50,12 +50,16 @@ class ProxyItem implements ItemInterface
      * @param array  $args   Arguments array
      *
      * @return mixed
+     *
+     * @throws \InvalidArgumentException If method is not defined
      */
     public function __call($method, $args)
     {
         if (method_exists($this->item, $method)) {
             return call_user_func_array(array($this->item, $method), $args);
         }
+
+        throw new \InvalidArgumentException(sprintf('Method "%s" should be defined in your entity.', $method));
     }
 
     /**
