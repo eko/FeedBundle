@@ -62,6 +62,16 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
     }
 
     /**
+     * Returns a fake anchor
+     *
+     * @return string
+     */
+    public function getFeedItemUrlAnchor()
+    {
+        return 'fake-anchor';
+    }
+
+    /**
      * Returns a fake publication date
      *
      * @return \DateTime

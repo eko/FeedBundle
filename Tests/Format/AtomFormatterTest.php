@@ -140,6 +140,18 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if anchors are really appended to generated url of RouterItemInterface
+     */
+    public function testAnchorIsAppendedToLinkWithRoutedItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeRoutedItemInterfaceEntity());
+
+        $output = $feed->render('atom');
+        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url#fake-anchor"/>', $output);
+    }
+
+    /**
      * Check if an exception is thrown when trying to render a non-existant method with RoutedItemInterface
      */
     public function testNonExistantCustomFieldWithRoutedItemInterface()
@@ -163,6 +175,12 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockRouter()
     {
-        return $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+        $mockRouter = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+
+        $mockRouter->expects($this->any())
+            ->method('generate')
+            ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
+
+        return $mockRouter;
     }
 }
