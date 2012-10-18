@@ -47,6 +47,10 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
 
+        $router->expects($this->any())
+            ->method('generate')
+            ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
+
         $this->manager = new FeedManager($router, $config);
     }
 
@@ -108,6 +112,18 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $output = $feed->render('rss');
 
         $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+    }
+
+    /**
+     * Check if anchors are really appended to generated url of RouterItemInterface
+     */
+    public function testAnchorIsAppendedToLinkWithRoutedItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeRoutedItemInterfaceEntity());
+
+        $output = $feed->render('atom');
+        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url#fake-anchor"/>', $output);
     }
 
     /**

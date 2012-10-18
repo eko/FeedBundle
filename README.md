@@ -114,6 +114,7 @@ In this entity, you'll need to implement the following methods:
  * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
  * `public function getFeedItemRouteName() { … }` : this method returns the name of the route
  * `public function getFeedItemRouteParameters() { … }` : this method must return an array with the parameters that are required for the route
+ * `public function getFeedItemUrlAnchor() { … }` : this method returns the anchor that will be appended to the router-generated url. *Note: can be an empty string.*
 
 
 ### 3) Generate the feed!

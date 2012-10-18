@@ -56,6 +56,15 @@ interface RoutedItemInterface
     public function getFeedItemRouteParameters();
 
     /**
+     * This method returns the anchor to be appended on this item's url
+     *
+     * @abstract
+     *
+     * @return string The anchor, without the "#"
+     */
+    public function getFeedItemUrlAnchor();
+
+    /**
      * This method returns item publication date
      *
      * @abstract
