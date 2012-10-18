@@ -97,7 +97,7 @@ class ProxyItem implements ItemInterface
         if ($anchor !== '') {
             $url .= '#' . $anchor;
         }
-        
+
         return $url;
     }
 
