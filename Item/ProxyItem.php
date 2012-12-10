@@ -11,7 +11,7 @@
 
 namespace Eko\FeedBundle\Item;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Proxy Item
@@ -28,7 +28,7 @@ class ProxyItem implements ItemInterface
     protected $item;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     protected $router;
 
@@ -36,8 +36,9 @@ class ProxyItem implements ItemInterface
      * Constructor
      *
      * @param RoutedItemInterface $item
+     * @param RouterInterface     $router
      */
-    public function __construct(RoutedItemInterface $item, Router $router)
+    public function __construct(RoutedItemInterface $item, RouterInterface $router)
     {
         $this->item = $item;
         $this->router = $router;
