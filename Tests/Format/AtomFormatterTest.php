@@ -169,7 +169,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns Router mock
+     * Returns RouterInterface mock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
