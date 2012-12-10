@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Feed;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * FeedManager
@@ -32,16 +32,17 @@ class FeedManager
     protected $feeds;
 
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router Router service
+     * @var RouterInterface Router service
      */
     protected $router;
 
     /**
      * Constructor
-     *
-     * @param array $config Configuration settings
+     * 
+     * @param RouterInterface $router
+     * @param array           $config Configuration settings
      */
-    public function __construct(Router $router, array $config)
+    public function __construct(RouterInterface $router, array $config)
     {
         $this->config = $config;
         $this->router = $router;

@@ -16,7 +16,7 @@ use Eko\FeedBundle\Item\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Item\Field;
 use Eko\FeedBundle\Item\ItemInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Feed
@@ -28,7 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 class Feed
 {
     /**
-     * @var Router Router service
+     * @var RouterInterface Router service
      */
     protected $router;
 
@@ -58,9 +58,9 @@ class Feed
     /**
      * Set the router service
      *
-     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     * @param RouterInterface $router
      */
-    public function setRouter(Router $router)
+    public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
     }
