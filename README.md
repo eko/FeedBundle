@@ -10,6 +10,7 @@ Features
  * Items based on your entities
  * Easy to configurate & use
  * Available on packagist (to install via composer)
+ * Dump your feeds into a file via a Symfony console command
 
 Installation
 -----------------------------------
@@ -154,6 +155,8 @@ Please note that for better performances you can add a cache control.
 Go further with your feeds
 --------------------------
 
+### Add some custom fields
+
 You can add custom fields for your entities nodes by adding them this way:
 
 ```php
@@ -173,6 +176,57 @@ $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add($article);
 ```
 
+### Dump your feeds by using the Symfony console command
+
+You can dump your feeds into a .xml file if you don't want to generate it on the fly by using the `php app/console eko:feed:dump` Symfony command.
+
+Here are the options :
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>--name</td>
+    <td>Feed name defined in eko_feed configuration</td>
+  </tr>
+  <tr>
+    <td>--entity</td>
+    <td>Entity to use to generate the feed</td>
+  </tr>
+  <tr>
+    <td>--filename</td>
+    <td>Defines feed filename</td>
+  </tr>
+  <tr>
+    <td>--orderBy</td>
+    <td>Order field to sort by using findBy() method</td>
+  </tr>
+  <tr>
+    <td>--direction</td>
+    <td>Direction to give to sort field with findBy() method</td>
+  </tr>
+  <tr>
+    <td>--format</td>
+    <td>Formatter to use to generate, "rss" is default</td>
+  </tr>
+  <tr>
+    <td>--limit</td>
+    <td>Defines a limit of entity items to retrieve</td>
+  </tr>
+</table>
+
+An example with all the options:
+
+`php app/console eko:feed:dump --name=article --entity=AcmeDemoBundle:Fake --filename=test.xml --format=atom --orderBy=id --direction=DESC`
+
+This will result:
+```
+Start dumping "article" feed from "AcmeDemoBundle:Fake" entity...
+done!
+Feed has been dumped and located in "/Users/vincent/dev/perso/symfony/web/test.xml"
+```
+
 For any question, do not hesitate to contact me and/or participate.
 
 Contributors
@@ -182,3 +236,4 @@ Contributors
  * Rob Masters <mastahuk@gmail.com>
 
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
+
