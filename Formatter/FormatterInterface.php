@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Formatter;
 
-use Eko\FeedBundle\Item\ItemInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
  * Formatter interface

@@ -11,11 +11,11 @@
 namespace Eko\FeedBundle\Feed;
 
 use Eko\FeedBundle\Formatter\AtomFormatter;
-use Eko\FeedBundle\Item\ProxyItem;
-use Eko\FeedBundle\Item\RoutedItemInterface;
+use Eko\FeedBundle\Item\Writer\ProxyItem;
+use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Item\Field;
-use Eko\FeedBundle\Item\ItemInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**

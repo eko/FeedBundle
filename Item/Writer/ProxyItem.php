@@ -9,9 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Item;
+namespace Eko\FeedBundle\Item\Writer;
 
 use Symfony\Component\Routing\RouterInterface;
+
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
  * Proxy Item

@@ -12,7 +12,7 @@ namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Item\Field;
-use Eko\FeedBundle\Item\ItemInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
  * RSS formatter

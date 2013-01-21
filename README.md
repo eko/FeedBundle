@@ -65,16 +65,16 @@ eko_feed:
 
 ### 2) Implement the ItemInterface
 
-Each entities you will use to generate an RSS feed needs to implement `Eko\FeedBundle\Item\ItemInterface` or `Eko\FeedBundle\Item\RoutedItemInterface` as demonstrated in this example for an `Article` entity of a blog:
+Each entities you will use to generate an RSS feed needs to implement `Eko\FeedBundle\Item\Writer\ItemInterface` or `Eko\FeedBundle\Item\Writer\RoutedItemInterface` as demonstrated in this example for an `Article` entity of a blog:
 
-#### Option A: Eko\FeedBundle\Item\ItemInterface
+#### Option A: Eko\FeedBundle\Item\Writer\ItemInterface
 
 ```php
 <?php
 
 namespace Bundle\BlogBundle\Entity;
 
-use Eko\FeedBundle\Item\ItemInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
  * Bundle\BlogBundle\Entity\Article
@@ -90,7 +90,7 @@ In this same entity, just implement those required methods:
  * `public function getFeedItemPubDate() { … }` : this method returns entity item publication date
  * `public function getFeedItemLink() { … }` : this method returns entity item link (URL)
 
-#### Option B: Eko\FeedBundle\Item\RoutedItemInterface
+#### Option B: Eko\FeedBundle\Item\Writer\RoutedItemInterface
 
 Alternatively, if you need to make use of the router service to generate the link for your entity you can use the following interface. You don't need to worry about injecting the router to your entity.
 
@@ -99,7 +99,7 @@ Alternatively, if you need to make use of the router service to generate the lin
 
 namespace Bundle\BlogBundle\Entity;
 
-use Eko\FeedBundle\Item\RoutedItemInterface;
+use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 
 /**
  * Bundle\BlogBundle\Entity\Article

@@ -8,16 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Item;
+namespace Eko\FeedBundle\Item\Writer;
 
 /**
- * Routed Item interface
+ * Item interface
  *
  * This interface contains the methods that you need to implement in your entity
+ * to write your entity data in an XML feed
  *
- * @author Rob Masters <mastahuk@gmail.com>
+ * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-interface RoutedItemInterface
+interface ItemInterface
 {
     /**
      * This method returns feed item title
@@ -38,31 +39,13 @@ interface RoutedItemInterface
     public function getFeedItemDescription();
 
     /**
-     * This method returns the name of the route
+     * This method returns feed item URL link
      *
      * @abstract
      *
      * @return string
      */
-    public function getFeedItemRouteName();
-
-    /**
-     * This method returns the parameters for the route.
-     *
-     * @abstract
-     *
-     * @return array
-     */
-    public function getFeedItemRouteParameters();
-
-    /**
-     * This method returns the anchor to be appended on this item's url
-     *
-     * @abstract
-     *
-     * @return string The anchor, without the "#"
-     */
-    public function getFeedItemUrlAnchor();
+    public function getFeedItemLink();
 
     /**
      * This method returns item publication date

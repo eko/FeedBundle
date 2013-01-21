@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Eko\FeedBundle\Item\RoutedItemInterface;
+use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 
 /**
  * Fake
