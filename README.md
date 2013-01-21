@@ -231,13 +231,25 @@ For any question, do not hesitate to contact me and/or participate.
 
 ### Read an XML feed and populate an entity
 
-You also can populate an entity from an XML feed. This is very easy.
+If you only want to read an XML feed, here is the way:
+
+```php
+<?php
+$reader = $this->get('eko_feed.feed.reader');
+$feed = $reader->load('http://php.net/feed.atom')->get();
+```
+
+`$feed` will be a `\Zend\Feed\Reader\Feed\FeedInterface` that you can manipulate.
+
+--------------------------------------------------------------------------------
+
+You can also populate an entity from an XML feed. This is very easy.
 
 Just load the feed and call the populate method with your entity name which needs to implement `Eko\FeedBundle\Item\Reader\ItemInterface`, take a look on this example:
 
 ```php
 <?php
-$reader = $this->container->get('eko_feed.feed.reader');
+$reader = $this->get('eko_feed.feed.reader');
 $items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity\Name');
 ```
 
