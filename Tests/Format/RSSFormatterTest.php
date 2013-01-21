@@ -12,8 +12,8 @@ namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Item\Field;
-use Eko\FeedBundle\Tests\Entity\FakeItemInterfaceEntity;
-use Eko\FeedBundle\Tests\Entity\FakeRoutedItemInterfaceEntity;
+use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
+use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
 /**
  * RSSFormatterTest

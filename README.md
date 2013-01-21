@@ -229,6 +229,20 @@ Feed has been dumped and located in "/Users/vincent/dev/perso/symfony/web/test.x
 
 For any question, do not hesitate to contact me and/or participate.
 
+### Read an XML feed and populate an entity
+
+You also can populate an entity from an XML feed. This is very easy.
+
+Just load the feed and call the populate method with your entity name which needs to implement `Eko\FeedBundle\Item\Reader\ItemInterface`, take a look on this example:
+
+```php
+<?php
+$reader = $this->container->get('eko_feed.feed.reader');
+$items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity\Name');
+```
+
+In this example, `$items` will be an array that will contains an array with your entities populated with the given feed content.
+
 Contributors
 ------------
 

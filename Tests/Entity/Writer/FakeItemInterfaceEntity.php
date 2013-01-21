@@ -8,17 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Tests\Entity;
+namespace Eko\FeedBundle\Tests\Entity\Writer;
 
 use Doctrine\ORM\Mapping as ORM;
-use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
  * Fake
  *
- * A fake entity implementing RoutedItemInterface for tests
+ * A fake entity implementing ItemInterface for tests
  */
-class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
+class FakeItemInterfaceEntity implements ItemInterface
 {
     /**
      * Returns a fake title
@@ -46,29 +46,9 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
      *
      * @return string
      */
-    public function getFeedItemRouteName()
+    public function getFeedItemLink()
     {
-        return 'fake_route';
-    }
-
-    /**
-     * Returns a fake route parameters array
-     *
-     * @return array
-     */
-    public function getFeedItemRouteParameters()
-    {
-        return array();
-    }
-
-    /**
-     * Returns a fake anchor
-     *
-     * @return string
-     */
-    public function getFeedItemUrlAnchor()
-    {
-        return 'fake-anchor';
+        return 'http://github.com/eko/FeedBundle/article/fake/url';
     }
 
     /**

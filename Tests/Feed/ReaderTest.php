@@ -38,7 +38,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoad()
     {
-        $feed = $this->reader->get(__DIR__ . '/../DataFixtures/Feed.xml');
+        $feed = $this->reader->load(__DIR__ . '/../DataFixtures/Feed.xml')->get();
 
         $this->assertNotNull($feed, 'Returned feed should not be null');
         $this->assertInstanceOf('\Zend\Feed\Reader\Feed\FeedInterface', $feed, 'Should return an AbstractFeed instance');
@@ -47,6 +47,28 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('PHP 5.4.11 and PHP 5.3.21 released!', $entry->getTitle(), 'Should be equal');
             $this->assertEquals('http://php.net/index.php#id2013-01-17-1', $entry->getLink(), 'Should be equal');
             $this->assertInstanceOf('\Zend\Feed\Reader\Collection\Author', $entry->getAuthors(), 'Should be an instance of Author');
+        }
+    }
+
+    /**
+     * Check if feeds can populate an entity
+     */
+    public function testPopulate()
+    {
+        $entityName = 'Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity';
+
+        $reader = $this->reader->load(__DIR__ . '/../DataFixtures/Feed.xml');
+        $items = $reader->populate($entityName);
+
+        $this->assertCount(1, $items, 'Should contain an array with the only feed element');
+
+        foreach ($items as $item) {
+            $this->assertInstanceOf($entityName, $item, 'Should be an instance of populated entity name');
+
+            $this->assertEquals('PHP 5.4.11 and PHP 5.3.21 released!', $item->getTitle(), 'Should be correct title');
+            $this->assertEquals('<div>', substr($item->getDescription(), 0, 5), 'Should be correct description');
+            $this->assertEquals('http://php.net/index.php#id2013-01-17-1', $item->getLink(), 'Should be correct link');
+            $this->assertEquals('2013-01-17 14:54:00', $item->getPublicationDate()->format('Y-m-d H:i:s'), 'Should be the same datetime object');
         }
     }
 }

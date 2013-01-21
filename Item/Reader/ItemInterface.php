@@ -23,28 +23,36 @@ interface ItemInterface
     /**
      * This method sets feed item title
      *
+     * @param string $title
+     *
      * @abstract
      */
-    public function setFeedItemTitle();
+    public function setFeedItemTitle($title);
 
     /**
      * This method sets feed item description (or content)
      *
+     * @param string $description
+     *
      * @abstract
      */
-    public function setFeedItemDescription();
+    public function setFeedItemDescription($description);
 
     /**
      * This method sets feed item URL link
      *
+     * @param string $link
+     *
      * @abstract
      */
-    public function setFeedItemLink();
+    public function setFeedItemLink($link);
 
     /**
      * This method sets item publication date
      *
+     * @param \DateTime $date
+     *
      * @abstract
      */
-    public function setFeedItemPubDate();
+    public function setFeedItemPubDate(\DateTime $date);
 }
