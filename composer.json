@@ -11,12 +11,6 @@
             "email": "vincent.composieux@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.zendframework.com/"
-        }
-    ],
     "require": {
         "php": ">=5.3.2",
         "symfony/framework-bundle": ">=2.0,<2.4-dev",
