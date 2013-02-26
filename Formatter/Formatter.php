@@ -86,6 +86,10 @@ class Formatter
 
         } else {
             if ($format = $field->get('date_format')) {
+                if (!$value instanceof \DateTime) {
+                    throw new \InvalidArgumentException(sprintf('Field "%s" should be a DateTime instance.', $name));
+                }
+
                 $value = $value->format($format);
             }
 
