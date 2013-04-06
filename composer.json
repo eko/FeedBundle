@@ -20,5 +20,10 @@
     "autoload": {
         "psr-0": { "Eko\\FeedBundle": "" }
     },
-    "target-dir": "Eko/FeedBundle"
+    "target-dir": "Eko/FeedBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    }
 }
