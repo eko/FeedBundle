@@ -15,6 +15,7 @@
         "php": ">=5.3.2",
         "symfony/framework-bundle": ">=2.0,<2.4-dev",
         "zendframework/zend-feed": ">=2.0",
+        "zendframework/zend-servicemanager": ">=2.0",
         "zendframework/zend-http": ">=2.0"
     },
     "autoload": {
