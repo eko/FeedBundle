@@ -10,6 +10,7 @@ Features
 
  * Generate XML feeds (RSS & Atom formats)
  * Items based on your entities
+ * Read XML feeds and populate your Symfony entities
  * Easy to configurate & use
  * Available on packagist (to install via composer)
  * Dump your feeds into a file via a Symfony console command
