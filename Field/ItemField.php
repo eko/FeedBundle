@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Item;
+namespace Eko\FeedBundle\Field;
 
 /**
  * Field
@@ -17,7 +17,7 @@ namespace Eko\FeedBundle\Item;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class Field
+class ItemField
 {
     /**
      * @var string $name Field name

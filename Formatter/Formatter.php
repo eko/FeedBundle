@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Item\Field;
+use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -34,9 +34,9 @@ class Formatter
     protected $dom;
 
     /**
-     * @var array $fields Contain Field instances for this formatter
+     * @var array $fields Contain item Field instances for this formatter
      */
-    protected $fields = array();
+    protected $itemFields = array();
 
     /**
      * Construct a formatter with given feed
@@ -45,20 +45,20 @@ class Formatter
      */
     public function __construct(Feed $feed)
     {
-        $this->fields = array_merge($this->fields, $feed->getFields());
+        $this->itemFields = array_merge($this->itemFields, $feed->getItemFields());
 
         $this->feed = $feed;
     }
 
     /**
-     * Format field
+     * Format items field
      *
-     * @param Field         $field A field instance
+     * @param ItemField     $field A item field instance
      * @param ItemInterface $item  An entity instance
      * 
      * @return string
      */
-    protected function format(Field $field, ItemInterface $item)
+    protected function format(ItemField $field, ItemInterface $item)
     {
         $name = $field->getName();
 

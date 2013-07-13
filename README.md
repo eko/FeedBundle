@@ -158,15 +158,26 @@ Please note that for better performances you can add a cache control.
 Go further with your feeds
 --------------------------
 
-### Add some custom fields
+### Add some custom channel fields
 
-You can add custom fields for your entities nodes by adding them this way:
+You can add custom fields to main channel by adding them this way:
 
 ```php
 <?php
 $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add(new FakeEntity());
-$feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+$feed->addChannelField(new ChannelField('custom_name', 'custom_value'));
+```
+
+### Add some custom items fields
+
+You can add custom items fields for your entities nodes by adding them this way:
+
+```php
+<?php
+$feed = $this->get('eko_feed.feed.manager')->get('article');
+$feed->add(new FakeEntity());
+$feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 ```
 
 Of course, `getFeedItemCustom()` method needs to be declared in your entity.

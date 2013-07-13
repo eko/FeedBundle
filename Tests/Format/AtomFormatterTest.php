@@ -11,7 +11,8 @@
 namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
-use Eko\FeedBundle\Item\Field;
+use Eko\FeedBundle\Field\ChannelField;
+use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
@@ -112,13 +113,27 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom field is properly rendered with ItemInterface
+     * Check if a custom channel field is properly rendered
      */
-    public function testAddCustomFieldWithItemInterface()
+    public function testAddCustomChannelField()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
-        $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+        $feed->addChannelField(new ChannelField('fake_channel_custom', 'My fake value'));
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<fake_channel_custom>My fake value</fake_channel_custom>', $output);
+    }
+
+    /**
+     * Check if a custom item field is properly rendered with ItemInterface
+     */
+    public function testAddCustomItemFieldWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 
         $output = $feed->render('atom');
 
@@ -126,13 +141,13 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom field is properly rendered with RoutedItemInterface
+     * Check if a custom item field is properly rendered with RoutedItemInterface
      */
-    public function testAddCustomFieldWithRoutedItemInterface()
+    public function testAddCustomItemFieldWithRoutedItemInterface()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeRoutedItemInterfaceEntity());
-        $feed->addField(new Field('fake_custom', 'getFeedItemCustom'));
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 
         $output = $feed->render('atom');
 
@@ -154,11 +169,11 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * Check if an exception is thrown when trying to render a non-existant method with RoutedItemInterface
      */
-    public function testNonExistantCustomFieldWithRoutedItemInterface()
+    public function testNonExistantCustomItemFieldWithRoutedItemInterface()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeRoutedItemInterfaceEntity());
-        $feed->addField(new Field('fake_custom', 'getFeedDoNotExistsItemCustomMethod'));
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedDoNotExistsItemCustomMethod'));
 
         $this->setExpectedException(
             'InvalidArgumentException',

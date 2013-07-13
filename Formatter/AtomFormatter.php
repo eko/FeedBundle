@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Item\Field;
+use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -30,28 +30,28 @@ class AtomFormatter extends Formatter implements FormatterInterface
      */
     public function __construct(Feed $feed)
     {
-        $this->fields = array(
-            new Field(
+        $this->itemFields = array(
+            new ItemField(
                 'id',
                 'getFeedItemLink',
                 array('cdata' => false)
             ),
-            new Field(
+            new ItemField(
                 'title',
                 'getFeedItemTitle',
                 array('cdata' => true)
             ),
-            new Field(
+            new ItemField(
                 'summary',
                 'getFeedItemDescription',
                 array('cdata' => true)
             ),
-            new Field(
+            new ItemField(
                 'link',
                 'getFeedItemLink',
                 array('attribute' => true, 'attribute_name' => 'href')
             ),
-            new Field(
+            new ItemField(
                 'updated',
                 'getFeedItemPubDate',
                 array('date_format' => \DateTime::ATOM)
@@ -103,6 +103,13 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $root->appendChild($identifier);
         $root->appendChild($author);
 
+        // Add custom channel fields
+        foreach ($this->feed->getChannelFields() as $field) {
+            $child = $this->dom->createElement($field->getName(), $field->getValue());
+            $root->appendChild($child);
+        }
+
+        // Add field items
         $items = $this->feed->getItems();
 
         foreach ($items as $item) {
@@ -121,7 +128,7 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $node = $this->dom->createElement('entry');
         $node = $root->appendChild($node);
 
-        foreach ($this->fields as $field) {
+        foreach ($this->itemFields as $field) {
             $element = $this->format($field, $item);
             $node->appendChild($element);
         }

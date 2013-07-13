@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Item\Field;
+use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -30,22 +30,22 @@ class RssFormatter extends Formatter implements FormatterInterface
      */
     public function __construct(Feed $feed)
     {
-        $this->fields = array(
-            new Field(
+        $this->itemFields = array(
+            new ItemField(
                 'title',
                 'getFeedItemTitle',
                 array('cdata' => true)
             ),
-            new Field(
+            new ItemField(
                 'description',
                 'getFeedItemDescription',
                 array('cdata' => true)
             ),
-            new Field(
+            new ItemField(
                 'link',
                 'getFeedItemLink'
             ),
-            new Field(
+            new ItemField(
                 'pubDate',
                 'getFeedItemPubDate',
                 array('date_format' => \DateTime::RSS)
@@ -85,6 +85,13 @@ class RssFormatter extends Formatter implements FormatterInterface
 
         $channel->appendChild($lastBuildDate);
 
+        // Add custom channel fields
+        foreach ($this->feed->getChannelFields() as $field) {
+            $child = $this->dom->createElement($field->getName(), $field->getValue());
+            $channel->appendChild($child);
+        }
+
+        // Add feed items
         $items = $this->feed->getItems();
 
         foreach ($items as $item) {
@@ -103,7 +110,7 @@ class RssFormatter extends Formatter implements FormatterInterface
         $node = $this->dom->createElement('item');
         $node = $channel->appendChild($node);
 
-        foreach ($this->fields as $field) {
+        foreach ($this->itemFields as $field) {
             $element = $this->format($field, $item);
             $node->appendChild($element);
         }

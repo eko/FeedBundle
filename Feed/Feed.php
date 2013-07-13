@@ -14,7 +14,8 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
-use Eko\FeedBundle\Item\Field;
+use Eko\FeedBundle\Field\ChannelField;
+use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -43,9 +44,14 @@ class Feed
     protected $items = array();
 
     /**
-     * @var array $fields Contain Field instances for this formatter
+     * @var array $fields Contains channel Field instances for this feed
      */
-    protected $fields = array();
+    protected $channelFields = array();
+
+    /**
+     * @var array $fields Contains items Field instances for this feed
+     */
+    protected $itemFields = array();
 
     /**
      * @param array $config Configuration settings
@@ -158,27 +164,51 @@ class Feed
     }
 
     /**
-     * Add a new field to render
+     * Add a new channel field to render
      *
-     * @param Field $field A custom Field instance
+     * @param ChannelField $field A custom Field instance
      *
      * @return \Eko\FeedBundle\Feed\Feed
      */
-    public function addField(Field $field)
+    public function addChannelField(ChannelField $field)
     {
-        $this->fields[] = $field;
+        $this->channelFields[] = $field;
 
         return $this;
     }
 
     /**
-     * Returns custom fields
+     * Returns custom channel fields
      *
      * @return array
      */
-    public function getFields()
+    public function getChannelFields()
     {
-        return $this->fields;
+        return $this->channelFields;
+    }
+
+    /**
+     * Add a new item field to render
+     *
+     * @param ItemField $field A custom Field instance
+     *
+     * @return \Eko\FeedBundle\Feed\Feed
+     */
+    public function addItemField(ItemField $field)
+    {
+        $this->itemFields[] = $field;
+
+        return $this;
+    }
+
+    /**
+     * Returns custom item fields
+     *
+     * @return array
+     */
+    public function getItemFields()
+    {
+        return $this->itemFields;
     }
 
     /**
