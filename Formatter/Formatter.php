@@ -45,13 +45,7 @@ class Formatter
      */
     public function __construct(Feed $feed)
     {
-        $fields = $feed->getFields();
-
-        if (!empty($fields)) {
-            foreach ($fields as $field) {
-                $this->fields[] = $field;
-            }
-        }
+        $this->fields = array_merge($this->fields, $feed->getFields());
 
         $this->feed = $feed;
     }
