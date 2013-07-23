@@ -1,6 +1,8 @@
 FeedBundle - A bundle to build RSS/Atom feeds from entities
 =========================================================
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5620e128-834b-462c-b6fc-395609c57999/big.png)](https://insight.sensiolabs.com/projects/5620e128-834b-462c-b6fc-395609c57999)
+
 [![Build Status](https://secure.travis-ci.org/eko/FeedBundle.png?branch=master)](http://travis-ci.org/eko/FeedBundle)
 [![Latest Stable Version](https://poser.pugx.org/eko/feedbundle/version.png)](https://packagist.org/packages/eko/feedbundle)
 [![Total Downloads](https://poser.pugx.org/eko/feedbundle/d/total.png)](https://packagist.org/packages/eko/feedbundle)
