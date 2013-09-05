@@ -182,6 +182,17 @@ $feed->add(new FakeEntity());
 $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 ```
 
+You can also add group item fields using this way, if your method returns an array:
+
+```php
+<?php
+$feed = $this->get('eko_feed.feed.manager')->get('article');
+$feed->add(new FakeEntity());
+$feed->addItemField(
+    new GroupItemField('categories', new ItemField('category', 'getFeedCategoriesCustom'))
+);
+```
+
 Of course, `getFeedItemCustom()` method needs to be declared in your entity.
 
 Moreover, entities objects can be added separatly with add method:

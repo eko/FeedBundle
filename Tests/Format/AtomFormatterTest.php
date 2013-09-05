@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Field\ChannelField;
+use Eko\FeedBundle\Field\GroupItemField;
 use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
@@ -138,6 +139,27 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $output = $feed->render('atom');
 
         $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+    }
+
+    /**
+     * Check if a custom group item field is properly rendered with ItemInterface
+     */
+    public function testAddCustomGroupItemFieldWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new GroupItemField(
+            'categories',
+            new ItemField('category', 'getFeedCategoriesCustom'))
+        );
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<categories>', $output);
+        $this->assertContains('<category>category 1</category>', $output);
+        $this->assertContains('<category>category 2</category>', $output);
+        $this->assertContains('<category>category 3</category>', $output);
+        $this->assertContains('</categories>', $output);
     }
 
     /**

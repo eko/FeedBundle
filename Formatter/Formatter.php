@@ -11,7 +11,8 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Field\ItemField;
+use Eko\FeedBundle\Field\GroupItemField;
+use Eko\FeedBundle\Field\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -53,44 +54,66 @@ class Formatter
     /**
      * Format items field
      *
-     * @param ItemField     $field A item field instance
-     * @param ItemInterface $item  An entity instance
+     * @param ItemFieldInterface $field A item field instance
+     * @param ItemInterface      $item  An entity instance
      * 
      * @return string
      */
-    protected function format(ItemField $field, ItemInterface $item)
+    protected function format(ItemFieldInterface $field, ItemInterface $item)
     {
         $name = $field->getName();
 
-        $method = $field->getMethod();
-        $value = $item->{$method}();
-
-        if ($field->get('cdata')) {
-            $value = $this->dom->createCDATASection($value);
-
+        if ($field instanceof GroupItemField) {
             $element = $this->dom->createElement($name);
-            $element->appendChild($value);
-        } else if ($field->get('attribute')) {
-            if (!$field->get('attribute_name')) {
-                throw new \InvalidArgumentException("'attribute' parameter required an 'attribute_name' parameter.");
+            $itemElements = $this->format($field->getItemField(), $item);
+
+            foreach ($itemElements as $itemElement) {
+                $element->appendChild($itemElement);
             }
 
-            $element = $this->dom->createElement($name);
-            $element->setAttribute($field->get('attribute_name'), $item->getFeedItemLink());
-
-        } else {
-            if ($format = $field->get('date_format')) {
-                if (!$value instanceof \DateTime) {
-                    throw new \InvalidArgumentException(sprintf('Field "%s" should be a DateTime instance.', $name));
-                }
-
-                $value = $value->format($format);
-            }
-
-            $element = $this->dom->createElement($name, $value);
+            return $element;
         }
 
-        return $element;
+        $elements = array();
+
+        $method = $field->getMethod();
+        $values = $item->{$method}();
+
+        if (!is_array($values)) {
+            $values = array($values);
+        }
+
+        foreach ($values as $value) {
+            if ($field->get('cdata')) {
+                $value = $this->dom->createCDATASection($value);
+
+                $element = $this->dom->createElement($name);
+                $element->appendChild($value);
+
+                $elements[] = $element;
+            } else if ($field->get('attribute')) {
+                if (!$field->get('attribute_name')) {
+                    throw new \InvalidArgumentException("'attribute' parameter required an 'attribute_name' parameter.");
+                }
+
+                $element = $this->dom->createElement($name);
+                $element->setAttribute($field->get('attribute_name'), $item->getFeedItemLink());
+
+                $elements[] = $element;
+            } else {
+                if ($format = $field->get('date_format')) {
+                    if (!$value instanceof \DateTime) {
+                        throw new \InvalidArgumentException(sprintf('Field "%s" should be a DateTime instance.', $name));
+                    }
+
+                    $value = $value->format($format);
+                }
+
+                $elements[] = $this->dom->createElement($name, $value);
+            }
+        }
+
+        return 1 == count($elements) ? current($elements) : $elements;
     }
 
     /**

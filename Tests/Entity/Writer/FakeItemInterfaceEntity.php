@@ -70,4 +70,18 @@ class FakeItemInterfaceEntity implements ItemInterface
     {
         return 'My custom field';
     }
+
+    /**
+     * Returns a fake custom categories array
+     *
+     * @return array
+     */
+    public function getFeedCategoriesCustom()
+    {
+        return array(
+            'category 1',
+            'category 2',
+            'category 3'
+        );
+    }
 }

@@ -15,8 +15,9 @@ use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Field\ChannelField;
-use Eko\FeedBundle\Field\ItemField;
+use Eko\FeedBundle\Field\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
+
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -190,11 +191,11 @@ class Feed
     /**
      * Add a new item field to render
      *
-     * @param ItemField $field A custom Field instance
+     * @param ItemFieldInterface $field A custom Field instance
      *
      * @return \Eko\FeedBundle\Feed\Feed
      */
-    public function addItemField(ItemField $field)
+    public function addItemField(ItemFieldInterface $field)
     {
         $this->itemFields[] = $field;
 

@@ -10,14 +10,16 @@
 
 namespace Eko\FeedBundle\Field;
 
+use Eko\FeedBundle\Field\ItemFieldInterface;
+
 /**
- * Field
+ * ItemField
  *
  * This is the items field class
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class ItemField
+class ItemField implements ItemFieldInterface
 {
     /**
      * @var string $name Field name
