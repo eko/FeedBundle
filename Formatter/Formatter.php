@@ -11,7 +11,6 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Field\GroupItemField;
 use Eko\FeedBundle\Field\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
