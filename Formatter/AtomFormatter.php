@@ -31,31 +31,11 @@ class AtomFormatter extends Formatter implements FormatterInterface
     public function __construct(Feed $feed)
     {
         $this->itemFields = array(
-            new ItemField(
-                'id',
-                'getFeedItemLink',
-                array('cdata' => false)
-            ),
-            new ItemField(
-                'title',
-                'getFeedItemTitle',
-                array('cdata' => true)
-            ),
-            new ItemField(
-                'summary',
-                'getFeedItemDescription',
-                array('cdata' => true)
-            ),
-            new ItemField(
-                'link',
-                'getFeedItemLink',
-                array('attribute' => true, 'attribute_name' => 'href')
-            ),
-            new ItemField(
-                'updated',
-                'getFeedItemPubDate',
-                array('date_format' => \DateTime::ATOM)
-            ),
+            new ItemField('id', 'getFeedItemLink', array('cdata' => false)),
+            new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
+            new ItemField('summary', 'getFeedItemDescription', array('cdata' => true)),
+            new ItemField('link', 'getFeedItemLink', array('attribute' => true, 'attribute_name' => 'href')),
+            new ItemField('updated', 'getFeedItemPubDate',array('date_format' => \DateTime::ATOM)),
         );
 
         $author = $feed->get('author');

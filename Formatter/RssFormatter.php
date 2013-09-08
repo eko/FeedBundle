@@ -31,25 +31,10 @@ class RssFormatter extends Formatter implements FormatterInterface
     public function __construct(Feed $feed)
     {
         $this->itemFields = array(
-            new ItemField(
-                'title',
-                'getFeedItemTitle',
-                array('cdata' => true)
-            ),
-            new ItemField(
-                'description',
-                'getFeedItemDescription',
-                array('cdata' => true)
-            ),
-            new ItemField(
-                'link',
-                'getFeedItemLink'
-            ),
-            new ItemField(
-                'pubDate',
-                'getFeedItemPubDate',
-                array('date_format' => \DateTime::RSS)
-            ),
+            new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
+            new ItemField('description', 'getFeedItemDescription', array('cdata' => true)),
+            new ItemField('link', 'getFeedItemLink'),
+            new ItemField('pubDate', 'getFeedItemPubDate', array('date_format' => \DateTime::RSS)),
         );
 
         parent::__construct($feed);

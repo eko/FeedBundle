@@ -52,6 +52,18 @@ class Formatter
     }
 
     /**
+     * This method render the given feed transforming the DOMDocument to XML
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $this->dom->formatOutput = true;
+
+        return $this->dom->saveXml();
+    }
+
+    /**
      * Format items field
      *
      * @param ItemFieldInterface $field A item field instance
@@ -61,19 +73,51 @@ class Formatter
      */
     protected function format(ItemFieldInterface $field, ItemInterface $item)
     {
+        $class = get_class($field);
+
+        switch ($class) {
+            case 'Eko\FeedBundle\Field\GroupItemField':
+                return $this->formatGroupItemField($field, $item);
+                break;
+
+            case 'Eko\FeedBundle\Field\ItemField':
+                return $this->formatItemField($field, $item);
+                break;
+        }
+    }
+
+    /**
+     * Format a group item field
+     *
+     * @param ItemFieldInterface $field An item field instance
+     * @param ItemInterface      $item  An entity instance
+     *
+     * @return \DOMElement
+     */
+    protected function formatGroupItemField(ItemFieldInterface $field, ItemInterface $item)
+    {
         $name = $field->getName();
 
-        if ($field instanceof GroupItemField) {
-            $element = $this->dom->createElement($name);
-            $itemElements = $this->format($field->getItemField(), $item);
+        $element = $this->dom->createElement($name);
+        $itemElements = $this->formatItemField($field->getItemField(), $item);
 
-            foreach ($itemElements as $itemElement) {
-                $element->appendChild($itemElement);
-            }
-
-            return $element;
+        foreach ($itemElements as $itemElement) {
+            $element->appendChild($itemElement);
         }
 
+        return $element;
+    }
+
+    /**
+     * Format an item field
+     *
+     * @param ItemFieldInterface $field An item field instance
+     * @param ItemInterface      $item  An entity instance
+     *
+     * @return array|\DOMElement
+     */
+    protected function formatItemField(ItemFieldInterface $field, ItemInterface $item)
+    {
         $elements = array();
 
         $method = $field->getMethod();
@@ -84,47 +128,53 @@ class Formatter
         }
 
         foreach ($values as $value) {
-            if ($field->get('cdata')) {
-                $value = $this->dom->createCDATASection($value);
-
-                $element = $this->dom->createElement($name);
-                $element->appendChild($value);
-
-                $elements[] = $element;
-            } else if ($field->get('attribute')) {
-                if (!$field->get('attribute_name')) {
-                    throw new \InvalidArgumentException("'attribute' parameter required an 'attribute_name' parameter.");
-                }
-
-                $element = $this->dom->createElement($name);
-                $element->setAttribute($field->get('attribute_name'), $item->getFeedItemLink());
-
-                $elements[] = $element;
-            } else {
-                if ($format = $field->get('date_format')) {
-                    if (!$value instanceof \DateTime) {
-                        throw new \InvalidArgumentException(sprintf('Field "%s" should be a DateTime instance.', $name));
-                    }
-
-                    $value = $value->format($format);
-                }
-
-                $elements[] = $this->dom->createElement($name, $value);
-            }
+            $elements[] = $this->formatWithOptions($field, $item, $value);
         }
 
         return 1 == count($elements) ? current($elements) : $elements;
     }
 
     /**
-     * This method render the given feed transforming the DOMDocument to XML
+     * Format an item field
      *
-     * @return string
+     * @param ItemFieldInterface $field An item field instance
+     * @param ItemInterface      $item  An entity instance
+     * @param string             $value A field value
+     *
+     * @return array|\DOMElement
+     *
+     * @throws \InvalidArgumentException
      */
-    public function render()
+    protected function formatWithOptions(ItemFieldInterface $field, ItemInterface $item, $value)
     {
-        $this->dom->formatOutput = true;
+        $element = null;
 
-        return $this->dom->saveXml();
+        $name = $field->getName();
+
+        if ($field->get('cdata')) {
+            $value = $this->dom->createCDATASection($value);
+
+            $element = $this->dom->createElement($name);
+            $element->appendChild($value);
+        } else if ($field->get('attribute')) {
+            if (!$field->get('attribute_name')) {
+                throw new \InvalidArgumentException("'attribute' parameter required an 'attribute_name' parameter.");
+            }
+
+            $element = $this->dom->createElement($name);
+            $element->setAttribute($field->get('attribute_name'), $item->getFeedItemLink());
+        } else {
+            if ($format = $field->get('date_format')) {
+                if (!$value instanceof \DateTime) {
+                    throw new \InvalidArgumentException(sprintf('Field "%s" should be a DateTime instance.', $name));
+                }
+
+                $value = $value->format($format);
+            }
+
+            $element = $this->dom->createElement($name, $value);
+        }
+
+        return $element;
     }
 }
