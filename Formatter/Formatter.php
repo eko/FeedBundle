@@ -141,7 +141,7 @@ class Formatter
      * @param ItemInterface      $item  An entity instance
      * @param string             $value A field value
      *
-     * @return array|\DOMElement
+     * @return \DOMElement
      *
      * @throws \InvalidArgumentException
      */
