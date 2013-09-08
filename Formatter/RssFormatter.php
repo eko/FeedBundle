@@ -43,7 +43,7 @@ class RssFormatter extends Formatter implements FormatterInterface
     }
 
     /**
-     * Initialize XML DOMDocument nodes and call addItem on all items
+     * {@inheritdoc}
      */
     public function initialize()
     {
@@ -85,10 +85,7 @@ class RssFormatter extends Formatter implements FormatterInterface
     }
 
     /**
-     * Add an entity item to the feed
-     *
-     * @param \DOMElement   $channel The channel DOM element
-     * @param ItemInterface $item    An entity object
+     * {@inheritdoc}
      */
     public function addItem(\DOMElement $channel, ItemInterface $item)
     {
@@ -99,5 +96,13 @@ class RssFormatter extends Formatter implements FormatterInterface
             $element = $this->format($field, $item);
             $node->appendChild($element);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'rss';
     }
 }

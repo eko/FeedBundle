@@ -35,4 +35,11 @@ interface FormatterInterface
      * @param ItemInterface $item    An entity object
      */
     public function addItem(\DOMElement $channel, ItemInterface $item);
+
+    /**
+     * Returns formatter name
+     *
+     * @return string
+     */
+    public function getName();
 }

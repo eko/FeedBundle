@@ -14,6 +14,7 @@ use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Field\ChannelField;
 use Eko\FeedBundle\Field\GroupItemField;
 use Eko\FeedBundle\Field\ItemField;
+use Eko\FeedBundle\Field\MediaItemField;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
@@ -139,6 +140,40 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $output = $feed->render('atom');
 
         $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+    }
+
+    /**
+     * Check if a custom media item field is properly rendered with ItemInterface
+     */
+    public function testAddCustomMediaItemFieldWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new MediaItemField('getFeedMediaItem'));
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+    }
+
+    /**
+     * Check if a custom group media items field is properly rendered with ItemInterface
+     */
+    public function testAddCustomGroupMediaItemsFieldsWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new GroupItemField(
+            'images',
+            new MediaItemField('getFeedMediaMultipleItems'))
+        );
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<images>', $output);
+        $this->assertContains('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+        $this->assertContains('<link rel="enclosure" href="http://website.com/image2.png" type="image/png" length="600"/>', $output);
+        $this->assertContains('</images>', $output);
     }
 
     /**

@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\ItemFieldInterface;
+use Eko\FeedBundle\Field\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -79,6 +80,10 @@ class Formatter
                 return $this->formatGroupItemField($field, $item);
                 break;
 
+            case 'Eko\FeedBundle\Field\MediaItemField':
+                return $this->formatMediaItemField($field, $item);
+                break;
+
             case 'Eko\FeedBundle\Field\ItemField':
                 return $this->formatItemField($field, $item);
                 break;
@@ -96,15 +101,75 @@ class Formatter
     protected function formatGroupItemField(ItemFieldInterface $field, ItemInterface $item)
     {
         $name = $field->getName();
-
         $element = $this->dom->createElement($name);
-        $itemElements = $this->formatItemField($field->getItemField(), $item);
+
+        $itemField = $field->getItemField();
+        $class = get_class($itemField);
+
+        switch ($class) {
+            case 'Eko\FeedBundle\Field\MediaItemField':
+                $itemElements = $this->formatMediaItemField($field->getItemField(), $item);
+                break;
+
+            case 'Eko\FeedBundle\Field\ItemField':
+                $itemElements = $this->formatItemField($field->getItemField(), $item);
+                break;
+        }
 
         foreach ($itemElements as $itemElement) {
             $element->appendChild($itemElement);
         }
 
         return $element;
+    }
+
+    /**
+     * Format a media item field
+     *
+     * @param MediaItemField $field A media item field instance
+     * @param ItemInterface  $item  An entity instance
+     *
+     * @return array|\DOMElement
+     */
+    protected function formatMediaItemField(MediaItemField $field, ItemInterface $item)
+    {
+        $elements = array();
+
+        $method = $field->getMethod();
+        $values = $item->{$method}();
+
+        if (!is_array($values) || (is_array($values) && isset($values['value']))) {
+            $values = array($values);
+        }
+
+        foreach ($values as $value) {
+            if (!isset($value['type']) || !isset($value['length']) || !isset($value['value'])) {
+                throw new \InvalidArgumentException('Item media method must returns an array with following keys: type, length & value.');
+            }
+
+            $elementName = $field->getName();
+            $elementName = $elementName[$this->getName()];
+
+            $element = $this->dom->createElement($elementName);
+
+            switch ($this->getName()) {
+                case 'rss':
+                    $element->setAttribute('url', $value['value']);
+                    break;
+
+                case 'atom':
+                    $element->setAttribute('rel', 'enclosure');
+                    $element->setAttribute('href', $value['value']);
+                    break;
+            }
+
+            $element->setAttribute('type', $value['type']);
+            $element->setAttribute('length', $value['length']);
+
+            $elements[] = $element;
+        }
+
+        return 1 == count($elements) ? current($elements) : $elements;
     }
 
     /**

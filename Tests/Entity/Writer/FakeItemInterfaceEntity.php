@@ -72,6 +72,41 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
+     * Returns a fake custom media field
+     *
+     * @return string
+     */
+    public function getFeedMediaItem()
+    {
+        return array(
+            'type'   => 'image/jpeg',
+            'length' => 500,
+            'value'  => 'http://website.com/image.jpg'
+        );
+    }
+
+    /**
+     * Returns a fake custom multiple media fields
+     *
+     * @return string
+     */
+    public function getFeedMediaMultipleItems()
+    {
+        return array(
+            array(
+                'type'   => 'image/jpeg',
+                'length' => 500,
+                'value'  => 'http://website.com/image.jpg'
+            ),
+            array(
+                'type'   => 'image/png',
+                'length' => 600,
+                'value'  => 'http://website.com/image2.png'
+            )
+        );
+    }
+
+    /**
      * Returns a fake custom categories array
      *
      * @return array

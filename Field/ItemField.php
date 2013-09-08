@@ -39,9 +39,9 @@ class ItemField implements ItemFieldInterface
     /**
      * Constructor
      *
-     * @param string $name    A field name
-     * @param string $method  An item method name
-     * @param array  $options An options array
+     * @param string|array $name    A field name
+     * @param string       $method  An item method name
+     * @param array        $options An options array
      */
     public function __construct($name, $method, $options = array())
     {
@@ -56,7 +56,7 @@ class ItemField implements ItemFieldInterface
     /**
      * Returns field name
      *
-     * @return string
+     * @return string|array
      */
     public function getName()
     {

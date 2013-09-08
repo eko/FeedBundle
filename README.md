@@ -12,6 +12,8 @@ Features
 
  * Generate XML feeds (RSS & Atom formats)
  * Items based on your entities
+ * Add groups of items
+ * Add enclosure media tags
  * Read XML feeds and populate your Symfony entities
  * Easy to configurate & use
  * Available on packagist (to install via composer)
@@ -157,6 +159,14 @@ class BlogController extends Controller
 
 Please note that for better performances you can add a cache control.
 
+Moreover, entities objects can be added separatly with add method:
+
+```php
+<?php
+$feed = $this->get('eko_feed.feed.manager')->get('article');
+$feed->add($article);
+```
+
 Go further with your feeds
 --------------------------
 
@@ -173,6 +183,8 @@ $feed->addChannelField(new ChannelField('custom_name', 'custom_value'));
 
 ### Add some custom items fields
 
+##### Add custom item fields
+
 You can add custom items fields for your entities nodes by adding them this way:
 
 ```php
@@ -181,6 +193,10 @@ $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add(new FakeEntity());
 $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 ```
+
+Of course, `getFeedItemCustom()` method needs to be declared in your entity.
+
+##### Add a group of custom item fields
 
 You can also add group item fields using this way, if your method returns an array:
 
@@ -193,15 +209,36 @@ $feed->addItemField(
 );
 ```
 
-Of course, `getFeedItemCustom()` method needs to be declared in your entity.
+##### Add custom media item fields
 
-Moreover, entities objects can be added separatly with add method:
+Media enclosure can be added using the `MediaItemField` field type as below:
 
 ```php
 <?php
 $feed = $this->get('eko_feed.feed.manager')->get('article');
-$feed->add($article);
+$feed->add(new FakeEntity());
+$feed->addItemField(new MediaItemField('getFeedMediaItem'));
 ```
+
+The `getFeedMediaItem()` method must return an array with the following keys: type, length & value:
+
+```php
+/**
+ * Returns a custom media field
+ *
+ * @return string
+ */
+public function getFeedMediaItem()
+{
+    return array(
+        'type'   => 'image/jpeg',
+        'length' => 500,
+        'value'  => 'http://website.com/image.jpg'
+    );
+}
+```
+
+This media items can also be grouped using `GroupItemField`.
 
 ### Dump your feeds by using the Symfony console command
 
