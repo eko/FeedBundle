@@ -22,12 +22,11 @@ Features
 Installation
 -----------------------------------
 
-Add this to deps
+Add the package to your composer.json file
 ```
-[EkoFeedBundle]
-    git=https://github.com/eko/FeedBundle.git
-    target=/bundles/Eko/FeedBundle
+"eko/feedbundle": "dev-master",
 ```
+
 Add this to app/AppKernel.php
 ```php
 <?php
