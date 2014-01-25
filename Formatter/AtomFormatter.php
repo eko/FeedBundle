@@ -93,6 +93,10 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $items = $this->feed->getItems();
 
         foreach ($items as $item) {
+            if (null === $item) {
+                continue;
+            }
+
             $this->addItem($root, $item);
         }
     }
@@ -107,6 +111,11 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
         foreach ($this->itemFields as $field) {
             $element = $this->format($field, $item);
+
+            if (null === $element) {
+                continue;
+            }
+
             $node->appendChild($element);
         }
     }

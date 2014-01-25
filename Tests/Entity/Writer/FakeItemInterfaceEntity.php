@@ -20,6 +20,8 @@ use Eko\FeedBundle\Item\Writer\ItemInterface;
  */
 class FakeItemInterfaceEntity implements ItemInterface
 {
+    protected $medias;
+
     /**
      * Returns a fake title
      *
@@ -72,17 +74,23 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
+     * Sets feed media items
+     *
+     * @param array $medias
+     */
+    public function setFeedMediaItem(array $medias)
+    {
+        $this->medias = $medias;
+    }
+
+    /**
      * Returns a fake custom media field
      *
      * @return string
      */
     public function getFeedMediaItem()
     {
-        return array(
-            'type'   => 'image/jpeg',
-            'length' => 500,
-            'value'  => 'http://website.com/image.jpg'
-        );
+        return $this->medias;
     }
 
     /**

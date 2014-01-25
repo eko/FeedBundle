@@ -129,7 +129,9 @@ class Formatter
      * @param MediaItemField $field A media item field instance
      * @param ItemInterface  $item  An entity instance
      *
-     * @return array|\DOMElement
+     * @return array|null|\DOMElement
+     *
+     * @throws \InvalidArgumentException if media array format waiting to be returned is not well-formatted
      */
     protected function formatMediaItemField(MediaItemField $field, ItemInterface $item)
     {
@@ -137,6 +139,10 @@ class Formatter
 
         $method = $field->getMethod();
         $values = $item->{$method}();
+
+        if (null === $values) {
+            return;
+        }
 
         if (!is_array($values) || (is_array($values) && isset($values['value']))) {
             $values = array($values);
@@ -186,6 +192,10 @@ class Formatter
 
         $method = $field->getMethod();
         $values = $item->{$method}();
+
+        if (null === $values) {
+            return;
+        }
 
         if (!is_array($values)) {
             $values = array($values);

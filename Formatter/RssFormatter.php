@@ -94,6 +94,11 @@ class RssFormatter extends Formatter implements FormatterInterface
 
         foreach ($this->itemFields as $field) {
             $element = $this->format($field, $item);
+
+            if (null === $element) {
+                continue;
+            }
+
             $node->appendChild($element);
         }
     }

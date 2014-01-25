@@ -122,8 +122,18 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddCustomMediaItemFieldWithItemInterface()
     {
+        $fakeEntityWithMedias = new FakeItemInterfaceEntity();
+        $fakeEntityWithMedias->setFeedMediaItem(array(
+            'type'   => 'image/jpeg',
+            'length' => 500,
+            'value'  => 'http://website.com/image.jpg'
+        ));
+
+        $fakeEntityNoMedias = new FakeItemInterfaceEntity();
+
         $feed = $this->manager->get('article');
-        $feed->add(new FakeItemInterfaceEntity());
+        $feed->add($fakeEntityWithMedias);
+        $feed->add($fakeEntityNoMedias);
         $feed->addItemField(new MediaItemField('getFeedMediaItem'));
 
         $output = $feed->render('rss');
