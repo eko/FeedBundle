@@ -103,24 +103,27 @@ class Formatter
         $name = $field->getName();
         $element = $this->dom->createElement($name);
 
-        $itemField = $field->getItemField();
-        $class = get_class($itemField);
+        $itemFields = $field->getItemFields();
 
-        switch ($class) {
-            case 'Eko\FeedBundle\Field\MediaItemField':
-                $itemElements = $this->formatMediaItemField($field->getItemField(), $item);
-                break;
+        foreach ($itemFields as $itemField) {
+            $class = get_class($itemField);
 
-            case 'Eko\FeedBundle\Field\ItemField':
-                $itemElements = $this->formatItemField($field->getItemField(), $item);
-                break;
+            switch ($class) {
+                case 'Eko\FeedBundle\Field\MediaItemField':
+                    $itemElements = $this->formatMediaItemField($itemField, $item);
+                    break;
+
+                case 'Eko\FeedBundle\Field\ItemField':
+                    $itemElements = $this->formatItemField($itemField, $item);
+                    break;
+            }
+
+            foreach ($itemElements as $itemElement) {
+                $element->appendChild($itemElement);
+            }
         }
 
-        foreach ($itemElements as $itemElement) {
-            $element->appendChild($itemElement);
-        }
-
-        return $element;
+        return array($element);
     }
 
     /**
@@ -141,7 +144,7 @@ class Formatter
         $values = $item->{$method}();
 
         if (null === $values) {
-            return;
+            return $elements;
         }
 
         if (!is_array($values) || (is_array($values) && isset($values['value']))) {
@@ -175,7 +178,7 @@ class Formatter
             $elements[] = $element;
         }
 
-        return 1 == count($elements) ? current($elements) : $elements;
+        return $elements;
     }
 
     /**
@@ -194,7 +197,7 @@ class Formatter
         $values = $item->{$method}();
 
         if (null === $values) {
-            return;
+            return $elements;
         }
 
         if (!is_array($values)) {
@@ -205,7 +208,7 @@ class Formatter
             $elements[] = $this->formatWithOptions($field, $item, $value);
         }
 
-        return 1 == count($elements) ? current($elements) : $elements;
+        return $elements;
     }
 
     /**

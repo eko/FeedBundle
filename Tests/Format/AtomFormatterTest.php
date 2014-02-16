@@ -208,6 +208,29 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if a custom group item field with multiple item fields is properly rendered with ItemInterface
+     */
+    public function testAddCustomGroupMultipleItemFieldWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new GroupItemField('author', array(
+            new ItemField('name', 'getFeedItemAuthorName', array('cdata' => true)),
+            new ItemField('email', 'getFeedItemAuthorEmail'),
+        )));
+
+        $output = $feed->render('atom');
+
+        $this->assertContains(<<<EOF
+    <author>
+      <name><![CDATA[John Doe]]></name>
+      <email>john.doe@example.org</email>
+    </author>
+EOF
+            , $output);
+    }
+
+    /**
      * Check if a custom item field is properly rendered with RoutedItemInterface
      */
     public function testAddCustomItemFieldWithRoutedItemInterface()

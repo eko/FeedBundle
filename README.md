@@ -208,6 +208,17 @@ $feed->addItemField(
 );
 ```
 
+or even, multiple item fields in a group, like this:
+
+```php
+$feed->addItemField(
+    new GroupItemField('author', array(
+        new ItemField('name', 'getFeedItemAuthorName', array('cdata' => true)),
+        new ItemField('email', 'getFeedItemAuthorEmail')
+    )
+);
+```
+
 ##### Add custom media item fields
 
 Media enclosure can be added using the `MediaItemField` field type as below:

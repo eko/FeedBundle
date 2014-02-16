@@ -74,6 +74,26 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
+     * Returns a fake field author name
+     *
+     * @return string
+     */
+    public function getFeedItemAuthorName()
+    {
+        return 'John Doe';
+    }
+
+    /**
+     * Returns a fake field author email
+     *
+     * @return string
+     */
+    public function getFeedItemAuthorEmail()
+    {
+        return 'john.doe@example.org';
+    }
+
+    /**
      * Sets feed media items
      *
      * @param array $medias

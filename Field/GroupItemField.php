@@ -28,20 +28,29 @@ class GroupItemField implements ItemFieldInterface
     protected $name;
 
     /**
-     * @var ItemField ItemField instance
+     * @var array ItemField instances
      */
-    protected $itemField;
+    protected $itemFields;
 
     /**
      * Constructor
      *
-     * @param string    $name      A group field name
-     * @param ItemField $itemField A ItemField instance
+     * @param string          $name       A group field name
+     * @param array|ItemField $itemFields An array or a single ItemField instance
      */
-    public function __construct($name, ItemField $itemField)
+    public function __construct($name, $itemFields)
     {
-        $this->name      = $name;
-        $this->itemField = $itemField;
+        $this->name = $name;
+
+        if (!is_array($itemFields) && !$itemFields instanceof ItemField) {
+            throw new \RuntimeException('GroupItemField second arguments should be an array or a single ItemField instance');
+        }
+
+        if (!is_array($itemFields)) {
+            $itemFields = array($itemFields);
+        }
+
+        $this->itemFields = $itemFields;
     }
 
     /**
@@ -55,12 +64,12 @@ class GroupItemField implements ItemFieldInterface
     }
 
     /**
-     * Returns item field
+     * Returns item fields
      *
-     * @return ItemField
+     * @return array
      */
-    public function getItemField()
+    public function getItemFields()
     {
-        return $this->itemField;
+        return $this->itemFields;
     }
 }

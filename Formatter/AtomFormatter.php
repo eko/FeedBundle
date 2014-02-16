@@ -110,13 +110,11 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $node = $root->appendChild($node);
 
         foreach ($this->itemFields as $field) {
-            $element = $this->format($field, $item);
+            $elements = $this->format($field, $item);
 
-            if (null === $element) {
-                continue;
+            foreach ($elements as $element) {
+                $node->appendChild($element);
             }
-
-            $node->appendChild($element);
         }
     }
 
