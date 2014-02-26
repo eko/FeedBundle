@@ -72,11 +72,9 @@ class FeedDumpCommand extends ContainerAwareCommand
         $feed->addFromArray($items);
         $dump = $feed->render($format);
 
-        $filepath = realpath($this->getWebPath() . $filename);
+        $filepath = $this->getWebPath() . $filename;
 
-        $file = fopen($filepath, 'w');
-        fwrite($file, $dump);
-        fclose($file);
+        $this->getFilesystem()->dumpFile($filepath, $dump);
 
         $output->writeln('<comment>done!</comment>');
         $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $filepath));
@@ -112,6 +110,16 @@ class FeedDumpCommand extends ContainerAwareCommand
     protected function getWebPath()
     {
         return $this->getContainer()->get('kernel')->getRootDir().'/../web/';
+    }
+
+    /**
+     * Get Symfony Filesystem component
+     *
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFilesystem()
+    {
+        return $this->getContainer()->get('filesystem');
     }
 }
 
