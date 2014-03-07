@@ -19,9 +19,8 @@
         "zendframework/zend-http": ">=2.0"
     },
     "autoload": {
-        "psr-0": { "Eko\\FeedBundle": "" }
+        "psr-4": { "Eko\\FeedBundle\\": "" }
     },
-    "target-dir": "Eko/FeedBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.1.x-dev"
