@@ -337,7 +337,3 @@ Contributors
 
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
 
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/eko/feedbundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
