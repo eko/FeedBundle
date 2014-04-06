@@ -58,9 +58,9 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
         $this->dom = new \DOMDocument('1.0', $encoding);
 
-        $root = $this->dom->createElement('feed');
-        $root->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
-        $root = $this->dom->appendChild($root);
+        $channel = $this->dom->createElement('feed');
+        $channel->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
+        $channel = $this->dom->appendChild($channel);
 
         $identifier = $this->dom->createElement('id', $this->feed->get('link'));
         $title = $this->dom->createElement('title', $this->feed->get('title'));
@@ -76,17 +76,17 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $author = $this->dom->createElement('author');
         $author->appendChild($name);
 
-        $root->appendChild($title);
-        $root->appendChild($subtitle);
-        $root->appendChild($link);
-        $root->appendChild($updated);
-        $root->appendChild($identifier);
-        $root->appendChild($author);
+        $channel->appendChild($title);
+        $channel->appendChild($subtitle);
+        $channel->appendChild($link);
+        $channel->appendChild($updated);
+        $channel->appendChild($identifier);
+        $channel->appendChild($author);
 
         // Add custom channel fields
         foreach ($this->feed->getChannelFields() as $field) {
             $child = $this->dom->createElement($field->getName(), $field->getValue());
-            $root->appendChild($child);
+            $channel->appendChild($child);
         }
 
         // Add field items
@@ -97,17 +97,17 @@ class AtomFormatter extends Formatter implements FormatterInterface
                 continue;
             }
 
-            $this->addItem($root, $item);
+            $this->addItem($channel, $item);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addItem(\DOMElement $root, ItemInterface $item)
+    public function addItem(\DOMElement $channel, ItemInterface $item)
     {
         $node = $this->dom->createElement('entry');
-        $node = $root->appendChild($node);
+        $node = $channel->appendChild($node);
 
         foreach ($this->itemFields as $field) {
             $elements = $this->format($field, $item);
