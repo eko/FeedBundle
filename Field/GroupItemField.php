@@ -10,11 +10,8 @@
 
 namespace Eko\FeedBundle\Field;
 
-use Eko\FeedBundle\Field\ItemField;
-use Eko\FeedBundle\Field\ItemFieldInterface;
-
 /**
- * GroupField
+ * GroupItemField
  *
  * This is items group field class
  *
@@ -35,14 +32,16 @@ class GroupItemField implements ItemFieldInterface
     /**
      * Constructor
      *
-     * @param string          $name       A group field name
-     * @param array|ItemField $itemFields An array or a single ItemField instance
+     * @param string                   $name       A group field name
+     * @param array|ItemFieldInterface $itemFields An array or a single ItemField instance
+     *
+     * @throws \RuntimeException if
      */
     public function __construct($name, $itemFields)
     {
         $this->name = $name;
 
-        if (!is_array($itemFields) && !$itemFields instanceof ItemField) {
+        if (!is_array($itemFields) && !$itemFields instanceof ItemFieldInterface) {
             throw new \RuntimeException('GroupItemField second arguments should be an array or a single ItemField instance');
         }
 

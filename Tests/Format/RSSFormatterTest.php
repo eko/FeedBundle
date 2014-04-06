@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Field\ChannelField;
+use Eko\FeedBundle\Field\GroupChannelField;
 use Eko\FeedBundle\Field\GroupItemField;
 use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Field\MediaItemField;
@@ -179,6 +180,28 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<category>category 2</category>', $output);
         $this->assertContains('<category>category 3</category>', $output);
         $this->assertContains('</categories>', $output);
+    }
+
+    /**
+     * Check if a custom group channel field is properly rendered with GroupFieldInterface
+     */
+    public function testAddCustomGroupChannelFieldWithItemInterface()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addChannelField(
+            new GroupChannelField('image', array(
+                new ChannelField('name', 'My test image'),
+                new ChannelField('url', 'http://www.example.com/image.jpg')
+            ))
+        );
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<image>', $output);
+        $this->assertContains('<name>My test image</name>', $output);
+        $this->assertContains('<url>http://www.example.com/image.jpg</url>', $output);
+        $this->assertContains('</image>', $output);
     }
 
     /**

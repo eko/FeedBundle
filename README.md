@@ -219,6 +219,19 @@ $feed->addItemField(
 );
 ```
 
+##### Add a group of custom channel fields
+
+As you can do for item fields, you can also add a custom group of channel fields like this:
+
+```php
+$feed->addChannelField(
+    new GroupChannelField('author', array(
+        new ChannelField('name', 'My author name'),
+        new ChannelField('email', 'myauthor@email.org')
+    )
+);
+```
+
 ##### Add custom media item fields
 
 Media enclosure can be added using the `MediaItemField` field type as below:

@@ -10,11 +10,11 @@
 
 namespace Eko\FeedBundle\Feed;
 
+use Eko\FeedBundle\Field\ChannelFieldInterface;
 use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 use Eko\FeedBundle\Formatter\RssFormatter;
-use Eko\FeedBundle\Field\ChannelField;
 use Eko\FeedBundle\Field\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
@@ -167,11 +167,11 @@ class Feed
     /**
      * Add a new channel field to render
      *
-     * @param ChannelField $field A custom Field instance
+     * @param ChannelFieldInterface $field A custom Field instance
      *
      * @return \Eko\FeedBundle\Feed\Feed
      */
-    public function addChannelField(ChannelField $field)
+    public function addChannelField(ChannelFieldInterface $field)
     {
         $this->channelFields[] = $field;
 

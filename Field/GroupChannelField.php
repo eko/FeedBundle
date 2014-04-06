@@ -11,18 +11,13 @@
 namespace Eko\FeedBundle\Field;
 
 /**
- * ItemFieldInterface
+ * GroupChannelField
  *
- * This is the item field interface
+ * This is channel group field class
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-interface ItemFieldInterface
+class GroupChannelField extends GroupItemField implements ChannelFieldInterface
 {
-    /**
-     * Returns field name
-     *
-     * @return string
-     */
-    public function getName();
+
 }

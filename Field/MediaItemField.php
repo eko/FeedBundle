@@ -20,7 +20,7 @@ use Eko\FeedBundle\Field\ItemFieldInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class MediaItemField extends ItemField implements ItemFieldInterface
+class MediaItemField extends ItemField
 {
     /**
      * Constructor

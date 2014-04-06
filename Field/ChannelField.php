@@ -17,7 +17,7 @@ namespace Eko\FeedBundle\Field;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class ChannelField
+class ChannelField implements ChannelFieldInterface
 {
     /**
      * @var string $name Field name

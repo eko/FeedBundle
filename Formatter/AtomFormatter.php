@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Field\GroupChannelField;
 use Eko\FeedBundle\Field\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
@@ -85,8 +86,18 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
         // Add custom channel fields
         foreach ($this->feed->getChannelFields() as $field) {
-            $child = $this->dom->createElement($field->getName(), $field->getValue());
-            $channel->appendChild($child);
+            if ($field instanceof GroupChannelField) {
+                $parent = $this->dom->createElement($field->getName());
+
+                foreach ($field->getItemFields() as $childField) {
+                    $child = $this->dom->createElement($childField->getName(), $childField->getValue());
+                    $parent->appendChild($child);
+                }
+            } else {
+                $parent = $this->dom->createElement($field->getName(), $field->getValue());
+            }
+
+            $channel->appendChild($parent);
         }
 
         // Add field items
