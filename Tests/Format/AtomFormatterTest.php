@@ -11,11 +11,11 @@
 namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
-use Eko\FeedBundle\Field\ChannelField;
-use Eko\FeedBundle\Field\GroupChannelField;
-use Eko\FeedBundle\Field\GroupItemField;
-use Eko\FeedBundle\Field\ItemField;
-use Eko\FeedBundle\Field\MediaItemField;
+use Eko\FeedBundle\Field\Channel\ChannelField;
+use Eko\FeedBundle\Field\Channel\GroupChannelField;
+use Eko\FeedBundle\Field\Item\GroupItemField;
+use Eko\FeedBundle\Field\Item\ItemField;
+use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 

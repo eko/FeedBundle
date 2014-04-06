@@ -10,7 +10,6 @@
 
 namespace Eko\FeedBundle\Tests\Entity\Reader;
 
-use Doctrine\ORM\Mapping as ORM;
 use Eko\FeedBundle\Item\Reader\ItemInterface;
 
 /**

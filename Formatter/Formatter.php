@@ -11,8 +11,8 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Field\ItemFieldInterface;
-use Eko\FeedBundle\Field\MediaItemField;
+use Eko\FeedBundle\Field\Item\ItemFieldInterface;
+use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -30,7 +30,7 @@ class Formatter
     protected $feed;
 
     /**
-     * @var DOMDocument $dom XML DOMDocument
+     * @var \DOMDocument $dom XML DOMDocument
      */
     protected $dom;
 
@@ -76,15 +76,15 @@ class Formatter
         $class = get_class($field);
 
         switch ($class) {
-            case 'Eko\FeedBundle\Field\GroupItemField':
+            case 'Eko\FeedBundle\Field\Item\GroupItemField':
                 return $this->formatGroupItemField($field, $item);
                 break;
 
-            case 'Eko\FeedBundle\Field\MediaItemField':
+            case 'Eko\FeedBundle\Field\Item\MediaItemField':
                 return $this->formatMediaItemField($field, $item);
                 break;
 
-            case 'Eko\FeedBundle\Field\ItemField':
+            case 'Eko\FeedBundle\Field\Item\ItemField':
                 return $this->formatItemField($field, $item);
                 break;
         }
@@ -109,11 +109,11 @@ class Formatter
             $class = get_class($itemField);
 
             switch ($class) {
-                case 'Eko\FeedBundle\Field\MediaItemField':
+                case 'Eko\FeedBundle\Field\Item\MediaItemField':
                     $itemElements = $this->formatMediaItemField($itemField, $item);
                     break;
 
-                case 'Eko\FeedBundle\Field\ItemField':
+                case 'Eko\FeedBundle\Field\Item\ItemField':
                     $itemElements = $this->formatItemField($itemField, $item);
                     break;
             }

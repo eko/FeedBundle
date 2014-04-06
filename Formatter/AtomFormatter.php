@@ -11,8 +11,8 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Field\GroupChannelField;
-use Eko\FeedBundle\Field\ItemField;
+use Eko\FeedBundle\Field\Channel\GroupChannelField;
+use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -28,6 +28,8 @@ class AtomFormatter extends Formatter implements FormatterInterface
      * Construct a formatter with given feed
      *
      * @param Feed $feed A feed instance
+     *
+     * @throws \InvalidArgumentException if author is not filled in bundle configuration
      */
     public function __construct(Feed $feed)
     {

@@ -8,10 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Field;
-
-use Eko\FeedBundle\Field\ItemField;
-use Eko\FeedBundle\Field\ItemFieldInterface;
+namespace Eko\FeedBundle\Field\Item;
 
 /**
  * MediaItemField

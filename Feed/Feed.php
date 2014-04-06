@@ -10,13 +10,13 @@
 
 namespace Eko\FeedBundle\Feed;
 
-use Eko\FeedBundle\Field\ChannelFieldInterface;
-use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Field\Channel\ChannelFieldInterface;
+use Eko\FeedBundle\Field\Item\ItemFieldInterface;
+use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
+use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
-use Eko\FeedBundle\Field\ItemFieldInterface;
-use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 use Symfony\Component\Routing\RouterInterface;
 

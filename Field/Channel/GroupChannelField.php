@@ -8,7 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Field;
+namespace Eko\FeedBundle\Field\Channel;
+
+use Eko\FeedBundle\Field\Item\GroupItemField;
 
 /**
  * GroupChannelField

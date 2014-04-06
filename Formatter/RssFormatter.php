@@ -11,9 +11,8 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
-use Eko\FeedBundle\Field\ChannelFieldInterface;
-use Eko\FeedBundle\Field\GroupChannelField;
-use Eko\FeedBundle\Field\ItemField;
+use Eko\FeedBundle\Field\Channel\GroupChannelField;
+use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**

@@ -10,7 +10,6 @@
 
 namespace Eko\FeedBundle\Tests\Entity\Writer;
 
-use Doctrine\ORM\Mapping as ORM;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**

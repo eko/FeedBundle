@@ -12,7 +12,6 @@ namespace Eko\FeedBundle\Tests;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * FeedTest
