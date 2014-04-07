@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Field\Channel\GroupChannelField;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
@@ -61,6 +62,29 @@ class Formatter
         $this->dom->formatOutput = true;
 
         return $this->dom->saveXml();
+    }
+
+    /**
+     * Adds channel fields to given channel
+     *
+     * @param \DOMElement $channel
+     */
+    protected function addChannelFields(\DOMElement $channel)
+    {
+        foreach ($this->feed->getChannelFields() as $field) {
+            if ($field instanceof GroupChannelField) {
+                $parent = $this->dom->createElement($field->getName());
+
+                foreach ($field->getItemFields() as $childField) {
+                    $child = $this->dom->createElement($childField->getName(), $childField->getValue());
+                    $parent->appendChild($child);
+                }
+            } else {
+                $parent = $this->dom->createElement($field->getName(), $field->getValue());
+            }
+
+            $channel->appendChild($parent);
+        }
     }
 
     /**
