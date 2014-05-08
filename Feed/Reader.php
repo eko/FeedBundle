@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Feed;
 
-use Eko\FeedBundle\Item\Reader\ItemInterface;
+use Eko\FeedBundle\Hydrator\HydratorInterface;
 
 use Zend\Feed\Reader\Reader as ZendReader;
 use Zend\Feed\Reader\Feed\FeedInterface;
@@ -28,6 +28,21 @@ class Reader
      * @var FeedInterface
      */
     protected $feed;
+
+    /**
+     * @var HydratorInterface
+     */
+    protected $hydrator;
+
+    /**
+     * Sets entity hydrator service
+     *
+     * @param HydratorInterface $hydrator
+     */
+    public function setHydrator(HydratorInterface $hydrator)
+    {
+        $this->hydrator = $hydrator;
+    }
 
     /**
      * Loads feed from an url or file path
@@ -60,53 +75,34 @@ class Reader
     }
 
     /**
-     * Populate entities with feed entries
+     * Populate entities with feed entries using hydrator
      *
      * @param string $entityName
      *
      * @return array
      *
-     * @throws \Exception if entity does not exists or does not implement Reader\ItemInterface
+     * @throws \RuntimeException if entity name does not exists
      */
     public function populate($entityName)
     {
-        $this->checkIfFeedIsLoaded();
-
         if (!class_exists($entityName)) {
-            throw new \Exception(sprintf('Entity %s does not exists.'));
+            throw new \RuntimeException(sprintf('Entity %s does not exists.'));
         }
 
-        $entity = new $entityName();
+        $feed = $this->get();
 
-        if (!$entity instanceof ItemInterface) {
-            throw new \Exception(sprintf('Entity "%s" does not implement required %s.', $entityName, 'Eko\FeedBundle\Item\Reader\ItemInterface'));
-        }
-
-        $items = array();
-
-        foreach ($this->feed as $entry) {
-            $entity = new $entityName();
-
-            $entity->setFeedItemTitle($entry->getTitle());
-            $entity->setFeedItemDescription($entry->getContent());
-            $entity->setFeedItemLink($entry->getLink());
-            $entity->setFeedItemPubDate($entry->getDateModified());
-
-            $items[] = $entity;
-        }
-
-        return $items;
+        return $this->hydrator->hydrate($feed, $entityName);
     }
 
     /**
      * Check if a feed is currently loaded
      *
-     * @throws \Exception if there is no feed loaded
+     * @throws \RuntimeException if there is no feed loaded
      */
     protected function checkIfFeedIsLoaded()
     {
         if (null === $this->feed) {
-            throw new \Exception('There is not feed loaded. Please make sure to load a feed before using the get() method.');
+            throw new \RuntimeException('There is not feed loaded. Please make sure to load a feed before using the get() method.');
         }
     }
 }

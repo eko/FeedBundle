@@ -35,8 +35,30 @@ class EkoFeedExtension extends Extension
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader->load('feed.xml');
+        $loader->load('formatter.xml');
+        $loader->load('hydrator.xml');
 
         $container->setParameter('eko_feed.config', $config);
+
+        $this->configureHydrator($config, $container);
+    }
+
+    /**
+     * Configures feed reader hydrator service
+     *
+     * @param array            $config    Bundle configuration values array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     *
+     * @throws \RuntimeException
+     */
+    protected function configureHydrator(array $config, ContainerBuilder $container)
+    {
+        if (!$container->hasDefinition($config['hydrator'])) {
+            throw new \RuntimeException(sprintf('Unable to load hydrator service "%s"', $config['hydrator']));
+        }
+
+        $container->getDefinition('eko_feed.feed.reader')
+            ->setArguments(array($config['hydrator']));
     }
 }

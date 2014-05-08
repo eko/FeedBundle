@@ -60,6 +60,7 @@ The following configuration lines are required:
 
 ```yaml
 eko_feed:
+    hydrator: your_hydrator.custom.service # Optional, if you use entity hydrating with a custom hydrator
     feeds:
         article:
             title:       'My articles/posts'
@@ -341,6 +342,19 @@ $items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity
 ```
 
 In this example, `$items` will be an array that will contains an array with your entities populated with the given feed content.
+
+### Use a custom hydrator to populate your entity
+
+You can also write your own hydrator and use it this way:
+
+```php
+$reader = $this->get('eko_feed.feed.reader');
+$reader->setHydrator(new MyCustomHydrator());
+
+$items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity\Name');
+```
+
+This way, your custom hydrator will be used instead of the `Eko\FeedBundle\Hydrator\DefaultHydrator`
 
 Contributors
 ------------

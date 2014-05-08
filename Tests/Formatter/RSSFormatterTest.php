@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Tests;
+namespace Eko\FeedBundle\Tests\Formatter;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Field\Channel\ChannelField;
@@ -34,9 +34,9 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     protected $manager;
 
     /**
-     * Construct elements used in test case
+     * Sets up elements used in test case
      */
-    public function __construct() {
+    public function setUp() {
         $config = array(
             'feeds' => array(
                 'article' => array(

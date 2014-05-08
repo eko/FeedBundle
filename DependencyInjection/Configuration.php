@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('hydrator')->defaultValue('eko_feed.hydrator.default')->end()
                 ->arrayNode('feeds')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('name')
