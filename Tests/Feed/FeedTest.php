@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Tests;
+namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;

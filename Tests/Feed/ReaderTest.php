@@ -8,9 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Tests;
+namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\Reader;
+use Eko\FeedBundle\Hydrator\DefaultHydrator;
 
 /**
  * ReaderTest
@@ -27,10 +28,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected $reader;
 
     /**
-     * Construct elements used in test case
+     * Sets up elements used in test case
      */
-    public function __construct() {
+    public function setUp() {
         $this->reader = new Reader();
+        $this->reader->setHydrator(new DefaultHydrator());
     }
 
     /**

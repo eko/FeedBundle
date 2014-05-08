@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eko\FeedBundle\Tests;
+namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\FeedManager;
 
@@ -19,7 +19,7 @@ use Eko\FeedBundle\Feed\FeedManager;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class FeedManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FeedManager $manager A feed manager instance
@@ -27,9 +27,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     protected $manager;
 
     /**
-     * Construct elements used in test case
+     * Sets up manager & configuration used in test cases
      */
-    public function __construct() {
+    public function setUp() {
         $config = array(
             'feeds' => array(
                 'article' => array(
