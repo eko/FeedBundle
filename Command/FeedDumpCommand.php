@@ -66,7 +66,7 @@ class FeedDumpCommand extends ContainerAwareCommand
 
         $output->writeln(sprintf('<info>Start dumping "%s" feed from "%s" entity...</info>', $name, $entity));
 
-        $repository = $this->getEntityManager()->getRepository($entity);
+        $repository = $this->getManager()->getRepository($entity);
         $items = $repository->findBy(array(), $orderBy, $limit);
 
         $feed->addFromArray($items);
@@ -97,9 +97,9 @@ class FeedDumpCommand extends ContainerAwareCommand
      *
      * @return \Doctrine\ORM\EntityManager
      */
-    protected function getEntityManager()
+    protected function getManager()
     {
-        return $this->getContainer()->get('doctrine')->getEntityManager();
+        return $this->getContainer()->get('doctrine')->getManager();
     }
 
     /**
