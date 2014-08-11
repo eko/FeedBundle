@@ -5,6 +5,7 @@ namespace Eko\FeedBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -27,12 +28,13 @@ class FeedDumpCommand extends ContainerAwareCommand
             ->setDescription('Generate (dump) a feed in an XML file')
             ->setName('eko:feed:dump')
             ->addOption('name',      null, InputOption::VALUE_REQUIRED, 'Feed name defined in eko_feed configuration')
-            ->addOption('entity',    null, InputOption::VALUE_REQUIRED, 'Entity to use to generate the feed')
+            ->addOption('entity',    null, InputOption::VALUE_OPTIONAL, 'Entity to use to generate the feed')
             ->addOption('filename',  null, InputOption::VALUE_REQUIRED, 'Defines feed filename')
             ->addOption('orderBy',   null, InputOption::VALUE_OPTIONAL, 'Order field to sort by using findBy() method')
             ->addOption('direction', null, InputOption::VALUE_OPTIONAL, 'Direction to give to sort field with findBy() method')
             ->addOption('format',    null, InputOption::VALUE_OPTIONAL, 'Formatter to use to generate, "rss" is default')
-            ->addOption('limit',     null, InputOption::VALUE_OPTIONAL, 'Defines a limit of entity items to retrieve');
+            ->addOption('limit',     null, InputOption::VALUE_OPTIONAL, 'Defines a limit of entity items to retrieve')
+            ->addArgument('host', InputArgument::REQUIRED, 'Set the host');
     }
 
     /**
@@ -40,86 +42,36 @@ class FeedDumpCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getOption('name');
-        $entity = $input->getOption('entity');
-        $filename = $input->getOption('filename');
-        $format = $input->getOption('format') ?: 'rss';
-        $limit = $input->getOption('limit');
-
+        $name      = $input->getOption('name');
+        $entity    = $input->getOption('entity');
+        $filename  = $input->getOption('filename');
+        $format    = $input->getOption('format') ?: 'rss';
+        $limit     = $input->getOption('limit');
         $direction = $input->getOption('direction');
-        $orderBy = $input->getOption('orderBy');
+        $orderBy   = $input->getOption('orderBy');
+        $rootDir   = $this->getContainer()->get('kernel')->getRootDir();
 
-        if (null !== $orderBy) {
-            switch ($direction) {
-                case 'ASC':
-                case 'DESC':
-                    $orderBy = array($input->getOption('orderBy') => $direction);
-                    break;
+        /**
+         * Avoid crontab cmd to generate localhost url
+         */
+        $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
 
-                default:
-                    throw new \InvalidArgumentException(sprintf('"direction" option should be set with "orderBy" and should be ASC or DESC'));
-                    break;
-            }
-        }
+        $feedDumpService = $this->getContainer()->get('eko_feed.feed.dump');
+        $feedDumpService
+                ->setName($name)
+                ->setEntity($entity)
+                ->setFilename($filename)
+                ->setFormat($format)
+                ->setLimit($limit)
+                ->setRootDir($rootDir)
+                ->setDirection($direction)
+                ->setOrderBy($orderBy)
+            ;
 
-        $feed = $this->getFeed($name);
-
-        $output->writeln(sprintf('<info>Start dumping "%s" feed from "%s" entity...</info>', $name, $entity));
-
-        $repository = $this->getManager()->getRepository($entity);
-        $items = $repository->findBy(array(), $orderBy, $limit);
-
-        $feed->addFromArray($items);
-        $dump = $feed->render($format);
-
-        $filepath = $this->getWebPath() . $filename;
-
-        $this->getFilesystem()->dumpFile($filepath, $dump);
+        $feedDumpService->dump();
 
         $output->writeln('<comment>done!</comment>');
-        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $filepath));
-    }
-
-    /**
-     * Get feed from specified name
-     *
-     * @param string $name
-     *
-     * @return \Eko\FeedBundle\Feed\Feed
-     */
-    protected function getFeed($name)
-    {
-        return $this->getContainer()->get('eko_feed.feed.manager')->get($name);
-    }
-
-    /**
-     * Get Doctrine entity manager
-     *
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getManager()
-    {
-        return $this->getContainer()->get('doctrine')->getManager();
-    }
-
-    /**
-     * Get Symfony web path
-     *
-     * @return mixed
-     */
-    protected function getWebPath()
-    {
-        return $this->getContainer()->get('kernel')->getRootDir().'/../web/';
-    }
-
-    /**
-     * Get Symfony Filesystem component
-     *
-     * @return \Symfony\Component\Filesystem\Filesystem
-     */
-    protected function getFilesystem()
-    {
-        return $this->getContainer()->get('filesystem');
+        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $rootDir . $filename));
     }
 }
 
