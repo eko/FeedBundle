@@ -302,11 +302,15 @@ Here are the options :
     <td>--limit</td>
     <td>Defines a limit of entity items to retrieve</td>
   </tr>
+  <tr>
+    <td>Host</td>
+    <td>Defines the host base to generate absolute Url</td>
+  </tr>
 </table>
 
 An example with all the options:
 
-`php app/console eko:feed:dump --name=article --entity=AcmeDemoBundle:Fake --filename=test.xml --format=atom --orderBy=id --direction=DESC`
+`php app/console eko:feed:dump --name=article --entity=AcmeDemoBundle:Fake --filename=test.xml --format=atom --orderBy=id --direction=DESC www.myhost.com`
 
 This will result:
 ```
@@ -361,6 +365,7 @@ Contributors
 
  * Vincent Composieux <vincent.composieux@gmail.com> (Twitter: @vcomposieux)
  * Rob Masters <mastahuk@gmail.com>
+ * Thomas P <thomas@scullwm.com> (Twitter: @scullwm)
 
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
 

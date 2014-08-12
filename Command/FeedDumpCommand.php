@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the Eko\FeedBundle Symfony bundle.
+ *
+ * (c) Vincent Composieux <vincent.composieux@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Eko\FeedBundle\Command;
 
@@ -51,9 +59,6 @@ class FeedDumpCommand extends ContainerAwareCommand
         $orderBy   = $input->getOption('orderBy');
         $rootDir   = $this->getContainer()->get('kernel')->getRootDir();
 
-        /**
-         * Avoid crontab cmd to generate localhost url
-         */
         $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
 
         $feedDumpService = $this->getContainer()->get('eko_feed.feed.dump');
