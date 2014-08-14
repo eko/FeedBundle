@@ -241,4 +241,14 @@ class Feed
 
         return $formatter->render();
     }
+
+    /**
+     * Return if feed has items
+     *
+     * @return boolean
+     */
+    public function hasItems()
+    {
+        return (bool) !empty($this->itemFields);
+    }
 }

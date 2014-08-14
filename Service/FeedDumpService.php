@@ -88,14 +88,17 @@ class FeedDumpService
         $this->initDirection();
         $feed = $this->feedManager->get($this->name);
 
-        if($this->entity) {
+        if ($this->entity) {
             $repository = $this->em->getRepository($this->entity);
-            $items = $repository->findBy(array(), $this->orderBy, $this->limit);
+            $items      = $repository->findBy(array(), $this->orderBy, $this->limit);
             $feed->addFromArray($items);
+
+        } else if ($feed->hasItems()) {
+            throw new \LogicException(sprintf("An entity should be set OR you should setItems first"));
+
         }
 
-        $dump = $feed->render($this->format);
-
+        $dump     = $feed->render($this->format);
         $filepath = $this->rootDir . $this->filename;
 
         $this->filesystem->dumpFile($filepath, $dump);

@@ -36,7 +36,7 @@ class FeedDumpCommand extends ContainerAwareCommand
             ->setDescription('Generate (dump) a feed in an XML file')
             ->setName('eko:feed:dump')
             ->addOption('name',      null, InputOption::VALUE_REQUIRED, 'Feed name defined in eko_feed configuration')
-            ->addOption('entity',    null, InputOption::VALUE_OPTIONAL, 'Entity to use to generate the feed')
+            ->addOption('entity',    null, InputOption::VALUE_REQUIRED, 'Entity to use to generate the feed')
             ->addOption('filename',  null, InputOption::VALUE_REQUIRED, 'Defines feed filename')
             ->addOption('orderBy',   null, InputOption::VALUE_OPTIONAL, 'Order field to sort by using findBy() method')
             ->addOption('direction', null, InputOption::VALUE_OPTIONAL, 'Direction to give to sort field with findBy() method')

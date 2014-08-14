@@ -319,6 +319,32 @@ done!
 Feed has been dumped and located in "/Users/vincent/dev/perso/symfony/web/test.xml"
 ```
 
+### Dump your feeds by using the eko_feed.feed.dump
+You can dump your feeds by simply using the "eko_feed.feed.dump" service. Used by the dump command, you have the same value to set.
+If you already have you items feed ready, you can dump it using the setItems().
+
+```php
+<?php
+
+$feedDumpService = $this->get('eko_feed.feed.dump');
+$feedDumpService
+        ->setName($name)
+        //You can set an entity
+        //->setEntity($entity)
+        // Or set you Items
+        ->setItems($MyOwnItemList)
+        ->setFilename($filename)
+        ->setFormat($format)
+        ->setLimit($limit)
+        ->setRootDir($rootDir)
+        ->setDirection($direction)
+        ->setOrderBy($orderBy)
+    ;
+
+$feedDumpService->dump();
+```
+
+
 For any question, do not hesitate to contact me and/or participate.
 
 ### Read an XML feed and populate an entity
