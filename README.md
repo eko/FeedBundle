@@ -159,7 +159,7 @@ class BlogController extends Controller
 
 Please note that for better performances you can add a cache control.
 
-Moreover, entities objects can be added separatly with add method:
+Moreover, entities objects can be added separately with add method:
 
 ```php
 <?php
