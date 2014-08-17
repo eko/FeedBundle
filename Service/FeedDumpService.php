@@ -95,10 +95,15 @@ class FeedDumpService
     /**
      * Dumps a feed from an entity or feed items using Filesystem component.
      *
+     * @throws \RuntimeException
      * @throws \LogicException
      */
     public function dump()
     {
+        if (!method_exists($this->filesystem, 'dumpFile')) {
+            throw new \RuntimeException('Method dumpFile() is not available on your Filesystem component version, you should upgrade it.');
+        }
+
         $this->initDirection();
         $feed = $this->feedManager->get($this->name);
 

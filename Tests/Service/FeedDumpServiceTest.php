@@ -64,6 +64,10 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testDumpWithInvalidOrder()
     {
+        if (!method_exists($this->filesystem, 'dumpFile')) {
+            $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
+        }
+        
         $this->setExpectedException('\InvalidArgumentException');
 
         $this->service->setOrderBy('unexistant-order');
@@ -75,6 +79,10 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testDumpWithAnEntity()
     {
+        if (!method_exists($this->filesystem, 'dumpFile')) {
+            $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
+        }
+
         // Given
         $this->service->setRootDir('/unit/test/');
         $this->service->setFilename('feed.rss');
@@ -114,6 +122,10 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testDumpWithoutItemsOrEntity()
     {
+        if (!method_exists($this->filesystem, 'dumpFile')) {
+            $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
+        }
+        
         $this->setExpectedException('\LogicException', 'An entity should be set OR you should use setItems() first');
 
         // Given
