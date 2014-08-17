@@ -302,11 +302,15 @@ Here are the options :
     <td>--limit</td>
     <td>Defines a limit of entity items to retrieve</td>
   </tr>
+  <tr>
+    <td>Host</td>
+    <td>Defines the host base to generate absolute Url</td>
+  </tr>
 </table>
 
 An example with all the options:
 
-`php app/console eko:feed:dump --name=article --entity=AcmeDemoBundle:Fake --filename=test.xml --format=atom --orderBy=id --direction=DESC`
+`php app/console eko:feed:dump --name=article --entity=AcmeDemoBundle:Fake --filename=test.xml --format=atom --orderBy=id --direction=DESC www.myhost.com`
 
 This will result:
 ```
@@ -314,6 +318,32 @@ Start dumping "article" feed from "AcmeDemoBundle:Fake" entity...
 done!
 Feed has been dumped and located in "/Users/vincent/dev/perso/symfony/web/test.xml"
 ```
+
+### Dump your feeds by using the eko_feed.feed.dump
+You can dump your feeds by simply using the "eko_feed.feed.dump" service. Used by the dump command, you have the same value to set.
+If you already have you items feed ready, you can dump it using the setItems().
+
+```php
+<?php
+
+$feedDumpService = $this->get('eko_feed.feed.dump');
+$feedDumpService
+        ->setName($name)
+        //You can set an entity
+        //->setEntity($entity)
+        // Or set you Items
+        ->setItems($MyOwnItemList)
+        ->setFilename($filename)
+        ->setFormat($format)
+        ->setLimit($limit)
+        ->setRootDir($rootDir)
+        ->setDirection($direction)
+        ->setOrderBy($orderBy)
+    ;
+
+$feedDumpService->dump();
+```
+
 
 For any question, do not hesitate to contact me and/or participate.
 
@@ -361,6 +391,7 @@ Contributors
 
  * Vincent Composieux <vincent.composieux@gmail.com> (Twitter: @vcomposieux)
  * Rob Masters <mastahuk@gmail.com>
+ * Thomas P <thomas@scullwm.com> (Twitter: @scullwm)
 
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
 
