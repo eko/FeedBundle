@@ -14,6 +14,13 @@ use Eko\FeedBundle\Feed\FeedManager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Class FeedDumpService
+ *
+ * This class helps to dump your feeds on filesystem
+ *
+ * @author Thomas P. <http://github.com/ScullWM>
+ */
 class FeedDumpService
 {
     /**
@@ -72,9 +79,11 @@ class FeedDumpService
     private $rootDir;
 
     /**
-     * @param FeedManager   $feedManager
-     * @param EntityManager $entityManager
-     * @param Filesystem    $filesystem
+     * Constructor.
+     *
+     * @param FeedManager   $feedManager   A Feed manager
+     * @param EntityManager $entityManager A Doctrine entity manager
+     * @param Filesystem    $filesystem    A Symfony Filesystem component
      */
     public function __construct(FeedManager $feedManager, EntityManager $entityManager, Filesystem $filesystem)
     {
@@ -83,6 +92,11 @@ class FeedDumpService
         $this->filesystem  = $filesystem;
     }
 
+    /**
+     * Dumps a feed from an entity or feed items using Filesystem component.
+     *
+     * @throws \LogicException
+     */
     public function dump()
     {
         $this->initDirection();
@@ -92,10 +106,8 @@ class FeedDumpService
             $repository = $this->em->getRepository($this->entity);
             $items      = $repository->findBy(array(), $this->orderBy, $this->limit);
             $feed->addFromArray($items);
-
         } else if ($feed->hasItems()) {
-            throw new \LogicException(sprintf("An entity should be set OR you should setItems first"));
-
+            throw new \LogicException(sprintf('An entity should be set OR you should use setItems() first'));
         }
 
         $dump     = $feed->render($this->format);
@@ -104,6 +116,11 @@ class FeedDumpService
         $this->filesystem->dumpFile($filepath, $dump);
     }
 
+    /**
+     * Initialize ordering.
+     *
+     * @throws \InvalidArgumentException
+     */
     private function initDirection()
     {
         if (null !== $this->orderBy) {
@@ -121,11 +138,11 @@ class FeedDumpService
     }
 
     /**
-     * Sets items to the feed
+     * Sets items to the feed.
      *
      * @param array $items items list
      *
-     * @return self
+     * @return $this
      */
     public function setItems(array $items)
     {
@@ -139,7 +156,7 @@ class FeedDumpService
      *
      * @param mixed $name the name
      *
-     * @return self
+     * @return $this
      */
     public function setName($name)
     {
@@ -153,7 +170,7 @@ class FeedDumpService
      *
      * @param mixed $entity the entity
      *
-     * @return self
+     * @return $this
      */
     public function setEntity($entity)
     {
@@ -165,9 +182,9 @@ class FeedDumpService
     /**
      * Sets the value of filename.
      *
-     * @param mixed $filename the filename
+     * @param string $filename
      *
-     * @return self
+     * @return $this
      */
     public function setFilename($filename)
     {
@@ -179,9 +196,9 @@ class FeedDumpService
     /**
      * Sets the value of format.
      *
-     * @param mixed $format the format
+     * @param string $format
      *
-     * @return self
+     * @return $this
      */
     public function setFormat($format)
     {
@@ -193,9 +210,9 @@ class FeedDumpService
     /**
      * Sets the value of limit.
      *
-     * @param mixed $limit the limit
+     * @param integer $limit
      *
-     * @return self
+     * @return $this
      */
     public function setLimit($limit)
     {
@@ -207,9 +224,9 @@ class FeedDumpService
     /**
      * Sets the value of direction.
      *
-     * @param mixed $direction the direction
+     * @param string $direction
      *
-     * @return self
+     * @return $this
      */
     public function setDirection($direction)
     {
@@ -221,9 +238,9 @@ class FeedDumpService
     /**
      * Sets the value of orderBy.
      *
-     * @param mixed $orderBy the order by
+     * @param string $orderBy
      *
-     * @return self
+     * @return $this
      */
     public function setOrderBy($orderBy)
     {
@@ -235,9 +252,9 @@ class FeedDumpService
     /**
      * Sets the value of rootDir.
      *
-     * @param mixed $rootDir the root dir
+     * @param string $rootDir
      *
-     * @return self
+     * @return $this
      */
     public function setRootDir($rootDir)
     {
