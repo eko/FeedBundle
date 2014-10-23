@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Loader\Exception\RuntimeException;
 
 /**
  * FeedDumpCommand
@@ -50,6 +51,10 @@ class FeedDumpCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!$this->getContainer()->has('eko_feed.feed.dump')) {
+            throw new RuntimeException('The "eko_feed.feed.dump" service used in this command requires Doctrine ORM to be configured.');
+        }
+
         $name      = $input->getOption('name');
         $entity    = $input->getOption('entity');
         $filename  = $input->getOption('filename');
