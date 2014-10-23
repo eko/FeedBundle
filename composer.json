@@ -18,6 +18,9 @@
         "zendframework/zend-servicemanager": ">=2.0",
         "zendframework/zend-http": ">=2.0"
     },
+    "require-dev": {
+        "doctrine/orm": "~2.2,>=2.2.3"
+    },
     "suggest": {
         "doctrine/orm": "~2.2,>=2.2.3"
     },

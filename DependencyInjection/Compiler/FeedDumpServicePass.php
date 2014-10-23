@@ -19,8 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Lukas Kahwe Smith <smith@pooteeweet.org>
  */
-class FeedDumpServicePass extends CompilerPassInterface
+class FeedDumpServicePass implements CompilerPassInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('doctrine.orm.entity_manager')) {
