@@ -15,6 +15,7 @@ env:
   - SYMFONY_VERSION=dev-master
 
 before_script:
+  - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer require symfony/symfony:${SYMFONY_VERSION} --prefer-source
   - composer install --dev --prefer-source
 
