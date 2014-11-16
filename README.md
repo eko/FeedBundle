@@ -11,12 +11,11 @@ Features
 --------
 
  * Generate XML feeds (RSS & Atom formats)
+ * Easy to configure & use
  * Items based on your entities
  * Add groups of items
  * Add enclosure media tags
  * Read XML feeds and populate your Symfony entities
- * Easy to configurate & use
- * Available on packagist (to install via composer)
  * Dump your feeds into a file via a Symfony console command
 
 Installation
@@ -385,6 +384,18 @@ $items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity
 ```
 
 This way, your custom hydrator will be used instead of the `Eko\FeedBundle\Hydrator\DefaultHydrator`
+
+### Define a custom feed formatter
+
+You can define your own feed formatter by using the following tag:
+
+```xml
+<service id="acme.my_bundle.formatter.custom" class="Acme\MyBundle\Feed\Formatter\CustomFormatter">
+    <tag name="eko_feed.formatter" format="custom"></tag>
+</service>
+```
+
+Then, use it by simply calling `$feed->render('custom')`.
 
 Contributors
 ------------

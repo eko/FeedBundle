@@ -10,6 +10,7 @@
 
 namespace Eko\FeedBundle\Formatter;
 
+use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
@@ -21,6 +22,13 @@ use Eko\FeedBundle\Item\Writer\ItemInterface;
  */
 interface FormatterInterface
 {
+    /**
+     * Sets feed instance
+     *
+     * @param Feed $feed
+     */
+    public function setFeed(Feed $feed);
+
     /**
      * Initialize XML DOMDocument
      *

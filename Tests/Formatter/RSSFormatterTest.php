@@ -16,6 +16,8 @@ use Eko\FeedBundle\Field\Channel\GroupChannelField;
 use Eko\FeedBundle\Field\Item\GroupItemField;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Field\Item\MediaItemField;
+use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
@@ -55,7 +57,12 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('generate')
             ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
 
-        $this->manager = new FeedManager($router, $config);
+        $formatters = array(
+            'rss'  => new RssFormatter(),
+            'atom' => new AtomFormatter(),
+        );
+
+        $this->manager = new FeedManager($router, $config, $formatters);
     }
 
     /**

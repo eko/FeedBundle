@@ -12,6 +12,7 @@ namespace Eko\FeedBundle;
 
 use Eko\FeedBundle\DependencyInjection\Compiler\FeedDumpServicePass;
 
+use Eko\FeedBundle\DependencyInjection\Compiler\FeedFormatterPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -31,6 +32,7 @@ class EkoFeedBundle extends Bundle
     {
         parent::build($container);
 
+        $container->addCompilerPass(new FeedFormatterPass());
         $container->addCompilerPass(new FeedDumpServicePass());
     }
 }

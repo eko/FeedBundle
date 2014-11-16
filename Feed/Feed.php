@@ -30,36 +30,45 @@ use Symfony\Component\Routing\RouterInterface;
 class Feed
 {
     /**
-     * @var RouterInterface Router service
-     */
-    protected $router;
-
-    /**
-     * @var array $config Configuration settings
+     * @var array $config
      */
     protected $config;
 
     /**
-     * @var array $items Items of the feed
+     * @var array
+     */
+    protected $formatters;
+
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    /**
+     * @var array
      */
     protected $items = array();
 
     /**
-     * @var array $fields Contains channel Field instances for this feed
+     * @var array $fields
      */
     protected $channelFields = array();
 
     /**
-     * @var array $fields Contains items Field instances for this feed
+     * @var array $fields
      */
     protected $itemFields = array();
 
     /**
-     * @param array $config Configuration settings
+     * Constructor
+     *
+     * @param array $config     Configuration settings
+     * @param array $formatters An array of available formatters services
      */
-    public function __construct(array $config)
+    public function __construct(array $config, array $formatters)
     {
-        $this->config = $config;
+        $this->config     = $config;
+        $this->formatters = $formatters;
     }
 
     /**
@@ -223,21 +232,14 @@ class Feed
      */
     public function render($format)
     {
-        switch ($format) {
-            case 'rss':
-                $formatter = new RssFormatter($this);
-                break;
-
-            case 'atom':
-                $formatter = new AtomFormatter($this);
-                break;
-
-            default:
-                throw new \InvalidArgumentException(
-                    sprintf("Format '%s' is not available. Please see documentation.", $format)
-                );
-                break;
+        if (!isset($this->formatters[$format])) {
+            throw new \InvalidArgumentException(
+                sprintf("Unable to find a formatter service for format '%s'.", $format)
+            );
         }
+
+        $formatter = $this->formatters[$format];
+        $formatter->setFeed($this);
 
         return $formatter->render();
     }

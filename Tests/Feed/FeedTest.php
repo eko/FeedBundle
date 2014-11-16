@@ -11,6 +11,8 @@
 namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\FeedManager;
+use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 
 /**
@@ -45,7 +47,12 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
         $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
 
-        $this->manager = new FeedManager($router, $config);
+        $formatters = array(
+            'rss'  => new RssFormatter(),
+            'atom' => new AtomFormatter(),
+        );
+
+        $this->manager = new FeedManager($router, $config, $formatters);
     }
 
     /**
@@ -134,7 +141,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             'InvalidArgumentException',
-            "Format 'unknown_formatter' is not available. Please see documentation."
+            "Unable to find a formatter service for format 'unknown_formatter'."
         );
 
         $feed->render('unknown_formatter');

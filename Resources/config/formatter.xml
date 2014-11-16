@@ -11,11 +11,11 @@
 
     <services>
         <service id="eko_feed.formatter.rss" class="%eko_feed.formatter.rss.class%">
-            <argument type="service" id="eko_feed.feed" />
+            <tag name="eko_feed.formatter" format="rss"></tag>
         </service>
 
         <service id="eko_feed.formatter.atom" class="%eko_feed.formatter.atom.class%">
-            <argument type="service" id="eko_feed.feed" />
+            <tag name="eko_feed.formatter" format="atom"></tag>
         </service>
     </services>
 

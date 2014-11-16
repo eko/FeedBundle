@@ -11,6 +11,8 @@
 namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\FeedManager;
+use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\RssFormatter;
 
 /**
  * FeedManagerTest
@@ -44,7 +46,12 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
 
         $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
 
-        $this->manager = new FeedManager($router, $config);
+        $formatters = array(
+            'rss'  => new RssFormatter(),
+            'atom' => new AtomFormatter(),
+        );
+
+        $this->manager = new FeedManager($router, $config, $formatters);
     }
 
     /**

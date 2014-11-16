@@ -16,6 +16,8 @@ use Eko\FeedBundle\Field\Channel\GroupChannelField;
 use Eko\FeedBundle\Field\Item\GroupItemField;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Field\Item\MediaItemField;
+use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
@@ -49,7 +51,12 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->manager = new FeedManager($this->getMockRouter(), $config);
+        $formatters = array(
+            'rss'  => new RssFormatter(),
+            'atom' => new AtomFormatter(),
+        );
+
+        $this->manager = new FeedManager($this->getMockRouter(), $config, $formatters);
     }
 
     /**
@@ -70,7 +77,12 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $manager = new FeedManager($this->getMockRouter(), $config);
+        $formatters = array(
+            'rss'  => new RssFormatter(),
+            'atom' => new AtomFormatter(),
+        );
+
+        $manager = new FeedManager($this->getMockRouter(), $config, $formatters);
 
         $feed = $manager->get('article');
 

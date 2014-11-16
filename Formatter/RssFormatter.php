@@ -25,10 +25,8 @@ class RssFormatter extends Formatter implements FormatterInterface
 {
     /**
      * Construct a formatter with given feed
-     *
-     * @param Feed $feed A feed instance
      */
-    public function __construct(Feed $feed)
+    public function __construct()
     {
         $this->itemFields = array(
             new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
@@ -36,8 +34,16 @@ class RssFormatter extends Formatter implements FormatterInterface
             new ItemField('link', 'getFeedItemLink'),
             new ItemField('pubDate', 'getFeedItemPubDate', array('date_format' => \DateTime::RSS)),
         );
+    }
 
-        parent::__construct($feed);
+    /**
+     * Sets feed instance
+     *
+     * @param Feed $feed
+     */
+    public function setFeed(Feed $feed)
+    {
+        $this->feed = $feed;
 
         $this->initialize();
     }
@@ -47,6 +53,8 @@ class RssFormatter extends Formatter implements FormatterInterface
      */
     public function initialize()
     {
+        parent::initialize();
+
         $encoding = $this->feed->get('encoding');
 
         $this->dom = new \DOMDocument('1.0', $encoding);

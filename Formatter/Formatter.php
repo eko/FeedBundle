@@ -41,15 +41,11 @@ class Formatter
     protected $itemFields = array();
 
     /**
-     * Construct a formatter with given feed
-     *
-     * @param Feed $feed A feed instance
+     * Initializes feed
      */
-    public function __construct(Feed $feed)
+    public function initialize()
     {
-        $this->itemFields = array_merge($this->itemFields, $feed->getItemFields());
-
-        $this->feed = $feed;
+        $this->itemFields = array_merge($this->itemFields, $this->feed->getItemFields());
     }
 
     /**

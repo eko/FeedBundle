@@ -26,11 +26,9 @@ class AtomFormatter extends Formatter implements FormatterInterface
     /**
      * Construct a formatter with given feed
      *
-     * @param Feed $feed A feed instance
-     *
      * @throws \InvalidArgumentException if author is not filled in bundle configuration
      */
-    public function __construct(Feed $feed)
+    public function __construct()
     {
         $this->itemFields = array(
             new ItemField('id', 'getFeedItemLink', array('cdata' => false)),
@@ -39,14 +37,22 @@ class AtomFormatter extends Formatter implements FormatterInterface
             new ItemField('link', 'getFeedItemLink', array('attribute' => true, 'attribute_name' => 'href')),
             new ItemField('updated', 'getFeedItemPubDate',array('date_format' => \DateTime::ATOM)),
         );
+    }
 
+    /**
+     * Sets feed instance
+     *
+     * @param Feed $feed
+     */
+    public function setFeed(Feed $feed)
+    {
         $author = $feed->get('author');
 
         if (empty($author)) {
             throw new \InvalidArgumentException('Atom formatter requires an "author" parameter in configuration.');
         }
 
-        parent::__construct($feed);
+        $this->feed = $feed;
 
         $this->initialize();
     }
@@ -56,6 +62,8 @@ class AtomFormatter extends Formatter implements FormatterInterface
      */
     public function initialize()
     {
+        parent::initialize();
+
         $encoding = $this->feed->get('encoding');
 
         $this->dom = new \DOMDocument('1.0', $encoding);
