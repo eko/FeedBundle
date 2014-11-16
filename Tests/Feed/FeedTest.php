@@ -47,9 +47,11 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
         $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
 
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
         $formatters = array(
-            'rss'  => new RssFormatter(),
-            'atom' => new AtomFormatter(),
+            'rss'  => new RssFormatter($translator, 'test'),
+            'atom' => new AtomFormatter($translator, 'test'),
         );
 
         $this->manager = new FeedManager($router, $config, $formatters);

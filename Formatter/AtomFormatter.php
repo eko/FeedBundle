@@ -14,6 +14,8 @@ use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * Atom formatter
  *
@@ -26,9 +28,12 @@ class AtomFormatter extends Formatter implements FormatterInterface
     /**
      * Construct a formatter with given feed
      *
+     * @param TranslatorInterface $translator A Symfony translator service instance
+     * @param string|null         $domain     A Symfony translation domain
+     *
      * @throws \InvalidArgumentException if author is not filled in bundle configuration
      */
-    public function __construct()
+    public function __construct(TranslatorInterface $translator, $domain = null)
     {
         $this->itemFields = array(
             new ItemField('id', 'getFeedItemLink', array('cdata' => false)),
@@ -37,6 +42,8 @@ class AtomFormatter extends Formatter implements FormatterInterface
             new ItemField('link', 'getFeedItemLink', array('attribute' => true, 'attribute_name' => 'href')),
             new ItemField('updated', 'getFeedItemPubDate',array('date_format' => \DateTime::ATOM)),
         );
+
+        parent::__construct($translator, $domain);
     }
 
     /**
@@ -73,8 +80,13 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $channel = $this->dom->appendChild($channel);
 
         $identifier = $this->dom->createElement('id', $this->feed->get('link'));
-        $title = $this->dom->createElement('title', $this->feed->get('title'));
-        $subtitle = $this->dom->createElement('subtitle', $this->feed->get('description'));
+
+        $title = $this->translate($this->feed->get('title'));
+        $title = $this->dom->createElement('title', $title);
+
+        $description = $this->translate($this->feed->get('description'));
+        $subtitle = $this->dom->createElement('subtitle', $description);
+
         $name = $this->dom->createElement('name', $this->feed->get('author'));
 
         $link = $this->dom->createElement('link');

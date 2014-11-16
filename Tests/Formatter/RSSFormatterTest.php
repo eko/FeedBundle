@@ -57,9 +57,11 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('generate')
             ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
 
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
         $formatters = array(
-            'rss'  => new RssFormatter(),
-            'atom' => new AtomFormatter(),
+            'rss'  => new RssFormatter($translator, 'test'),
+            'atom' => new AtomFormatter($translator, 'test'),
         );
 
         $this->manager = new FeedManager($router, $config, $formatters);
@@ -275,5 +277,40 @@ EOF
         );
 
         $feed->render('rss');
+    }
+
+    /**
+     * Check if values are well translated with "translatable" option
+     */
+    public function testTranslatableValue()
+    {
+        $config = array(
+            'feeds' => array(
+                'article' => array(
+                    'title'       => 'My title',
+                    'description' => 'My description',
+                    'link'        => 'http://github.com/eko/FeedBundle',
+                    'encoding'    => 'utf-8'
+                )
+            )
+        );
+
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
+
+        $formatters = array('rss' => new RssFormatter($translator, 'test'));
+
+        $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+
+        $manager = new FeedManager($router, $config, $formatters);
+
+        $feed = $manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', array(
+            'translatable' => true
+        )));
+
+        $output = $feed->render('rss');
+        $this->assertContains('<fake_custom>translatable-value</fake_custom>', $output);
     }
 }

@@ -40,6 +40,7 @@ class EkoFeedExtension extends Extension
         $loader->load('hydrator.xml');
 
         $container->setParameter('eko_feed.config', $config);
+        $container->setParameter('eko_feed.translation_domain', $config['translation_domain']);
 
         $this->configureHydrator($config, $container);
     }

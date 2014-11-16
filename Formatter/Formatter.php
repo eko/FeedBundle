@@ -16,6 +16,8 @@ use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * Formatter
  *
@@ -31,6 +33,16 @@ class Formatter
     protected $feed;
 
     /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @var string|null
+     */
+    protected $domain;
+
+    /**
      * @var \DOMDocument $dom XML DOMDocument
      */
     protected $dom;
@@ -39,6 +51,18 @@ class Formatter
      * @var array $fields Contain item Field instances for this formatter
      */
     protected $itemFields = array();
+
+    /**
+     * Construct a formatter with given feed
+     *
+     * @param TranslatorInterface $translator A Symfony translator service instance
+     * @param string|null         $domain     A Symfony translation domain
+     */
+    public function __construct(TranslatorInterface $translator, $domain = null)
+    {
+        $this->translator = $translator;
+        $this->domain     = $domain;
+    }
 
     /**
      * Initializes feed
@@ -248,6 +272,10 @@ class Formatter
 
         $name = $field->getName();
 
+        if ($field->get('translatable')) {
+            $value = $this->translate($value);
+        }
+
         if ($field->get('cdata')) {
             $value = $this->dom->createCDATASection($value);
 
@@ -273,5 +301,17 @@ class Formatter
         }
 
         return $element;
+    }
+
+    /**
+     * Translates a value
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function translate($value)
+    {
+        return $this->translator->trans($value, array(), $this->domain);
     }
 }

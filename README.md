@@ -15,6 +15,7 @@ Features
  * Items based on your entities
  * Add groups of items
  * Add enclosure media tags
+ * Translate your feed data
  * Read XML feeds and populate your Symfony entities
  * Dump your feeds into a file via a Symfony console command
 
@@ -60,6 +61,7 @@ The following configuration lines are required:
 ```yaml
 eko_feed:
     hydrator: your_hydrator.custom.service # Optional, if you use entity hydrating with a custom hydrator
+    translation_domain: test # Optional, if you want to use a custom translation domain
     feeds:
         article:
             title:       'My articles/posts'

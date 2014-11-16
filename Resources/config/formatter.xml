@@ -12,10 +12,16 @@
     <services>
         <service id="eko_feed.formatter.rss" class="%eko_feed.formatter.rss.class%">
             <tag name="eko_feed.formatter" format="rss"></tag>
+
+            <argument type="service" id="translator" />
+            <argument>%eko_feed.translation_domain%</argument>
         </service>
 
         <service id="eko_feed.formatter.atom" class="%eko_feed.formatter.atom.class%">
             <tag name="eko_feed.formatter" format="atom"></tag>
+
+            <argument type="service" id="translator" />
+            <argument>%eko_feed.translation_domain%</argument>
         </service>
     </services>
 

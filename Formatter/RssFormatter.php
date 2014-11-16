@@ -14,6 +14,8 @@ use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * RSS formatter
  *
@@ -25,8 +27,11 @@ class RssFormatter extends Formatter implements FormatterInterface
 {
     /**
      * Construct a formatter with given feed
+     *
+     * @param TranslatorInterface $translator A Symfony translator service instance
+     * @param string|null         $domain     A Symfony translation domain
      */
-    public function __construct()
+    public function __construct(TranslatorInterface $translator, $domain = null)
     {
         $this->itemFields = array(
             new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
@@ -34,6 +39,8 @@ class RssFormatter extends Formatter implements FormatterInterface
             new ItemField('link', 'getFeedItemLink'),
             new ItemField('pubDate', 'getFeedItemPubDate', array('date_format' => \DateTime::RSS)),
         );
+
+        parent::__construct($translator, $domain);
     }
 
     /**
@@ -66,12 +73,16 @@ class RssFormatter extends Formatter implements FormatterInterface
         $channel = $this->dom->createElement('channel');
         $channel = $root->appendChild($channel);
 
-        $fields = array('title', 'description', 'link');
+        $title = $this->translate($this->feed->get('title'));
+        $title = $this->dom->createElement('title', $this->feed->get($title));
+        $channel->appendChild($title);
 
-        foreach ($fields as $field) {
-            $element = $this->dom->createElement($field, $this->feed->get($field));
-            $channel->appendChild($element);
-        }
+        $description = $this->translate($this->feed->get('description'));
+        $description = $this->dom->createElement('description', $this->feed->get($description));
+        $channel->appendChild($description);
+
+        $link = $this->dom->createElement('link', $this->feed->get('link'));
+        $channel->appendChild($link);
 
         $date = new \DateTime();
         $lastBuildDate = $this->dom->createElement('lastBuildDate', $date->format(\DateTime::RSS));
