@@ -86,7 +86,7 @@ class Reader
     public function populate($entityName)
     {
         if (!class_exists($entityName)) {
-            throw new \RuntimeException(sprintf('Entity %s does not exists.'));
+            throw new \RuntimeException(sprintf('Entity %s does not exists.', $entityName));
         }
 
         $feed = $this->get();
