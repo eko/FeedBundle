@@ -23,6 +23,11 @@ class GroupItemField implements ItemFieldInterface
      * @var string $name Field name
      */
     protected $name;
+    
+    /**
+     * @var ItemField or false if this is a simple GroupItemField
+     */
+    protected $parentObj = false;
 
     /**
      * @var array ItemField instances
@@ -32,14 +37,20 @@ class GroupItemField implements ItemFieldInterface
     /**
      * Constructor
      *
-     * @param string                   $name       A group field name
+     * @param string|ItemFieldInterface $parent A group field name or an ItemField instance to serve as the parent
      * @param array|ItemFieldInterface $itemFields An array or a single ItemField instance
      *
      * @throws \RuntimeException if
      */
-    public function __construct($name, $itemFields)
+    public function __construct($parent, $itemFields)
     {
-        $this->name = $name;
+    	if($parent instanceof ItemFieldInterface) {
+        	$this->name = $parent->getName();
+        	$this->parentObj = $parent;
+    	}
+    	else {
+    		$this->name = $parent;
+    	}
 
         if (!is_array($itemFields) && !$itemFields instanceof ItemFieldInterface) {
             throw new \RuntimeException('GroupItemField second arguments should be an array or a single ItemField instance');
@@ -70,5 +81,13 @@ class GroupItemField implements ItemFieldInterface
     public function getItemFields()
     {
         return $this->itemFields;
+    }
+    
+    /**
+     * Returns prent ItemField object or false if this is a simple GroupItem
+     * @return \Eko\FeedBundle\Field\Item\ItemField
+     */
+    public function getParentObject() {
+    	return $this->parentObj;
     }
 }

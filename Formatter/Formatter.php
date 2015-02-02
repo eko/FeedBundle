@@ -145,8 +145,14 @@ class Formatter
     protected function formatGroupItemField(ItemFieldInterface $field, ItemInterface $item)
     {
         $name = $field->getName();
-        $element = $this->dom->createElement($name);
-
+        $parent = $field->getParentObject();
+        if($parent) {
+        	$elArray = $this->format($parent, $item);
+        	$element = reset($elArray);
+        }
+        else {
+        	$element = $this->dom->createElement($name);
+        }
         $itemFields = $field->getItemFields();
 
         foreach ($itemFields as $itemField) {
