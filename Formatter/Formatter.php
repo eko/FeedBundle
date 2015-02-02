@@ -145,8 +145,14 @@ class Formatter
     protected function formatGroupItemField(ItemFieldInterface $field, ItemInterface $item)
     {
         $name = $field->getName();
-        $element = $this->dom->createElement($name);
-
+        $parent = $field->getParentObject();
+        if($parent) {
+        	$elArray = $this->format($parent, $item);
+        	$element = reset($elArray);
+        }
+        else {
+        	$element = $this->dom->createElement($name);
+        }
         $itemFields = $field->getItemFields();
 
         foreach ($itemFields as $itemField) {
@@ -271,7 +277,6 @@ class Formatter
         $element = null;
 
         $name = $field->getName();
-
         if ($field->get('translatable')) {
             $value = $this->translate($value);
         }
@@ -287,7 +292,7 @@ class Formatter
             }
 
             $element = $this->dom->createElement($name);
-            $element->setAttribute($field->get('attribute_name'), $item->getFeedItemLink());
+            $element->setAttribute($field->get('attribute_name'), $value);
         } else {
             if ($format = $field->get('date_format')) {
                 if (!$value instanceof \DateTime) {
