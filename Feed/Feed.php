@@ -15,8 +15,6 @@ use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
-use Eko\FeedBundle\Formatter\AtomFormatter;
-use Eko\FeedBundle\Formatter\RssFormatter;
 
 use Symfony\Component\Routing\RouterInterface;
 

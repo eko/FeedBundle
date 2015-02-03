@@ -10,7 +10,6 @@
 
 namespace Eko\FeedBundle\Feed;
 
-use Eko\FeedBundle\Formatter\FormatterInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -29,12 +28,12 @@ class FeedManager extends ContainerAware
     protected $config;
 
     /**
-     * @var RouterInterface Router service
+     * @var RouterInterface
      */
     protected $router;
 
     /**
-     * @var Formatters services
+     * @var array
      */
     protected $formatters;
 
