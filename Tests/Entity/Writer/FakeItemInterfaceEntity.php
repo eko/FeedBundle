@@ -146,4 +146,36 @@ class FakeItemInterfaceEntity implements ItemInterface
             'category 3'
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getGroupKeyAttribute()
+    {
+        return 'my-group-key-attribute';
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroupValueAttribute()
+    {
+        return 'my-group-value-attribute';
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemKeyAttribute()
+    {
+        return 'my-item-key-attribute';
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemValueAttribute()
+    {
+        return 'my-item-value-attribute';
+    }
 }

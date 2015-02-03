@@ -10,6 +10,8 @@
 
 namespace Eko\FeedBundle\Field\Channel;
 
+use Eko\FeedBundle\Field\Item\ItemFieldInterface;
+
 /**
  * ChannelFieldInterface
  *
@@ -17,12 +19,7 @@ namespace Eko\FeedBundle\Field\Channel;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-interface ChannelFieldInterface
+interface ChannelFieldInterface extends ItemFieldInterface
 {
-    /**
-     * Returns field name
-     *
-     * @return string
-     */
-    public function getName();
+
 }

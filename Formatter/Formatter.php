@@ -99,9 +99,7 @@ class Formatter
                 foreach ($field->getItemFields() as $childField) {
                     $child = $this->dom->createElement($childField->getName(), $childField->getValue());
 
-                    foreach ($childField->getAttributes() as $key => $value) {
-                        $child->setAttribute($key, $value);
-                    }
+                    $this->addAttributes($child, $childField);
 
                     $parent->appendChild($child);
                 }
@@ -109,9 +107,7 @@ class Formatter
                 $parent = $this->dom->createElement($field->getName(), $field->getValue());
             }
 
-            foreach ($field->getAttributes() as $key => $value) {
-                $parent->setAttribute($key, $value);
-            }
+            $this->addAttributes($parent, $field);
 
             $channel->appendChild($parent);
         }
@@ -157,9 +153,7 @@ class Formatter
         $name = $field->getName();
         $element = $this->dom->createElement($name);
 
-        foreach ($field->getAttributes() as $key => $value) {
-            $element->setAttribute($key, $value);
-        }
+        $this->addAttributes($element, $field, $item);
 
         $itemFields = $field->getItemFields();
 
@@ -219,9 +213,7 @@ class Formatter
 
             $element = $this->dom->createElement($elementName);
 
-            foreach ($field->getAttributes() as $key => $attribute) {
-                $element->setAttribute($key, $attribute);
-            }
+            $this->addAttributes($element, $field, $item);
 
             switch ($this->getName()) {
                 case 'rss':
@@ -318,11 +310,28 @@ class Formatter
             $element = $this->dom->createElement($name, $value);
         }
 
-        foreach ($field->getAttributes() as $key => $value) {
-            $element->setAttribute($key, $value);
-        }
+        $this->addAttributes($element, $field, $item);
 
         return $element;
+    }
+
+    /**
+     * Add field attributes to a DOM element
+     *
+     * @param \DOMElement        $element A XML DOM element
+     * @param ItemFieldInterface $field   A feed field instance
+     * @param ItemInterface|null $item    A feed item instance
+     */
+    protected function addAttributes(\DOMElement $element, ItemFieldInterface $field, ItemInterface $item = null)
+    {
+        foreach ($field->getAttributes() as $key => $value) {
+            if ($item) {
+                $key   = method_exists($item, $key) ? call_user_func(array($item, $key)) : $key;
+                $value = method_exists($item, $value) ? call_user_func(array($item, $value)) : $value;
+            }
+
+            $element->setAttribute($key, $value);
+        }
     }
 
     /**

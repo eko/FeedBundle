@@ -209,7 +209,7 @@ $feed->addItemField(
     new GroupItemField(
         'categories',
         new ItemField('category', 'getFeedCategoriesCustom', array(), array('category-attribute', 'test'),
-        array('categories-attribute', 'test')
+        array('categories-attribute', 'getAttributeValue')
     )
 );
 ```

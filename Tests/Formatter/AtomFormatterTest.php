@@ -249,6 +249,30 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if a custom group item field with attributes from method is properly rendered
+     */
+    public function testAddCustomGroupItemFieldWithAttributesFromMethod()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(
+            new GroupItemField(
+                'categories',
+                new ItemField('category', 'getFeedCategoriesCustom', array(), array('getItemKeyAttribute' => 'getItemValueAttribute')),
+                array('getGroupKeyAttribute' => 'getGroupValueAttribute')
+            )
+        );
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<categories my-group-key-attribute="my-group-value-attribute">', $output);
+        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 1</category>', $output);
+        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 2</category>', $output);
+        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 3</category>', $output);
+        $this->assertContains('</categories>', $output);
+    }
+
+    /**
      * Check if a custom group channel field is properly rendered with GroupFieldInterface
      */
     public function testAddCustomGroupChannelFieldWithItemInterface()
