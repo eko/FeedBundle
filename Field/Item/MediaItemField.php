@@ -22,16 +22,17 @@ class MediaItemField extends ItemField
     /**
      * Constructor
      *
-     * @param string $method  An item method name
-     * @param array  $options An options array
+     * @param string $method     An item method name
+     * @param array  $options    An options array
+     * @param array  $attributes An attributes array
      */
-    public function __construct($method, $options = array())
+    public function __construct($method, array $options = array(), array $attributes = array())
     {
         $name = array(
             'rss'  => 'enclosure',
             'atom' => 'link'
         );
 
-        parent::__construct($name, $method, $options);
+        parent::__construct($name, $method, $options, $attributes);
     }
 }

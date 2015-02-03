@@ -35,20 +35,28 @@ class ChannelField implements ChannelFieldInterface
     protected $options;
 
     /**
+     * @var array $attributes An attributes array
+     */
+    protected $attributes;
+
+    /**
      * Constructor
      *
-     * @param string $name    A field name
-     * @param string $value   A field value
-     * @param array  $options An options array
+     * @param string $name       A field name
+     * @param string $value      A field value
+     * @param array  $options    An options array
+     * @param array  $attributes An attributes array
      */
-    public function __construct($name, $value, $options = array())
+    public function __construct($name, $value, array $options = array(), array $attributes = array())
     {
-        $this->name = $name;
+        $this->name  = $name;
         $this->value = $value;
 
         if (!empty($options)) {
             $this->options = $options;
         }
+
+        $this->attributes = $attributes;
     }
 
     /**
@@ -82,5 +90,15 @@ class ChannelField implements ChannelFieldInterface
     public function get($option, $default = false)
     {
         return isset($this->options[$option]) ? $this->options[$option] : $default;
+    }
+
+    /**
+     * Returns attributes to be added to this item field
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

@@ -192,6 +192,30 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if a custom group item field with attributes is properly rendered
+     */
+    public function testAddCustomGroupItemFieldWithAttributes()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(
+            new GroupItemField(
+                'categories',
+                new ItemField('category', 'getFeedCategoriesCustom', array(), array('category-type' => 'test')),
+                array('is-it-test' => 'yes')
+            )
+        );
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<categories is-it-test="yes">', $output);
+        $this->assertContains('<category category-type="test">category 1</category>', $output);
+        $this->assertContains('<category category-type="test">category 2</category>', $output);
+        $this->assertContains('<category category-type="test">category 3</category>', $output);
+        $this->assertContains('</categories>', $output);
+    }
+
+    /**
      * Check if a custom group channel field is properly rendered with GroupFieldInterface
      */
     public function testAddCustomGroupChannelFieldWithItemInterface()
@@ -210,6 +234,28 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<image>', $output);
         $this->assertContains('<name>My test image</name>', $output);
         $this->assertContains('<url>http://www.example.com/image.jpg</url>', $output);
+        $this->assertContains('</image>', $output);
+    }
+
+    /**
+     * Check if a custom group channel field is properly rendered with attributes
+     */
+    public function testAddCustomGroupChannelFieldWithAttributes()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addChannelField(
+            new GroupChannelField('image', array(
+                new ChannelField('name', 'My test image', array(), array('name-attribute' => 'test')),
+                new ChannelField('url', 'http://www.example.com/image.jpg', array(), array('url-attribute' => 'test'))
+            ), array('image-attribute' => 'test'))
+        );
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<image image-attribute="test">', $output);
+        $this->assertContains('<name name-attribute="test">My test image</name>', $output);
+        $this->assertContains('<url url-attribute="test">http://www.example.com/image.jpg</url>', $output);
         $this->assertContains('</image>', $output);
     }
 

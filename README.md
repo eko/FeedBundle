@@ -197,7 +197,7 @@ $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom'));
 
 Of course, `getFeedItemCustom()` method needs to be declared in your entity.
 
-##### Add a group of custom item fields
+##### Add a group of custom item fields (optionally, with attributes)
 
 You can also add group item fields using this way, if your method returns an array:
 
@@ -206,7 +206,11 @@ You can also add group item fields using this way, if your method returns an arr
 $feed = $this->get('eko_feed.feed.manager')->get('article');
 $feed->add(new FakeEntity());
 $feed->addItemField(
-    new GroupItemField('categories', new ItemField('category', 'getFeedCategoriesCustom'))
+    new GroupItemField(
+        'categories',
+        new ItemField('category', 'getFeedCategoriesCustom', array(), array('category-attribute', 'test'),
+        array('categories-attribute', 'test')
+    )
 );
 ```
 

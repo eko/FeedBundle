@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Formatter;
 
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Channel\GroupChannelField;
+use Eko\FeedBundle\Field\Item\GroupItemField;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
@@ -97,10 +98,19 @@ class Formatter
 
                 foreach ($field->getItemFields() as $childField) {
                     $child = $this->dom->createElement($childField->getName(), $childField->getValue());
+
+                    foreach ($childField->getAttributes() as $key => $value) {
+                        $child->setAttribute($key, $value);
+                    }
+
                     $parent->appendChild($child);
                 }
             } else {
                 $parent = $this->dom->createElement($field->getName(), $field->getValue());
+            }
+
+            foreach ($field->getAttributes() as $key => $value) {
+                $parent->setAttribute($key, $value);
             }
 
             $channel->appendChild($parent);
@@ -137,15 +147,19 @@ class Formatter
     /**
      * Format a group item field
      *
-     * @param ItemFieldInterface $field An item field instance
-     * @param ItemInterface      $item  An entity instance
+     * @param GroupItemField $field An item field instance
+     * @param ItemInterface  $item  An entity instance
      *
      * @return \DOMElement
      */
-    protected function formatGroupItemField(ItemFieldInterface $field, ItemInterface $item)
+    protected function formatGroupItemField(GroupItemField $field, ItemInterface $item)
     {
         $name = $field->getName();
         $element = $this->dom->createElement($name);
+
+        foreach ($field->getAttributes() as $key => $value) {
+            $element->setAttribute($key, $value);
+        }
 
         $itemFields = $field->getItemFields();
 
@@ -204,6 +218,10 @@ class Formatter
             $elementName = $elementName[$this->getName()];
 
             $element = $this->dom->createElement($elementName);
+
+            foreach ($field->getAttributes() as $key => $attribute) {
+                $element->setAttribute($key, $attribute);
+            }
 
             switch ($this->getName()) {
                 case 'rss':
@@ -298,6 +316,10 @@ class Formatter
             }
 
             $element = $this->dom->createElement($name, $value);
+        }
+
+        foreach ($field->getAttributes() as $key => $value) {
+            $element->setAttribute($key, $value);
         }
 
         return $element;

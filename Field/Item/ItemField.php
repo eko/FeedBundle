@@ -35,20 +35,28 @@ class ItemField implements ItemFieldInterface
     protected $options;
 
     /**
+     * @var array $attributes Attributes to add to this item field
+     */
+    protected $attributes;
+
+    /**
      * Constructor
      *
-     * @param string|array $name    A field name
-     * @param string       $method  An item method name
-     * @param array        $options An options array
+     * @param string|array $name       A field name
+     * @param string       $method     An item method name
+     * @param array        $options    An options array
+     * @param array        $attributes An attributes array
      */
-    public function __construct($name, $method, $options = array())
+    public function __construct($name, $method, array $options = array(), array $attributes = array())
     {
-        $this->name = $name;
+        $this->name   = $name;
         $this->method = $method;
 
         if (!empty($options)) {
             $this->options = $options;
         }
+
+        $this->attributes = $attributes;
     }
 
     /**
@@ -82,5 +90,15 @@ class ItemField implements ItemFieldInterface
     public function get($option, $default = false)
     {
         return isset($this->options[$option]) ? $this->options[$option] : $default;
+    }
+
+    /**
+     * Returns attributes to be added to this item field
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

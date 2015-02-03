@@ -30,14 +30,20 @@ class GroupItemField implements ItemFieldInterface
     protected $itemFields;
 
     /**
+     * @var array
+     */
+    protected $attributes;
+
+    /**
      * Constructor
      *
      * @param string                   $name       A group field name
      * @param array|ItemFieldInterface $itemFields An array or a single ItemField instance
+     * @param array                    $attributes An attributes array to add to item fields
      *
      * @throws \RuntimeException if
      */
-    public function __construct($name, $itemFields)
+    public function __construct($name, $itemFields, array $attributes = array())
     {
         $this->name = $name;
 
@@ -50,6 +56,7 @@ class GroupItemField implements ItemFieldInterface
         }
 
         $this->itemFields = $itemFields;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -70,5 +77,15 @@ class GroupItemField implements ItemFieldInterface
     public function getItemFields()
     {
         return $this->itemFields;
+    }
+
+    /**
+     * Returns attributes to add to this group item field
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }
