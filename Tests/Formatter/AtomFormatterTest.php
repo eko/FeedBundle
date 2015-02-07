@@ -160,6 +160,23 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if a custom item field with one attribute only is properly rendered with ItemInterface
+     */
+    public function testAddCustomItemFieldWithOneAttributeOnly()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', array(
+            'attribute'      => true,
+            'attribute_name' => 'fake-value'
+        )));
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<fake_custom fake-value="My custom field"/>', $output);
+    }
+
+    /**
      * Check if a custom media item field is properly rendered with ItemInterface
      */
     public function testAddCustomMediaItemFieldWithItemInterface()
