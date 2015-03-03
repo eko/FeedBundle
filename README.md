@@ -398,6 +398,8 @@ You can define your own feed formatter by using the following tag:
 ```xml
 <service id="acme.my_bundle.formatter.custom" class="Acme\MyBundle\Feed\Formatter\CustomFormatter">
     <tag name="eko_feed.formatter" format="custom"></tag>
+
+    <argument type="service" id="translator" />
 </service>
 ```
 
