@@ -16,10 +16,12 @@
         "symfony/framework-bundle": ">=2.2",
         "zendframework/zend-feed": ">=2.0",
         "zendframework/zend-servicemanager": ">=2.0",
-        "zendframework/zend-http": ">=2.0"
+        "zendframework/zend-http": ">=2.0",
+        "symfony/symfony": "2.7.*@dev"
     },
     "require-dev": {
-        "doctrine/orm": "~2.2,>=2.2.3"
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "phpunit/phpunit": "~4"
     },
     "suggest": {
         "doctrine/orm": "~2.2,>=2.2.3"
