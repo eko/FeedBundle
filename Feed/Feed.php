@@ -112,7 +112,7 @@ class Feed
     }
 
 	/**
-	 * Returns link value
+	 * Returns absolute link value
 	 *
 	 * @return string
 	 */
