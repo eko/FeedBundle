@@ -104,6 +104,10 @@ class Feed
      */
     public function get($parameter, $default = null)
     {
+		if('link' == $parameter){
+			return $this->getLink();
+		}
+
         return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
     }
 
@@ -112,14 +116,15 @@ class Feed
 	 *
 	 * @return string
 	 */
-	public function getLink()
+	private function getLink()
 	{
-		if(isset($this->config['link']['direct'])) {
-			return $this->config['link']['direct'];
+		$linkConfig = $this->config['link'];
+
+		if(is_string($linkConfig) || isset($linkConfig['direct']) ) {
+			return (is_string($linkConfig)) ? $linkConfig : $linkConfig['direct'];
 		}
 
-		return $this->router->generate($this->config['link']['route_name'],
-			$this->config['link']['route_params'], true);
+		return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
 	}
 
     /**

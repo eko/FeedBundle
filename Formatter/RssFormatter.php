@@ -81,7 +81,7 @@ class RssFormatter extends Formatter implements FormatterInterface
         $description = $this->dom->createElement('description', $description);
         $channel->appendChild($description);
 
-		$link = $this->dom->createElement('id', $this->feed->getLink());
+		$link = $this->dom->createElement('link', $this->feed->get('link'));
         $channel->appendChild($link);
 
         $date = new \DateTime();
