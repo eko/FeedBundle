@@ -79,7 +79,7 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $channel->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
         $channel = $this->dom->appendChild($channel);
 
-        $identifier = $this->dom->createElement('id', $this->feed->get('link'));
+        $identifier = $this->dom->createElement('id', $this->feed->getLink());
 
         $title = $this->translate($this->feed->get('title'));
         $title = $this->dom->createElement('title', $title);
@@ -90,7 +90,7 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $name = $this->dom->createElement('name', $this->feed->get('author'));
 
         $link = $this->dom->createElement('link');
-        $link->setAttribute('href', $this->feed->get('link'));
+        $link->setAttribute('href', $this->feed->getLink());
 
         $date = new \DateTime();
         $updated = $this->dom->createElement('updated', $date->format(\DateTime::ATOM));
@@ -118,6 +118,7 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
             $this->addItem($channel, $item);
         }
+
     }
 
     /**

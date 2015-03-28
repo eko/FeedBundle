@@ -107,6 +107,21 @@ class Feed
         return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
     }
 
+	/**
+	 * Returns link value
+	 *
+	 * @return string
+	 */
+	public function getLink()
+	{
+		if(isset($this->config['link']['direct'])) {
+			return $this->config['link']['direct'];
+		}
+
+		return $this->router->generate($this->config['link']['route_name'],
+			$this->config['link']['route_params'], true);
+	}
+
     /**
      * Add an item (an entity which implements ItemInterface instance)
      *
