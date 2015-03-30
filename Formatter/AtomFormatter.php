@@ -118,7 +118,6 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
             $this->addItem($channel, $item);
         }
-
     }
 
     /**
