@@ -104,28 +104,28 @@ class Feed
      */
     public function get($parameter, $default = null)
     {
-		if('link' == $parameter){
-			return $this->getLink();
-		}
+        if('link' == $parameter){
+            return $this->getLink();
+        }
 
         return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
     }
 
-	/**
-	 * Returns absolute link value
-	 *
-	 * @return string
-	 */
-	private function getLink()
-	{
-		$linkConfig = $this->config['link'];
+    /**
+     * Returns absolute link value
+     *
+     * @return string
+     */
+    private function getLink()
+    {
+        $linkConfig = $this->config['link'];
 
-		if(is_string($linkConfig) || isset($linkConfig['direct']) ) {
-			return (is_string($linkConfig)) ? $linkConfig : $linkConfig['direct'];
-		}
+        if (is_string($linkConfig) || isset($linkConfig['direct'])) {
+            return (is_string($linkConfig)) ? $linkConfig : $linkConfig['direct'];
+        }
 
-		return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
-	}
+        return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
+    }
 
     /**
      * Add an item (an entity which implements ItemInterface instance)
