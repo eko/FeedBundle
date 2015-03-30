@@ -104,7 +104,7 @@ class Feed
      */
     public function get($parameter, $default = null)
     {
-        if('link' == $parameter){
+        if ('link' == $parameter) {
             return $this->getLink();
         }
 
@@ -120,8 +120,8 @@ class Feed
     {
         $linkConfig = $this->config['link'];
 
-        if (is_string($linkConfig) || isset($linkConfig['direct'])) {
-            return (is_string($linkConfig)) ? $linkConfig : $linkConfig['direct'];
+        if (is_string($linkConfig) || isset($linkConfig['uri'])) {
+            return (is_string($linkConfig)) ? $linkConfig : $linkConfig['uri'];
         }
 
         return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
