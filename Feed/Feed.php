@@ -104,7 +104,27 @@ class Feed
      */
     public function get($parameter, $default = null)
     {
+        if ('link' == $parameter) {
+            return $this->getLink();
+        }
+
         return isset($this->config[$parameter]) ? $this->config[$parameter] : $default;
+    }
+
+    /**
+     * Returns absolute link value
+     *
+     * @return string
+     */
+    private function getLink()
+    {
+        $linkConfig = $this->config['link'];
+
+        if (is_string($linkConfig) || isset($linkConfig['uri'])) {
+            return (is_string($linkConfig)) ? $linkConfig : $linkConfig['uri'];
+        }
+
+        return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
     }
 
     /**

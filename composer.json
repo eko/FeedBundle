@@ -19,7 +19,8 @@
         "zendframework/zend-http": ">=2.0"
     },
     "require-dev": {
-        "doctrine/orm": "~2.2,>=2.2.3"
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "phpunit/phpunit": "~4"
     },
     "suggest": {
         "doctrine/orm": "~2.2,>=2.2.3"
