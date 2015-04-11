@@ -68,6 +68,20 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if RSS formatter output item
+     */
+    public function testRenderCorrectRootNodes()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+
+        $output = $feed->render('rss');
+
+        $this->assertContains('<rss version="2.0">', $output);
+        $this->assertContains('<channel>', $output);
+    }
+
+    /**
      * Check if RSS formatter output a valid XML
      */
     public function testRenderValidXML()

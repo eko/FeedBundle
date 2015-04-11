@@ -91,6 +91,8 @@ class AtomFormatter extends Formatter implements FormatterInterface
 
         $link = $this->dom->createElement('link');
         $link->setAttribute('href', $this->feed->get('link'));
+        $link->setAttribute('rel', 'self');
+        $link->setAttribute('type', 'application/rss+xml');
 
         $date = new \DateTime();
         $updated = $this->dom->createElement('updated', $date->format(\DateTime::ATOM));

@@ -100,7 +100,21 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if RSS formatter output a valid XML
+     * Check if Atom formatter output item
+     */
+    public function testRenderCorrectRootNodes()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+
+        $output = $feed->render('atom');
+
+        $this->assertContains('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
+        $this->assertContains('<link href="http://github.com/eko/FeedBundle" rel="self" type="application/rss+xml"/>', $output);
+    }
+
+    /**
+     * Check if Atom formatter output a valid XML
      */
     public function testRenderValidXML()
     {
@@ -117,7 +131,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if RSS formatter output item
+     * Check if Atom formatter output item
      */
     public function testRenderItem()
     {
