@@ -26,7 +26,7 @@ class FeedDumpServicePass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('doctrine.orm.entity_manager')) {
+        if (!$container->hasAlias('doctrine.orm.entity_manager')) {
             $container->removeDefinition('eko_feed.feed.dump');
         }
     }
