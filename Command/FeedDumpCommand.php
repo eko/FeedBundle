@@ -62,7 +62,6 @@ class FeedDumpCommand extends ContainerAwareCommand
         $limit     = $input->getOption('limit');
         $direction = $input->getOption('direction');
         $orderBy   = $input->getOption('orderBy');
-        $rootDir   = $this->getContainer()->get('kernel')->getRootDir();
 
         $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
 
@@ -73,7 +72,6 @@ class FeedDumpCommand extends ContainerAwareCommand
                 ->setFilename($filename)
                 ->setFormat($format)
                 ->setLimit($limit)
-                ->setRootDir($rootDir)
                 ->setDirection($direction)
                 ->setOrderBy($orderBy)
             ;
@@ -81,7 +79,7 @@ class FeedDumpCommand extends ContainerAwareCommand
         $feedDumpService->dump();
 
         $output->writeln('<comment>done!</comment>');
-        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $rootDir . $filename));
+        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $feedDumpService->getRootDir() . $filename));
     }
 }
 

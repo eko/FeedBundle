@@ -15,13 +15,15 @@
         <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%">
             <argument type="service" id="router" />
             <argument>%eko_feed.config%</argument>
-            <argument />
         </service>
 
         <service id="eko_feed.feed.dump" class="%eko_feed.feed.dump.class%">
             <argument type="service" id="eko_feed.feed.manager" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="filesystem" />
+            <call method="setRootDir">
+                 <argument>%kernel.root_dir%</argument>
+            </call>
         </service>
 
         <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" />
