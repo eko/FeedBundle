@@ -15,6 +15,7 @@
         <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%">
             <argument type="service" id="router" />
             <argument>%eko_feed.config%</argument>
+            <argument />
         </service>
 
         <service id="eko_feed.feed.dump" class="%eko_feed.feed.dump.class%">
