@@ -72,7 +72,7 @@ eko_feed:
 ```
 You can set link as route:
 ```yaml
-link:        
+link:
     route_name: acme_blog_main_index
     route_params: {id: 2} # necessary if route cantains required parameters
 ```
@@ -347,7 +347,6 @@ $feedDumpService
         ->setFilename($filename)
         ->setFormat($format)
         ->setLimit($limit)
-        ->setRootDir($rootDir)
         ->setDirection($direction)
         ->setOrderBy($orderBy)
     ;

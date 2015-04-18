@@ -267,4 +267,14 @@ class FeedDumpService
 
         return $this;
     }
+
+    /**
+     * Return rootdir
+     *
+     * @return string
+     */
+    public function getRootDir()
+    {
+        return $this->rootDir;
+    }
 }

@@ -22,6 +22,9 @@
             <argument type="service" id="eko_feed.feed.manager" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="filesystem" />
+            <call method="setRootDir">
+                 <argument>%kernel.root_dir%</argument>
+            </call>
         </service>
 
         <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" />
