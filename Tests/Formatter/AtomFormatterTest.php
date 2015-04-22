@@ -141,7 +141,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $output = $feed->render('atom');
 
         $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
-        $this->assertContains('<summary><![CDATA[Fake description or content]]></summary>', $output);
+        $this->assertContains('<summary type="html"><![CDATA[Fake description or content]]></summary>', $output);
         $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url"/>', $output);
     }
 
