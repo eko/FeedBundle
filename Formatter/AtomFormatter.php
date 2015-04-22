@@ -38,7 +38,7 @@ class AtomFormatter extends Formatter implements FormatterInterface
         $this->itemFields = array(
             new ItemField('id', 'getFeedItemLink', array('cdata' => false)),
             new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
-            new ItemField('summary', 'getFeedItemDescription', array('cdata' => true)),
+            new ItemField('summary', 'getFeedItemDescription', array('cdata' => true), array('type' => 'html')),
             new ItemField('link', 'getFeedItemLink', array('attribute' => true, 'attribute_name' => 'href')),
             new ItemField('updated', 'getFeedItemPubDate',array('date_format' => \DateTime::ATOM)),
         );
