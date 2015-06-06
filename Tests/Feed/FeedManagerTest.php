@@ -44,7 +44,7 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 

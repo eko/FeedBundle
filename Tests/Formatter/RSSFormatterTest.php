@@ -51,7 +51,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $router->expects($this->any())
             ->method('generate')
@@ -401,7 +401,7 @@ EOF
 
         $formatters = array('rss' => new RssFormatter($translator, 'test'));
 
-        $router = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $manager = new FeedManager($router, $config, $formatters);
 

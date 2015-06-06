@@ -454,7 +454,7 @@ EOF
      */
     private function getMockRouter()
     {
-        $mockRouter = $this->getMock('\Symfony\Bundle\FrameworkBundle\Routing\Router', array(), array(), '', false);
+        $mockRouter = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $mockRouter->expects($this->any())
             ->method('generate')
