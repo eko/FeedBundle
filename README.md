@@ -364,6 +364,7 @@ If you only want to read an XML feed, here is the way:
 ```php
 <?php
 $reader = $this->get('eko_feed.feed.reader');
+$reader->setHydrator(new DefaultHydrator());
 $feed = $reader->load('http://php.net/feed.atom')->get();
 ```
 
@@ -378,6 +379,7 @@ Just load the feed and call the populate method with your entity name which need
 ```php
 <?php
 $reader = $this->get('eko_feed.feed.reader');
+$reader->setHydrator(new DefaultHydrator());
 $items = $reader->load('http://php.net/feed.atom')->populate('MyNamespace\Entity\Name');
 ```
 
