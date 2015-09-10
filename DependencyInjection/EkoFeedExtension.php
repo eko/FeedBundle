@@ -60,6 +60,6 @@ class EkoFeedExtension extends Extension
         }
 
         $container->getDefinition('eko_feed.feed.reader')
-            ->setArguments(array($config['hydrator']));
+            ->addMethodCall('setHydrator', array(new \Symfony\Component\DependencyInjection\Reference($config['hydrator'])));
     }
 }
