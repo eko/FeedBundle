@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * EkoFeedExtension
@@ -60,6 +61,6 @@ class EkoFeedExtension extends Extension
         }
 
         $container->getDefinition('eko_feed.feed.reader')
-            ->addMethodCall('setHydrator', array(new \Symfony\Component\DependencyInjection\Reference($config['hydrator'])));
+            ->addMethodCall('setHydrator', array(new Reference($config['hydrator'])));
     }
 }
