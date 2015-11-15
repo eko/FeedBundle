@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Feed;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -20,8 +20,10 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedManager extends ContainerAware
+class FeedManager
 {
+    use ContainerAwareTrait;
+
     /**
      * @var array
      */
