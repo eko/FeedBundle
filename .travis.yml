@@ -23,9 +23,11 @@ matrix:
   allow_failures:
     - php: hhvm
     - php: nightly
-    - env: SYMFONY_VERSION=3.0.*@dev
 
-before_script:
+before_install:
+  - if [ "$SYMFONY_VERSION" = "2.8.*@dev" ] || [ "$SYMFONY_VERSION" = "3.0.*@dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+
+install:
   - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
   - composer install --dev --prefer-source
 
