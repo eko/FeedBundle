@@ -13,14 +13,14 @@ namespace Eko\FeedBundle\Tests\Entity\Writer;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
 
 /**
- * Fake
+ * Fake.
  *
  * A fake entity implementing RoutedItemInterface for tests
  */
 class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
 {
     /**
-     * Returns a fake title
+     * Returns a fake title.
      *
      * @return string
      */
@@ -29,9 +29,8 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
         return 'Fake title';
     }
 
-
     /**
-     * Returns a fake description or content
+     * Returns a fake description or content.
      *
      * @return string
      */
@@ -41,7 +40,7 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
     }
 
     /**
-     * Returns a fake item link
+     * Returns a fake item link.
      *
      * @return string
      */
@@ -51,17 +50,17 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
     }
 
     /**
-     * Returns a fake route parameters array
+     * Returns a fake route parameters array.
      *
      * @return array
      */
     public function getFeedItemRouteParameters()
     {
-        return array();
+        return [];
     }
 
     /**
-     * Returns a fake anchor
+     * Returns a fake anchor.
      *
      * @return string
      */
@@ -71,7 +70,7 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
     }
 
     /**
-     * Returns a fake publication date
+     * Returns a fake publication date.
      *
      * @return \DateTime
      */
@@ -81,7 +80,7 @@ class FakeRoutedItemInterfaceEntity implements RoutedItemInterface
     }
 
     /**
-     * Returns a fake custom field
+     * Returns a fake custom field.
      *
      * @return string
      */

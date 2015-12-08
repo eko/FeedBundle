@@ -11,11 +11,10 @@
 namespace Eko\FeedBundle\Hydrator;
 
 use Eko\FeedBundle\Item\Reader\ItemInterface;
-
 use Zend\Feed\Reader\Feed\FeedInterface;
 
 /**
- * DefaultHydrator
+ * DefaultHydrator.
  *
  * This is the default feed hydrator
  *
@@ -28,7 +27,7 @@ class DefaultHydrator implements HydratorInterface
      */
     public function hydrate(FeedInterface $feed, $entityName)
     {
-        $items = array();
+        $items = [];
 
         foreach ($feed as $entry) {
             $entity = new $entityName();

@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Tests\Service;
 use Eko\FeedBundle\Service\FeedDumpService;
 
 /**
- * FeedDumpServiceTest
+ * FeedDumpServiceTest.
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
@@ -40,9 +40,10 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
     protected $service;
 
     /**
-     * Sets up a dump service
+     * Sets up a dump service.
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->feedManager = $this->getMockBuilder('Eko\FeedBundle\Feed\FeedManager')
             ->disableOriginalConstructor()
             ->getMock();
@@ -60,14 +61,14 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the dump() method with an invalid order
-     * Should throw a \InvalidArgumentException
+     * Should throw a \InvalidArgumentException.
      */
     public function testDumpWithInvalidOrder()
     {
         if (!method_exists($this->filesystem, 'dumpFile')) {
             $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
         }
-        
+
         $this->setExpectedException('\InvalidArgumentException');
 
         $this->service->setOrderBy('unexistant-order');
@@ -75,7 +76,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the dump() method with an entity
+     * Tests the dump() method with an entity.
      */
     public function testDumpWithAnEntity()
     {
@@ -95,7 +96,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repository->expects($this->once())->method('findBy')->will($this->returnValue(array($entity, $entity)));
+        $repository->expects($this->once())->method('findBy')->will($this->returnValue([$entity, $entity]));
 
         $this->entityManager->expects($this->once())->method('getRepository')->will($this->returnValue($repository));
 
@@ -118,14 +119,14 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the dump() method without any items or entity set
+     * Tests the dump() method without any items or entity set.
      */
     public function testDumpWithoutItemsOrEntity()
     {
         if (!method_exists($this->filesystem, 'dumpFile')) {
             $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
         }
-        
+
         $this->setExpectedException('\LogicException', 'An entity should be set OR you should use setItems() first');
 
         // Given

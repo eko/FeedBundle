@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * FeedManager
+ * FeedManager.
  *
  * This class manage feeds specified in configuration file
  *
@@ -45,7 +45,7 @@ class FeedManager
     protected $feeds;
 
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param RouterInterface $router     A Symfony router instance
      * @param array           $config     Configuration settings
@@ -53,30 +53,31 @@ class FeedManager
      */
     public function __construct(RouterInterface $router, array $config, array $formatters)
     {
-        $this->config     = $config;
-        $this->router     = $router;
+        $this->config = $config;
+        $this->router = $router;
         $this->formatters = $formatters;
     }
 
     /**
-     * Check if feed exists in configuration under 'feeds' node
+     * Check if feed exists in configuration under 'feeds' node.
      *
      * @param string $feed Feed name
      *
      * @return bool
      */
-    public function has($feed) {
+    public function has($feed)
+    {
         return isset($this->config['feeds'][$feed]);
     }
 
     /**
-     * Return specified Feed instance if exists
+     * Return specified Feed instance if exists.
      *
      * @param string $feedName
      *
-     * @return Feed
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Feed
      */
     public function get($feedName)
     {

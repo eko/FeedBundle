@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Tests\Entity\Writer;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 
 /**
- * Fake
+ * Fake.
  *
  * A fake entity implementing ItemInterface for tests
  */
@@ -22,7 +22,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     protected $medias;
 
     /**
-     * Returns a fake title
+     * Returns a fake title.
      *
      * @return string
      */
@@ -31,9 +31,8 @@ class FakeItemInterfaceEntity implements ItemInterface
         return 'Fake title';
     }
 
-
     /**
-     * Returns a fake description or content
+     * Returns a fake description or content.
      *
      * @return string
      */
@@ -43,7 +42,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake item link
+     * Returns a fake item link.
      *
      * @return string
      */
@@ -53,7 +52,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake publication date
+     * Returns a fake publication date.
      *
      * @return \DateTime
      */
@@ -63,7 +62,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake custom field
+     * Returns a fake custom field.
      *
      * @return string
      */
@@ -73,7 +72,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake field author name
+     * Returns a fake field author name.
      *
      * @return string
      */
@@ -83,7 +82,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake field author email
+     * Returns a fake field author email.
      *
      * @return string
      */
@@ -93,7 +92,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Sets feed media items
+     * Sets feed media items.
      *
      * @param array $medias
      */
@@ -103,7 +102,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake custom media field
+     * Returns a fake custom media field.
      *
      * @return string
      */
@@ -113,38 +112,38 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake custom multiple media fields
+     * Returns a fake custom multiple media fields.
      *
      * @return string
      */
     public function getFeedMediaMultipleItems()
     {
-        return array(
-            array(
+        return [
+            [
                 'type'   => 'image/jpeg',
                 'length' => 500,
-                'value'  => 'http://website.com/image.jpg'
-            ),
-            array(
+                'value'  => 'http://website.com/image.jpg',
+            ],
+            [
                 'type'   => 'image/png',
                 'length' => 600,
-                'value'  => 'http://website.com/image2.png'
-            )
-        );
+                'value'  => 'http://website.com/image2.png',
+            ],
+        ];
     }
 
     /**
-     * Returns a fake custom categories array
+     * Returns a fake custom categories array.
      *
      * @return array
      */
     public function getFeedCategoriesCustom()
     {
-        return array(
+        return [
             'category 1',
             'category 2',
-            'category 3'
-        );
+            'category 3',
+        ];
     }
 
     /**

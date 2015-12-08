@@ -13,21 +13,21 @@ namespace Eko\FeedBundle\Hydrator;
 use Zend\Feed\Reader\Feed\FeedInterface;
 
 /**
- * HydratorInterface
+ * HydratorInterface.
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
 interface HydratorInterface
 {
     /**
-     * Hydrates given entity from its name with Feed data retrieved from reader
+     * Hydrates given entity from its name with Feed data retrieved from reader.
      *
      * @param FeedInterface $feed       A Feed instance
      * @param string        $entityName An entity name to populate with feed entries
      *
-     * @return array
-     *
      * @throws \RuntimeException if entity does not implements ItemInterface
+     *
+     * @return array
      */
     public function hydrate(FeedInterface $feed, $entityName);
 }

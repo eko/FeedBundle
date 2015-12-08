@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Field\Channel;
 
 /**
- * ChannelField
+ * ChannelField.
  *
  * This is the channel field class
  *
@@ -20,36 +20,36 @@ namespace Eko\FeedBundle\Field\Channel;
 class ChannelField implements ChannelFieldInterface
 {
     /**
-     * @var string $name Field name
+     * @var string Field name
      */
     protected $name;
 
     /**
-     * @var string $value Field value
+     * @var string Field value
      */
     protected $value;
 
     /**
-     * @var array $options Options array (required, cdata, ...)
+     * @var array Options array (required, cdata, ...)
      */
     protected $options;
 
     /**
-     * @var array $attributes An attributes array
+     * @var array An attributes array
      */
     protected $attributes;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $name       A field name
      * @param string $value      A field value
      * @param array  $options    An options array
      * @param array  $attributes An attributes array
      */
-    public function __construct($name, $value, array $options = array(), array $attributes = array())
+    public function __construct($name, $value, array $options = [], array $attributes = [])
     {
-        $this->name  = $name;
+        $this->name = $name;
         $this->value = $value;
 
         if (!empty($options)) {
@@ -60,7 +60,7 @@ class ChannelField implements ChannelFieldInterface
     }
 
     /**
-     * Returns field name
+     * Returns field name.
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class ChannelField implements ChannelFieldInterface
     }
 
     /**
-     * Returns field value
+     * Returns field value.
      *
      * @return string
      */
@@ -80,7 +80,7 @@ class ChannelField implements ChannelFieldInterface
     }
 
     /**
-     * Returns option value
+     * Returns option value.
      *
      * @param string $option  An option name
      * @param mixed  $default A default value
@@ -93,7 +93,7 @@ class ChannelField implements ChannelFieldInterface
     }
 
     /**
-     * Returns attributes to be added to this item field
+     * Returns attributes to be added to this item field.
      *
      * @return array
      */

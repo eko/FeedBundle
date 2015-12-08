@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Check if the eko_feed.feed.dump is missing dependencies
- * and if so remove the service
+ * and if so remove the service.
  *
  * @author Lukas Kahwe Smith <smith@pooteeweet.org>
  */

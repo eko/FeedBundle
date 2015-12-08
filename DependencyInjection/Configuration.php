@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Configuration
+ * Configuration.
  *
  * This class generates configuration settings tree
  *
@@ -23,7 +23,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * Builds configuration tree
+     * Builds configuration tree.
      *
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder A tree builder instance
      */
@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                                 ->isRequired()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($value) { return array('uri' => $value); })
+                                    ->then(function ($value) { return ['uri' => $value]; })
                                 ->end()
                                 ->children()
                                     ->scalarNode('route_name')->end()
@@ -63,8 +63,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

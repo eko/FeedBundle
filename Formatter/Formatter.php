@@ -16,11 +16,10 @@ use Eko\FeedBundle\Field\Item\GroupItemField;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
-
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Formatter
+ * Formatter.
  *
  * This class provides formatter methods
  *
@@ -29,7 +28,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class Formatter
 {
     /**
-     * @var Feed $feed A feed instance
+     * @var Feed A feed instance
      */
     protected $feed;
 
@@ -44,17 +43,17 @@ class Formatter
     protected $domain;
 
     /**
-     * @var \DOMDocument $dom XML DOMDocument
+     * @var \DOMDocument XML DOMDocument
      */
     protected $dom;
 
     /**
-     * @var array $fields Contain item Field instances for this formatter
+     * @var array Contain item Field instances for this formatter
      */
-    protected $itemFields = array();
+    protected $itemFields = [];
 
     /**
-     * Construct a formatter with given feed
+     * Construct a formatter with given feed.
      *
      * @param TranslatorInterface $translator A Symfony translator service instance
      * @param string|null         $domain     A Symfony translation domain
@@ -62,11 +61,11 @@ class Formatter
     public function __construct(TranslatorInterface $translator, $domain = null)
     {
         $this->translator = $translator;
-        $this->domain     = $domain;
+        $this->domain = $domain;
     }
 
     /**
-     * Initializes feed
+     * Initializes feed.
      */
     public function initialize()
     {
@@ -74,7 +73,7 @@ class Formatter
     }
 
     /**
-     * This method render the given feed transforming the DOMDocument to XML
+     * This method render the given feed transforming the DOMDocument to XML.
      *
      * @return string
      */
@@ -86,7 +85,7 @@ class Formatter
     }
 
     /**
-     * Adds channel fields to given channel
+     * Adds channel fields to given channel.
      *
      * @param \DOMElement $channel
      */
@@ -114,7 +113,7 @@ class Formatter
     }
 
     /**
-     * Format items field
+     * Format items field.
      *
      * @param ItemFieldInterface $field A item field instance
      * @param ItemInterface      $item  An entity instance
@@ -141,7 +140,7 @@ class Formatter
     }
 
     /**
-     * Format a group item field
+     * Format a group item field.
      *
      * @param GroupItemField $field An item field instance
      * @param ItemInterface  $item  An entity instance
@@ -175,22 +174,22 @@ class Formatter
             }
         }
 
-        return array($element);
+        return [$element];
     }
 
     /**
-     * Format a media item field
+     * Format a media item field.
      *
      * @param MediaItemField $field A media item field instance
      * @param ItemInterface  $item  An entity instance
      *
-     * @return array|null|\DOMElement
-     *
      * @throws \InvalidArgumentException if media array format waiting to be returned is not well-formatted
+     *
+     * @return array|null|\DOMElement
      */
     protected function formatMediaItemField(MediaItemField $field, ItemInterface $item)
     {
-        $elements = array();
+        $elements = [];
 
         $method = $field->getMethod();
         $values = $item->{$method}();
@@ -200,7 +199,7 @@ class Formatter
         }
 
         if (!is_array($values) || (is_array($values) && isset($values['value']))) {
-            $values = array($values);
+            $values = [$values];
         }
 
         foreach ($values as $value) {
@@ -236,7 +235,7 @@ class Formatter
     }
 
     /**
-     * Format an item field
+     * Format an item field.
      *
      * @param ItemFieldInterface $field An item field instance
      * @param ItemInterface      $item  An entity instance
@@ -245,7 +244,7 @@ class Formatter
      */
     protected function formatItemField(ItemFieldInterface $field, ItemInterface $item)
     {
-        $elements = array();
+        $elements = [];
 
         $method = $field->getMethod();
         $values = $item->{$method}();
@@ -255,7 +254,7 @@ class Formatter
         }
 
         if (!is_array($values)) {
-            $values = array($values);
+            $values = [$values];
         }
 
         foreach ($values as $value) {
@@ -266,15 +265,15 @@ class Formatter
     }
 
     /**
-     * Format an item field
+     * Format an item field.
      *
      * @param ItemFieldInterface $field An item field instance
      * @param ItemInterface      $item  An entity instance
      * @param string             $value A field value
      *
-     * @return \DOMElement
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return \DOMElement
      */
     protected function formatWithOptions(ItemFieldInterface $field, ItemInterface $item, $value)
     {
@@ -291,7 +290,7 @@ class Formatter
 
             $element = $this->dom->createElement($name);
             $element->appendChild($value);
-        } else if ($field->get('attribute')) {
+        } elseif ($field->get('attribute')) {
             if (!$field->get('attribute_name')) {
                 throw new \InvalidArgumentException("'attribute' parameter required an 'attribute_name' parameter.");
             }
@@ -316,7 +315,7 @@ class Formatter
     }
 
     /**
-     * Add field attributes to a DOM element
+     * Add field attributes to a DOM element.
      *
      * @param \DOMElement        $element A XML DOM element
      * @param ItemFieldInterface $field   A feed field instance
@@ -326,8 +325,8 @@ class Formatter
     {
         foreach ($field->getAttributes() as $key => $value) {
             if ($item) {
-                $key   = method_exists($item, $key) ? call_user_func(array($item, $key)) : $key;
-                $value = method_exists($item, $value) ? call_user_func(array($item, $value)) : $value;
+                $key = method_exists($item, $key) ? call_user_func([$item, $key]) : $key;
+                $value = method_exists($item, $value) ? call_user_func([$item, $value]) : $value;
             }
 
             $element->setAttribute($key, $value);
@@ -335,7 +334,7 @@ class Formatter
     }
 
     /**
-     * Translates a value
+     * Translates a value.
      *
      * @param string $value
      *
@@ -343,6 +342,6 @@ class Formatter
      */
     protected function translate($value)
     {
-        return $this->translator->trans($value, array(), $this->domain);
+        return $this->translator->trans($value, [], $this->domain);
     }
 }

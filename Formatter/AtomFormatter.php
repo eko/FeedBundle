@@ -13,11 +13,10 @@ namespace Eko\FeedBundle\Formatter;
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
-
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Atom formatter
+ * Atom formatter.
  *
  * This class provides an Atom formatter
  *
@@ -26,7 +25,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class AtomFormatter extends Formatter implements FormatterInterface
 {
     /**
-     * Construct a formatter with given feed
+     * Construct a formatter with given feed.
      *
      * @param TranslatorInterface $translator A Symfony translator service instance
      * @param string|null         $domain     A Symfony translation domain
@@ -35,19 +34,19 @@ class AtomFormatter extends Formatter implements FormatterInterface
      */
     public function __construct(TranslatorInterface $translator, $domain = null)
     {
-        $this->itemFields = array(
-            new ItemField('id', 'getFeedItemLink', array('cdata' => false)),
-            new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
-            new ItemField('summary', 'getFeedItemDescription', array('cdata' => true), array('type' => 'html')),
-            new ItemField('link', 'getFeedItemLink', array('attribute' => true, 'attribute_name' => 'href')),
-            new ItemField('updated', 'getFeedItemPubDate',array('date_format' => \DateTime::ATOM)),
-        );
+        $this->itemFields = [
+            new ItemField('id', 'getFeedItemLink', ['cdata' => false]),
+            new ItemField('title', 'getFeedItemTitle', ['cdata' => true]),
+            new ItemField('summary', 'getFeedItemDescription', ['cdata' => true], ['type' => 'html']),
+            new ItemField('link', 'getFeedItemLink', ['attribute' => true, 'attribute_name' => 'href']),
+            new ItemField('updated', 'getFeedItemPubDate', ['date_format' => \DateTime::ATOM]),
+        ];
 
         parent::__construct($translator, $domain);
     }
 
     /**
-     * Sets feed instance
+     * Sets feed instance.
      *
      * @param Feed $feed
      */

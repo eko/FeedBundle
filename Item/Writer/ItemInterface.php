@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Item\Writer;
 
 /**
- * Item interface
+ * Item interface.
  *
  * This interface contains the methods that you need to implement in your entity
  * to write your entity data in an XML feed
@@ -21,7 +21,7 @@ namespace Eko\FeedBundle\Item\Writer;
 interface ItemInterface
 {
     /**
-     * This method returns feed item title
+     * This method returns feed item title.
      *
      * @abstract
      *
@@ -30,7 +30,7 @@ interface ItemInterface
     public function getFeedItemTitle();
 
     /**
-     * This method returns feed item description (or content)
+     * This method returns feed item description (or content).
      *
      * @abstract
      *
@@ -39,7 +39,7 @@ interface ItemInterface
     public function getFeedItemDescription();
 
     /**
-     * This method returns feed item URL link
+     * This method returns feed item URL link.
      *
      * @abstract
      *
@@ -48,7 +48,7 @@ interface ItemInterface
     public function getFeedItemLink();
 
     /**
-     * This method returns item publication date
+     * This method returns item publication date.
      *
      * @abstract
      *

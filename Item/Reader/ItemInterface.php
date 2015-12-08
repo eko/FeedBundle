@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Item\Reader;
 
 /**
- * Item interface
+ * Item interface.
  *
  * This interface contains the methods that you need to implement in your entity
  * to load data from an XML feed in your entity
@@ -21,7 +21,7 @@ namespace Eko\FeedBundle\Item\Reader;
 interface ItemInterface
 {
     /**
-     * This method sets feed item title
+     * This method sets feed item title.
      *
      * @param string $title
      *
@@ -30,7 +30,7 @@ interface ItemInterface
     public function setFeedItemTitle($title);
 
     /**
-     * This method sets feed item description (or content)
+     * This method sets feed item description (or content).
      *
      * @param string $description
      *
@@ -39,7 +39,7 @@ interface ItemInterface
     public function setFeedItemDescription($description);
 
     /**
-     * This method sets feed item URL link
+     * This method sets feed item URL link.
      *
      * @param string $link
      *
@@ -48,7 +48,7 @@ interface ItemInterface
     public function setFeedItemLink($link);
 
     /**
-     * This method sets item publication date
+     * This method sets item publication date.
      *
      * @param \DateTime $date
      *

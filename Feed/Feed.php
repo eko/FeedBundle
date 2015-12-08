@@ -15,11 +15,10 @@ use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
-
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Feed
+ * Feed.
  *
  * This is the main feed class
  *
@@ -28,7 +27,7 @@ use Symfony\Component\Routing\RouterInterface;
 class Feed
 {
     /**
-     * @var array $config
+     * @var array
      */
     protected $config;
 
@@ -45,32 +44,32 @@ class Feed
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
-     * @var array $fields
+     * @var array
      */
-    protected $channelFields = array();
+    protected $channelFields = [];
 
     /**
-     * @var array $fields
+     * @var array
      */
-    protected $itemFields = array();
+    protected $itemFields = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $config     Configuration settings
      * @param array $formatters An array of available formatters services
      */
     public function __construct(array $config, array $formatters)
     {
-        $this->config     = $config;
+        $this->config = $config;
         $this->formatters = $formatters;
     }
 
     /**
-     * Set the router service
+     * Set the router service.
      *
      * @param RouterInterface $router
      */
@@ -80,10 +79,10 @@ class Feed
     }
 
     /**
-     * Set or redefine a configuration value
+     * Set or redefine a configuration value.
      *
-     * @param mixed  $parameter A configuration parameter name
-     * @param mixed  $value     A value
+     * @param mixed $parameter A configuration parameter name
+     * @param mixed $value     A value
      *
      * @return \Eko\FeedBundle\Feed\Feed
      */
@@ -95,7 +94,7 @@ class Feed
     }
 
     /**
-     * Returns config parameter value
+     * Returns config parameter value.
      *
      * @param mixed      $parameter A configuration parameter name
      * @param mixed|null $default   A default value if not found
@@ -112,7 +111,7 @@ class Feed
     }
 
     /**
-     * Returns absolute link value
+     * Returns absolute link value.
      *
      * @return string
      */
@@ -128,13 +127,13 @@ class Feed
     }
 
     /**
-     * Add an item (an entity which implements ItemInterface instance)
+     * Add an item (an entity which implements ItemInterface instance).
      *
      * @param mixed $item An entity item (implements ItemInterface or RoutedItemInterface)
      *
-     * @return \Eko\FeedBundle\Feed\Feed
-     *
      * @throws \InvalidArgumentException if item does not implement ItemInterface or RoutedItemInterface
+     *
+     * @return \Eko\FeedBundle\Feed\Feed
      */
     public function add($item)
     {
@@ -152,7 +151,7 @@ class Feed
     }
 
     /**
-     * Add items from array
+     * Add items from array.
      *
      * @param array $items Array of items (implementing ItemInterface or RoutedItemInterface) to add
      *
@@ -168,7 +167,7 @@ class Feed
     }
 
     /**
-     * Set items from array. Note that this method will override any existing items
+     * Set items from array. Note that this method will override any existing items.
      *
      * @param array $items Array of items (implementing ItemInterface or RoutedItemInterface) to set
      *
@@ -176,13 +175,13 @@ class Feed
      */
     public function setItems(array $items)
     {
-        $this->items = array();
+        $this->items = [];
 
         return $this->addFromArray($items);
     }
 
     /**
-     * Returns feed items
+     * Returns feed items.
      *
      * @return array
      */
@@ -192,7 +191,7 @@ class Feed
     }
 
     /**
-     * Add a new channel field to render
+     * Add a new channel field to render.
      *
      * @param ChannelFieldInterface $field A custom Field instance
      *
@@ -206,7 +205,7 @@ class Feed
     }
 
     /**
-     * Returns custom channel fields
+     * Returns custom channel fields.
      *
      * @return array
      */
@@ -216,7 +215,7 @@ class Feed
     }
 
     /**
-     * Add a new item field to render
+     * Add a new item field to render.
      *
      * @param ItemFieldInterface $field A custom Field instance
      *
@@ -230,7 +229,7 @@ class Feed
     }
 
     /**
-     * Returns custom item fields
+     * Returns custom item fields.
      *
      * @return array
      */
@@ -240,13 +239,13 @@ class Feed
     }
 
     /**
-     * Render the feed in specified format
+     * Render the feed in specified format.
      *
      * @param string $format The format to render (RSS, Atom, ...)
      *
-     * @return string
-     *
      * @throws \InvalidArgumentException if given format formatter does not exists
+     *
+     * @return string
      */
     public function render($format)
     {
@@ -263,9 +262,9 @@ class Feed
     }
 
     /**
-     * Return if feed has items
+     * Return if feed has items.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItems()
     {

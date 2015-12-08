@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Field\Channel;
 use Eko\FeedBundle\Field\Item\GroupItemField;
 
 /**
- * GroupChannelField
+ * GroupChannelField.
  *
  * This is channel group field class
  *
@@ -21,5 +21,4 @@ use Eko\FeedBundle\Field\Item\GroupItemField;
  */
 class GroupChannelField extends GroupItemField implements ChannelFieldInterface
 {
-
 }

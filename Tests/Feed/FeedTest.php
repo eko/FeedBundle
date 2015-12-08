@@ -16,7 +16,7 @@ use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 
 /**
- * FeedTest
+ * FeedTest.
  *
  * This is the feed test class
  *
@@ -25,40 +25,41 @@ use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 class FeedTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FeedManager $manager A feed manager instance
+     * @var FeedManager A feed manager instance
      */
     protected $manager;
 
     /**
-     * Set up
+     * Set up.
      */
-    public function setUp() {
-        $config = array(
-            'feeds' => array(
-                'article' => array(
+    public function setUp()
+    {
+        $config = [
+            'feeds' => [
+                'article' => [
                     'title'       => 'My articles/posts',
                     'description' => 'Latests articles',
                     'link'        => 'http://github.com/eko/FeedBundle',
                     'encoding'    => 'utf-8',
-                    'author'      => 'Vincent Composieux'
-                )
-            )
-        );
+                    'author'      => 'Vincent Composieux',
+                ],
+            ],
+        ];
 
         $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        $formatters = array(
+        $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
             'atom' => new AtomFormatter($translator, 'test'),
-        );
+        ];
 
         $this->manager = new FeedManager($router, $config, $formatters);
     }
 
     /**
-     * Check if there is no item inserted during feed creation
+     * Check if there is no item inserted during feed creation.
      */
     public function testNoItem()
     {
@@ -68,7 +69,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if items are correctly added
+     * Check if items are correctly added.
      */
     public function testAdditem()
     {
@@ -79,54 +80,54 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if items are correctly added
+     * Check if items are correctly added.
      */
     public function testAdditemsFromEmpty()
     {
         $feed = $this->manager->get('article');
 
-        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
+        $items = [new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity()];
         $feed->addFromArray($items);
 
         $this->assertEquals(2, count($feed->getItems()));
     }
 
     /**
-     * Check if items are correctly added
+     * Check if items are correctly added.
      */
     public function testAdditemsWithExistingItem()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
 
-        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
+        $items = [new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity()];
         $feed->addFromArray($items);
 
         $this->assertEquals(3, count($feed->getItems()));
     }
 
     /**
-     * Check if multiple items are correctly loaded
+     * Check if multiple items are correctly loaded.
      */
     public function testSetItemsFromEmpty()
     {
         $feed = $this->manager->get('article');
 
-        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
+        $items = [new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity()];
         $feed->setItems($items);
 
         $this->assertEquals(2, count($feed->getItems()));
     }
 
     /**
-     * Check if multiple items are correctly loaded
+     * Check if multiple items are correctly loaded.
      */
     public function testSetItemsWithExistingItem()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
 
-        $items = array(new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity());
+        $items = [new FakeItemInterfaceEntity(), new FakeItemInterfaceEntity()];
         $feed->setItems($items);
 
         $this->assertEquals(2, count($feed->getItems()));
@@ -134,7 +135,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if an \InvalidArgumentException is thrown
-     * when formatter asked for rendering does not exists
+     * when formatter asked for rendering does not exists.
      */
     public function testFormatterNotFoundException()
     {

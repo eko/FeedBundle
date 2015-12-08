@@ -22,7 +22,7 @@ use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 
 /**
- * AtomFormatterTest
+ * AtomFormatterTest.
  *
  * This is the Atom formatter test class
  *
@@ -31,60 +31,61 @@ use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FeedManager $manager A feed manager instance
+     * @var FeedManager A feed manager instance
      */
     protected $manager;
 
     /**
-     * Sets up elements used in test case
+     * Sets up elements used in test case.
      */
-    public function setUp() {
-        $config = array(
-            'feeds' => array(
-                'article' => array(
+    public function setUp()
+    {
+        $config = [
+            'feeds' => [
+                'article' => [
                     'title'       => 'My articles/posts',
                     'description' => 'Latests articles',
                     'link'        => 'http://github.com/eko/FeedBundle',
                     'encoding'    => 'utf-8',
-                    'author'      => 'Vincent Composieux'
-                )
-            )
-        );
+                    'author'      => 'Vincent Composieux',
+                ],
+            ],
+        ];
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        $formatters = array(
+        $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
             'atom' => new AtomFormatter($translator, 'test'),
-        );
+        ];
 
         $this->manager = new FeedManager($this->getMockRouter(), $config, $formatters);
     }
 
     /**
      * Check if exception is an \InvalidArgumentException is thrown
-     * when 'author' config parameter is not set or empty
+     * when 'author' config parameter is not set or empty.
      */
     public function testAuthorEmptyException()
     {
-        $config = array(
-            'feeds' => array(
-                'article' => array(
+        $config = [
+            'feeds' => [
+                'article' => [
                     'title'       => 'My title',
                     'description' => 'My description',
                     'link'        => 'http://github.com/eko/FeedBundle',
                     'encoding'    => 'utf-8',
-                    'author'      => ''
-                )
-            )
-        );
+                    'author'      => '',
+                ],
+            ],
+        ];
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        $formatters = array(
+        $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
             'atom' => new AtomFormatter($translator, 'test'),
-        );
+        ];
 
         $manager = new FeedManager($this->getMockRouter(), $config, $formatters);
 
@@ -100,7 +101,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if Atom formatter output item
+     * Check if Atom formatter output item.
      */
     public function testRenderCorrectRootNodes()
     {
@@ -114,7 +115,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if Atom formatter output a valid XML
+     * Check if Atom formatter output a valid XML.
      */
     public function testRenderValidXML()
     {
@@ -131,7 +132,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if Atom formatter output item
+     * Check if Atom formatter output item.
      */
     public function testRenderItem()
     {
@@ -146,7 +147,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom channel field is properly rendered
+     * Check if a custom channel field is properly rendered.
      */
     public function testAddCustomChannelField()
     {
@@ -160,7 +161,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom item field is properly rendered with ItemInterface
+     * Check if a custom item field is properly rendered with ItemInterface.
      */
     public function testAddCustomItemFieldWithItemInterface()
     {
@@ -174,16 +175,16 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom item field with one attribute only is properly rendered with ItemInterface
+     * Check if a custom item field with one attribute only is properly rendered with ItemInterface.
      */
     public function testAddCustomItemFieldWithOneAttributeOnly()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
-        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', array(
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', [
             'attribute'      => true,
-            'attribute_name' => 'fake-value'
-        )));
+            'attribute_name' => 'fake-value',
+        ]));
 
         $output = $feed->render('atom');
 
@@ -191,16 +192,16 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom media item field is properly rendered with ItemInterface
+     * Check if a custom media item field is properly rendered with ItemInterface.
      */
     public function testAddCustomMediaItemFieldWithItemInterface()
     {
         $fakeEntityWithMedias = new FakeItemInterfaceEntity();
-        $fakeEntityWithMedias->setFeedMediaItem(array(
+        $fakeEntityWithMedias->setFeedMediaItem([
             'type'   => 'image/jpeg',
             'length' => 500,
-            'value'  => 'http://website.com/image.jpg'
-        ));
+            'value'  => 'http://website.com/image.jpg',
+        ]);
 
         $fakeEntityNoMedias = new FakeItemInterfaceEntity();
 
@@ -215,7 +216,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group media items field is properly rendered with ItemInterface
+     * Check if a custom group media items field is properly rendered with ItemInterface.
      */
     public function testAddCustomGroupMediaItemsFieldsWithItemInterface()
     {
@@ -235,7 +236,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group item field is properly rendered with ItemInterface
+     * Check if a custom group item field is properly rendered with ItemInterface.
      */
     public function testAddCustomGroupItemFieldWithItemInterface()
     {
@@ -256,7 +257,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group item field with attributes is properly rendered
+     * Check if a custom group item field with attributes is properly rendered.
      */
     public function testAddCustomGroupItemFieldWithAttributes()
     {
@@ -265,8 +266,8 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $feed->addItemField(
             new GroupItemField(
                 'categories',
-                new ItemField('category', 'getFeedCategoriesCustom', array(), array('category-type' => 'test')),
-                array('is-it-test' => 'yes')
+                new ItemField('category', 'getFeedCategoriesCustom', [], ['category-type' => 'test']),
+                ['is-it-test' => 'yes']
             )
         );
 
@@ -280,7 +281,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group item field with attributes from method is properly rendered
+     * Check if a custom group item field with attributes from method is properly rendered.
      */
     public function testAddCustomGroupItemFieldWithAttributesFromMethod()
     {
@@ -289,8 +290,8 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $feed->addItemField(
             new GroupItemField(
                 'categories',
-                new ItemField('category', 'getFeedCategoriesCustom', array(), array('getItemKeyAttribute' => 'getItemValueAttribute')),
-                array('getGroupKeyAttribute' => 'getGroupValueAttribute')
+                new ItemField('category', 'getFeedCategoriesCustom', [], ['getItemKeyAttribute' => 'getItemValueAttribute']),
+                ['getGroupKeyAttribute' => 'getGroupValueAttribute']
             )
         );
 
@@ -304,17 +305,17 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group channel field is properly rendered with GroupFieldInterface
+     * Check if a custom group channel field is properly rendered with GroupFieldInterface.
      */
     public function testAddCustomGroupChannelFieldWithItemInterface()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
         $feed->addChannelField(
-            new GroupChannelField('image', array(
+            new GroupChannelField('image', [
                 new ChannelField('name', 'My test image'),
-                new ChannelField('url', 'http://www.example.com/image.jpg')
-            ))
+                new ChannelField('url', 'http://www.example.com/image.jpg'),
+            ])
         );
 
         $output = $feed->render('atom');
@@ -326,17 +327,17 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group channel field is properly rendered with attributes
+     * Check if a custom group channel field is properly rendered with attributes.
      */
     public function testAddCustomGroupChannelFieldWithAttributes()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
         $feed->addChannelField(
-            new GroupChannelField('image', array(
-                new ChannelField('name', 'My test image', array(), array('name-attribute' => 'test')),
-                new ChannelField('url', 'http://www.example.com/image.jpg', array(), array('url-attribute' => 'test'))
-            ), array('image-attribute' => 'test'))
+            new GroupChannelField('image', [
+                new ChannelField('name', 'My test image', [], ['name-attribute' => 'test']),
+                new ChannelField('url', 'http://www.example.com/image.jpg', [], ['url-attribute' => 'test']),
+            ], ['image-attribute' => 'test'])
         );
 
         $output = $feed->render('atom');
@@ -348,16 +349,16 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a custom group item field with multiple item fields is properly rendered with ItemInterface
+     * Check if a custom group item field with multiple item fields is properly rendered with ItemInterface.
      */
     public function testAddCustomGroupMultipleItemFieldWithItemInterface()
     {
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
-        $feed->addItemField(new GroupItemField('author', array(
-            new ItemField('name', 'getFeedItemAuthorName', array('cdata' => true)),
+        $feed->addItemField(new GroupItemField('author', [
+            new ItemField('name', 'getFeedItemAuthorName', ['cdata' => true]),
             new ItemField('email', 'getFeedItemAuthorEmail'),
-        )));
+        ]));
 
         $output = $feed->render('atom');
 
@@ -371,7 +372,7 @@ EOF
     }
 
     /**
-     * Check if a custom item field is properly rendered with RoutedItemInterface
+     * Check if a custom item field is properly rendered with RoutedItemInterface.
      */
     public function testAddCustomItemFieldWithRoutedItemInterface()
     {
@@ -385,7 +386,7 @@ EOF
     }
 
     /**
-     * Check if anchors are really appended to generated url of RouterItemInterface
+     * Check if anchors are really appended to generated url of RouterItemInterface.
      */
     public function testAnchorIsAppendedToLinkWithRoutedItemInterface()
     {
@@ -397,7 +398,7 @@ EOF
     }
 
     /**
-     * Check if an exception is thrown when trying to render a non-existant method with RoutedItemInterface
+     * Check if an exception is thrown when trying to render a non-existant method with RoutedItemInterface.
      */
     public function testNonExistantCustomItemFieldWithRoutedItemInterface()
     {
@@ -414,41 +415,41 @@ EOF
     }
 
     /**
-     * Check if values are well translated with "translatable" option
+     * Check if values are well translated with "translatable" option.
      */
     public function testTranslatableValue()
     {
-        $config = array(
-            'feeds' => array(
-                'article' => array(
+        $config = [
+            'feeds' => [
+                'article' => [
                     'title'       => 'My title',
                     'description' => 'My description',
                     'link'        => 'http://github.com/eko/FeedBundle',
                     'encoding'    => 'utf-8',
-                    'author'      => 'Vincent'
-                )
-            )
-        );
+                    'author'      => 'Vincent',
+                ],
+            ],
+        ];
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
         $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
 
-        $formatters = array('atom' => new AtomFormatter($translator, 'test'));
+        $formatters = ['atom' => new AtomFormatter($translator, 'test')];
 
         $manager = new FeedManager($this->getMockRouter(), $config, $formatters);
 
         $feed = $manager->get('article');
         $feed->add(new FakeRoutedItemInterfaceEntity());
-        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', array(
-            'translatable' => true
-        )));
+        $feed->addItemField(new ItemField('fake_custom', 'getFeedItemCustom', [
+            'translatable' => true,
+        ]));
 
         $output = $feed->render('atom');
         $this->assertContains('<fake_custom>translatable-value</fake_custom>', $output);
     }
 
     /**
-     * Returns RouterInterface mock
+     * Returns RouterInterface mock.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */

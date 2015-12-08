@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Field\Item;
 
 /**
- * ItemField
+ * ItemField.
  *
  * This is the items field class
  *
@@ -20,36 +20,36 @@ namespace Eko\FeedBundle\Field\Item;
 class ItemField implements ItemFieldInterface
 {
     /**
-     * @var string $name Field name
+     * @var string Field name
      */
     protected $name;
 
     /**
-     * @var string $method Item method name
+     * @var string Item method name
      */
     protected $method;
 
     /**
-     * @var array $options Options array (required, cdata, ...)
+     * @var array Options array (required, cdata, ...)
      */
     protected $options;
 
     /**
-     * @var array $attributes Attributes to add to this item field
+     * @var array Attributes to add to this item field
      */
     protected $attributes;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string|array $name       A field name
      * @param string       $method     An item method name
      * @param array        $options    An options array
      * @param array        $attributes An attributes array
      */
-    public function __construct($name, $method, array $options = array(), array $attributes = array())
+    public function __construct($name, $method, array $options = [], array $attributes = [])
     {
-        $this->name   = $name;
+        $this->name = $name;
         $this->method = $method;
 
         if (!empty($options)) {
@@ -60,7 +60,7 @@ class ItemField implements ItemFieldInterface
     }
 
     /**
-     * Returns field name
+     * Returns field name.
      *
      * @return string|array
      */
@@ -70,7 +70,7 @@ class ItemField implements ItemFieldInterface
     }
 
     /**
-     * Returns method name
+     * Returns method name.
      *
      * @return string
      */
@@ -80,7 +80,7 @@ class ItemField implements ItemFieldInterface
     }
 
     /**
-     * Returns option value
+     * Returns option value.
      *
      * @param string $option  An option name
      * @param mixed  $default A default value
@@ -93,7 +93,7 @@ class ItemField implements ItemFieldInterface
     }
 
     /**
-     * Returns attributes to be added to this item field
+     * Returns attributes to be added to this item field.
      *
      * @return array
      */

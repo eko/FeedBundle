@@ -14,7 +14,7 @@ use Eko\FeedBundle\Feed\Reader;
 use Eko\FeedBundle\Hydrator\DefaultHydrator;
 
 /**
- * ReaderTest
+ * ReaderTest.
  *
  * This is the feed reader test class
  *
@@ -23,24 +23,25 @@ use Eko\FeedBundle\Hydrator\DefaultHydrator;
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Reader $reader A feed reader instance
+     * @var Reader A feed reader instance
      */
     protected $reader;
 
     /**
-     * Sets up elements used in test case
+     * Sets up elements used in test case.
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->reader = new Reader();
         $this->reader->setHydrator(new DefaultHydrator());
     }
 
     /**
-     * Check if feeds can be loaded from data fixtures
+     * Check if feeds can be loaded from data fixtures.
      */
     public function testLoad()
     {
-        $feed = $this->reader->load(__DIR__ . '/../DataFixtures/Feed.xml')->get();
+        $feed = $this->reader->load(__DIR__.'/../DataFixtures/Feed.xml')->get();
 
         $this->assertNotNull($feed, 'Returned feed should not be null');
         $this->assertInstanceOf('\Zend\Feed\Reader\Feed\FeedInterface', $feed, 'Should return an AbstractFeed instance');
@@ -53,13 +54,13 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if feeds can populate an entity
+     * Check if feeds can populate an entity.
      */
     public function testPopulate()
     {
         $entityName = 'Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity';
 
-        $reader = $this->reader->load(__DIR__ . '/../DataFixtures/Feed.xml');
+        $reader = $this->reader->load(__DIR__.'/../DataFixtures/Feed.xml');
         $items = $reader->populate($entityName);
 
         $this->assertCount(1, $items, 'Should contain an array with the only feed element');

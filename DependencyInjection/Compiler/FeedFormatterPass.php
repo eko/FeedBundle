@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Retrieve all formatters and inject them into the feed manager service
+ * Retrieve all formatters and inject them into the feed manager service.
  *
  * @author Vincent Composieux <vincent.composieux@gail.com>
  */
@@ -26,7 +26,7 @@ class FeedFormatterPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $formatters = array();
+        $formatters = [];
 
         $services = $container->findTaggedServiceIds('eko_feed.formatter');
 

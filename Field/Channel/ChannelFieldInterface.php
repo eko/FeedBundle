@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Field\Channel;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 
 /**
- * ChannelFieldInterface
+ * ChannelFieldInterface.
  *
  * This is the channel field interface
  *
@@ -21,5 +21,4 @@ use Eko\FeedBundle\Field\Item\ItemFieldInterface;
  */
 interface ChannelFieldInterface extends ItemFieldInterface
 {
-
 }

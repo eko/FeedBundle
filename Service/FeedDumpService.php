@@ -10,12 +10,12 @@
 
 namespace Eko\FeedBundle\Service;
 
-use Eko\FeedBundle\Feed\FeedManager;
 use Doctrine\ORM\EntityManager;
+use Eko\FeedBundle\Feed\FeedManager;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Class FeedDumpService
+ * Class FeedDumpService.
  *
  * This class helps to dump your feeds on filesystem
  *
@@ -39,42 +39,42 @@ class FeedDumpService
     private $filesystem;
 
     /**
-     * @var string $name
+     * @var string
      */
     private $name;
 
     /**
-     * @var string $entity
+     * @var string
      */
     private $entity;
 
     /**
-     * @var string $filename
+     * @var string
      */
     private $filename;
 
     /**
-     * @var string $format
+     * @var string
      */
     private $format;
 
     /**
-     * @var integer $limit
+     * @var int
      */
     private $limit;
 
     /**
-     * @var string $direction
+     * @var string
      */
     private $direction;
 
     /**
-     * @var string $orderBy
+     * @var string
      */
     private $orderBy;
 
     /**
-     * @var string $rootDir
+     * @var string
      */
     private $rootDir;
 
@@ -88,8 +88,8 @@ class FeedDumpService
     public function __construct(FeedManager $feedManager, EntityManager $entityManager, Filesystem $filesystem)
     {
         $this->feedManager = $feedManager;
-        $this->em          = $entityManager;
-        $this->filesystem  = $filesystem;
+        $this->em = $entityManager;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -109,14 +109,14 @@ class FeedDumpService
 
         if ($this->entity) {
             $repository = $this->em->getRepository($this->entity);
-            $items      = $repository->findBy(array(), $this->orderBy, $this->limit);
+            $items = $repository->findBy([], $this->orderBy, $this->limit);
             $feed->addFromArray($items);
-        } else if ($feed->hasItems()) {
+        } elseif ($feed->hasItems()) {
             throw new \LogicException(sprintf('An entity should be set OR you should use setItems() first'));
         }
 
-        $dump     = $feed->render($this->format);
-        $filepath = $this->rootDir . $this->filename;
+        $dump = $feed->render($this->format);
+        $filepath = $this->rootDir.$this->filename;
 
         $this->filesystem->dumpFile($filepath, $dump);
     }
@@ -132,7 +132,7 @@ class FeedDumpService
             switch ($this->direction) {
                 case 'ASC':
                 case 'DESC':
-                    $this->orderBy = array($this->orderBy => $this->direction);
+                    $this->orderBy = [$this->orderBy => $this->direction];
                     break;
 
                 default:
@@ -215,7 +215,7 @@ class FeedDumpService
     /**
      * Sets the value of limit.
      *
-     * @param integer $limit
+     * @param int $limit
      *
      * @return $this
      */
@@ -269,7 +269,7 @@ class FeedDumpService
     }
 
     /**
-     * Return rootdir
+     * Return rootdir.
      *
      * @return string
      */

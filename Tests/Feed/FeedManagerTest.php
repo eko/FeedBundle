@@ -15,7 +15,7 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 
 /**
- * FeedManagerTest
+ * FeedManagerTest.
  *
  * This is the feed manager test class
  *
@@ -24,40 +24,41 @@ use Eko\FeedBundle\Formatter\RssFormatter;
 class FeedManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FeedManager $manager A feed manager instance
+     * @var FeedManager A feed manager instance
      */
     protected $manager;
 
     /**
-     * Sets up manager & configuration used in test cases
+     * Sets up manager & configuration used in test cases.
      */
-    public function setUp() {
-        $config = array(
-            'feeds' => array(
-                'article' => array(
+    public function setUp()
+    {
+        $config = [
+            'feeds' => [
+                'article' => [
                     'title'       => 'My articles/posts',
                     'description' => 'Latests articles',
                     'link'        => 'http://github.com/eko/FeedBundle',
                     'encoding'    => 'utf-8',
-                    'author'      => 'Vincent Composieux'
-                )
-            )
-        );
+                    'author'      => 'Vincent Composieux',
+                ],
+            ],
+        ];
 
         $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        $formatters = array(
+        $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
             'atom' => new AtomFormatter($translator, 'test'),
-        );
+        ];
 
         $this->manager = new FeedManager($router, $config, $formatters);
     }
 
     /**
-     * Check if feed is correctly inserted
+     * Check if feed is correctly inserted.
      */
     public function testHasFeed()
     {
@@ -65,7 +66,7 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if a fake feed name is not marked as existing
+     * Check if a fake feed name is not marked as existing.
      */
     public function testFeedDoNotExists()
     {
@@ -74,7 +75,7 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if an \InvalidArgumentException is thrown
-     * if requested feed does not exists
+     * if requested feed does not exists.
      */
     public function testNonExistantFeedException()
     {
@@ -87,7 +88,7 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if the feed data are properly loaded from configuration settings
+     * Check if the feed data are properly loaded from configuration settings.
      */
     public function testGetFeedData()
     {

@@ -11,7 +11,7 @@
 namespace Eko\FeedBundle\Field\Item;
 
 /**
- * ItemFieldInterface
+ * ItemFieldInterface.
  *
  * This is the item field interface
  *
@@ -20,7 +20,7 @@ namespace Eko\FeedBundle\Field\Item;
 interface ItemFieldInterface
 {
     /**
-     * Returns field name
+     * Returns field name.
      *
      * @return string
      */

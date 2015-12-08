@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Tests\Entity\Reader;
 use Eko\FeedBundle\Item\Reader\ItemInterface;
 
 /**
- * Fake
+ * Fake.
  *
  * A fake entity implementing ItemInterface for tests
  */
@@ -40,7 +40,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     protected $date;
 
     /**
-     * Returns a fake title
+     * Returns a fake title.
      *
      * @return string
      */
@@ -49,9 +49,8 @@ class FakeItemInterfaceEntity implements ItemInterface
         $this->title = $title;
     }
 
-
     /**
-     * Returns a fake description or content
+     * Returns a fake description or content.
      *
      * @return string
      */
@@ -61,7 +60,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake item link
+     * Returns a fake item link.
      *
      * @return string
      */
@@ -71,7 +70,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Returns a fake publication date
+     * Returns a fake publication date.
      *
      * @return \DateTime
      */
@@ -81,7 +80,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -91,7 +90,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -101,7 +100,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Get link
+     * Get link.
      *
      * @return string
      */
@@ -111,7 +110,7 @@ class FakeItemInterfaceEntity implements ItemInterface
     }
 
     /**
-     * Get publication date
+     * Get publication date.
      *
      * @return \DateTime
      */

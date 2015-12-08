@@ -10,14 +10,14 @@
 
 namespace Eko\FeedBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * EkoFeedExtension
+ * EkoFeedExtension.
  *
  * This class loads services.xml file and tree configuration
  *
@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class EkoFeedExtension extends Extension
 {
     /**
-     * Configuration extension loader
+     * Configuration extension loader.
      *
      * @param array            $configs   An array of configuration settings
      * @param ContainerBuilder $container A container builder instance
@@ -47,7 +47,7 @@ class EkoFeedExtension extends Extension
     }
 
     /**
-     * Configures feed reader hydrator service
+     * Configures feed reader hydrator service.
      *
      * @param array            $config    Bundle configuration values array
      * @param ContainerBuilder $container A ContainerBuilder instance
@@ -61,6 +61,6 @@ class EkoFeedExtension extends Extension
         }
 
         $container->getDefinition('eko_feed.feed.reader')
-            ->addMethodCall('setHydrator', array(new Reference($config['hydrator'])));
+            ->addMethodCall('setHydrator', [new Reference($config['hydrator'])]);
     }
 }

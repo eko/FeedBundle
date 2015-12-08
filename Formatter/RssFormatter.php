@@ -13,11 +13,10 @@ namespace Eko\FeedBundle\Formatter;
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
-
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * RSS formatter
+ * RSS formatter.
  *
  * This class provides an RSS formatter
  *
@@ -26,25 +25,25 @@ use Symfony\Component\Translation\TranslatorInterface;
 class RssFormatter extends Formatter implements FormatterInterface
 {
     /**
-     * Construct a formatter with given feed
+     * Construct a formatter with given feed.
      *
      * @param TranslatorInterface $translator A Symfony translator service instance
      * @param string|null         $domain     A Symfony translation domain
      */
     public function __construct(TranslatorInterface $translator, $domain = null)
     {
-        $this->itemFields = array(
-            new ItemField('title', 'getFeedItemTitle', array('cdata' => true)),
-            new ItemField('description', 'getFeedItemDescription', array('cdata' => true)),
+        $this->itemFields = [
+            new ItemField('title', 'getFeedItemTitle', ['cdata' => true]),
+            new ItemField('description', 'getFeedItemDescription', ['cdata' => true]),
             new ItemField('link', 'getFeedItemLink'),
-            new ItemField('pubDate', 'getFeedItemPubDate', array('date_format' => \DateTime::RSS)),
-        );
+            new ItemField('pubDate', 'getFeedItemPubDate', ['date_format' => \DateTime::RSS]),
+        ];
 
         parent::__construct($translator, $domain);
     }
 
     /**
-     * Sets feed instance
+     * Sets feed instance.
      *
      * @param Feed $feed
      */
