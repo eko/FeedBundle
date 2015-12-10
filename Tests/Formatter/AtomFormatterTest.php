@@ -20,6 +20,7 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * AtomFormatterTest.
@@ -459,6 +460,7 @@ EOF
 
         $mockRouter->expects($this->any())
             ->method('generate')
+            ->with('fake_route', [], UrlGeneratorInterface::ABSOLUTE_URL)
             ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
 
         return $mockRouter;

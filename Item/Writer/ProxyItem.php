@@ -11,6 +11,7 @@
 
 namespace Eko\FeedBundle\Item\Writer;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -92,7 +93,7 @@ class ProxyItem implements ItemInterface
     {
         $parameters = $this->item->getFeedItemRouteParameters() ?: [];
 
-        $url = $this->router->generate($this->item->getFeedItemRouteName(), $parameters, true);
+        $url = $this->router->generate($this->item->getFeedItemRouteName(), $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
 
         $anchor = (string) $this->item->getFeedItemUrlAnchor();
         if ($anchor !== '') {

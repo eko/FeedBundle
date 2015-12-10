@@ -15,6 +15,7 @@ use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -123,7 +124,7 @@ class Feed
             return (is_string($linkConfig)) ? $linkConfig : $linkConfig['uri'];
         }
 
-        return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], true);
+        return $this->router->generate($linkConfig['route_name'], $linkConfig['route_params'], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     /**

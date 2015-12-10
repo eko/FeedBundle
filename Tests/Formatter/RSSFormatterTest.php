@@ -20,6 +20,7 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * RSSFormatterTest.
@@ -56,6 +57,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $router->expects($this->any())
             ->method('generate')
+            ->with('fake_route', [], UrlGeneratorInterface::ABSOLUTE_URL)
             ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
