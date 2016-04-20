@@ -46,7 +46,7 @@ class FeedManager
 
     /**
      * Constructor.
-     * 
+     *
      * @param RouterInterface $router     A Symfony router instance
      * @param array           $config     Configuration settings
      * @param array           $formatters Feed formatters list
