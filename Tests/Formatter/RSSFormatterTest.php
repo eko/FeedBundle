@@ -331,7 +331,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains(<<<EOF
+        $this->assertContains(<<<'EOF'
       <author>
         <name><![CDATA[John Doe]]></name>
         <email>john.doe@example.org</email>

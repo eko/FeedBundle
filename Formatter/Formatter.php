@@ -117,7 +117,7 @@ class Formatter
      *
      * @param ItemFieldInterface $field A item field instance
      * @param ItemInterface      $item  An entity instance
-     * 
+     *
      * @return string
      */
     protected function format(ItemFieldInterface $field, ItemInterface $item)
