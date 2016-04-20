@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Eko\FeedBundle\Feed\FeedManager;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -29,7 +29,7 @@ class FeedDumpService
     private $feedManager;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -81,14 +81,14 @@ class FeedDumpService
     /**
      * Constructor.
      *
-     * @param FeedManager   $feedManager   A Feed manager
-     * @param EntityManager $entityManager A Doctrine entity manager
-     * @param Filesystem    $filesystem    A Symfony Filesystem component
+     * @param FeedManager            $feedManager A Feed manager
+     * @param EntityManagerInterface $em          A Doctrine entity manager
+     * @param Filesystem             $filesystem  A Symfony Filesystem component
      */
-    public function __construct(FeedManager $feedManager, EntityManager $entityManager, Filesystem $filesystem)
+    public function __construct(FeedManager $feedManager, EntityManagerInterface $em, Filesystem $filesystem)
     {
         $this->feedManager = $feedManager;
-        $this->em = $entityManager;
+        $this->em = $em;
         $this->filesystem = $filesystem;
     }
 

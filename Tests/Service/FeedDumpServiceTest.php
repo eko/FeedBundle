@@ -25,7 +25,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
     protected $feedManager;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     protected $entityManager;
 
@@ -48,7 +48,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
