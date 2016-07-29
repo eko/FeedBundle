@@ -306,7 +306,7 @@ class Formatter
                 $value = $value->format($format);
             }
 
-            $element = $this->dom->createElement($name, $value);
+            $element = $this->dom->createElement($name, htmlspecialchars($value));
         }
 
         $this->addAttributes($element, $field, $item);

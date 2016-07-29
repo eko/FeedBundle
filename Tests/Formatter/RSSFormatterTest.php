@@ -58,7 +58,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $router->expects($this->any())
             ->method('generate')
             ->with('fake_route', [], UrlGeneratorInterface::ABSOLUTE_URL)
-            ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url'));
+            ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url?utm_source=mysource&utm_medium=mymedium&utm_campaign=mycampaign&utm_content=mycontent'));
 
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
@@ -363,7 +363,7 @@ EOF
         $feed->add(new FakeRoutedItemInterfaceEntity());
 
         $output = $feed->render('atom');
-        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url#fake-anchor"/>', $output);
+        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url?utm_source=mysource&amp;utm_medium=mymedium&amp;utm_campaign=mycampaign&amp;utm_content=mycontent#fake-anchor"/>', $output);
     }
 
     /**
