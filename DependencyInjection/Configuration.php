@@ -47,7 +47,9 @@ class Configuration implements ConfigurationInterface
                                 ->isRequired()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($value) { return ['uri' => $value]; })
+                                    ->then(function ($value) {
+                                        return ['uri' => $value];
+                                    })
                                 ->end()
                                 ->children()
                                     ->scalarNode('route_name')->end()
