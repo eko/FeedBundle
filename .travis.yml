@@ -1,10 +1,10 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
+  - 7.1
   - hhvm
 
 matrix:
@@ -19,15 +19,15 @@ matrix:
     - php: 5.6
       env: SYMFONY_VERSION=3.0.*
     - php: 5.6
-      env: SYMFONY_VERSION=3.0.*@dev
-    - php: 5.6
       env: SYMFONY_VERSION=3.1.*@dev
+    - php: 5.6
+      env: SYMFONY_VERSION=3.2.*@dev
   allow_failures:
     - php: hhvm
 
 before_install:
-  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
-  - if [ "$SYMFONY_VERSION" = "3.0.*@dev" ] || [ "$SYMFONY_VERSION" = "3.1.*@dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; else composer require "symfony/symfony:dev-master"; fi;
+  - if [ "$SYMFONY_VERSION" = "3.1.*@dev" ] || [ "$SYMFONY_VERSION" = "3.2.*@dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
 install:
   - composer update --dev --prefer-source $COMPOSER_FLAGS
@@ -36,5 +36,4 @@ script: phpunit
 
 notifications:
   email:
-    - vincent.composieux@gmail.com
-
+    - travis-ci@composieux.fr
