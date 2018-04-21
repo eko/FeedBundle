@@ -12,7 +12,7 @@
     </parameters>
 
     <services>
-        <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%">
+        <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%" public="true">
             <argument type="service" id="router" />
             <argument>%eko_feed.config%</argument>
             <argument />
