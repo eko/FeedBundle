@@ -18,7 +18,7 @@
             <argument />
         </service>
 
-        <service id="eko_feed.feed.dump" class="%eko_feed.feed.dump.class%">
+        <service id="eko_feed.feed.dump" class="%eko_feed.feed.dump.class%" public="true">
             <argument type="service" id="eko_feed.feed.manager" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="filesystem" />
@@ -27,9 +27,9 @@
             </call>
         </service>
 
-        <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" />
+        <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" public="true" />
 
-        <service id="eko_feed.feed" class="%eko_feed.feed.class%">
+        <service id="eko_feed.feed" class="%eko_feed.feed.class% public="true"">
             <argument />
             <call method="setRouter">
                 <argument type="service" id="router" />
