@@ -29,7 +29,7 @@
 
         <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" public="true" />
 
-        <service id="eko_feed.feed" class="%eko_feed.feed.class% public="true"">
+        <service id="eko_feed.feed" class="%eko_feed.feed.class% public="true">
             <argument />
             <call method="setRouter">
                 <argument type="service" id="router" />
