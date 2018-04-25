@@ -1,5 +1,5 @@
 {
-    "name": "Muspi/feedbundle",
+    "name": "muspi/feedbundle",
     "type": "library",
     "description": "A Symfony bundle to build RSS feeds from entities, clone from eko/feedbundle",
     "keywords": ["feed", "bundle", "rss", "atom"],
