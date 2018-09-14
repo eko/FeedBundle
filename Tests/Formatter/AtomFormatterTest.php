@@ -53,7 +53,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
@@ -81,7 +81,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
@@ -432,7 +432,7 @@ EOF
             ],
         ];
 
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
 
         $formatters = ['atom' => new AtomFormatter($translator, 'test')];
@@ -456,7 +456,7 @@ EOF
      */
     private function getMockRouter()
     {
-        $mockRouter = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $mockRouter = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
         $mockRouter->expects($this->any())
             ->method('generate')
