@@ -90,7 +90,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setEntity('Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity');
         $this->service->setDirection('ASC');
 
-        $entity = $this->getMock('Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity');
+        $entity = $this->createMock('Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity');
 
         $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
