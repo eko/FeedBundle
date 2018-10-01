@@ -10,7 +10,13 @@
 
 namespace Eko\FeedBundle\Tests\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Eko\FeedBundle\Feed\Feed;
+use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Service\FeedDumpService;
+use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * FeedDumpServiceTest.
@@ -20,17 +26,17 @@ use Eko\FeedBundle\Service\FeedDumpService;
 class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Eko\FeedBundle\Feed\FeedManager
+     * @var FeedManager
      */
     protected $feedManager;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     protected $entityManager;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $filesystem;
 
@@ -44,15 +50,15 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->feedManager = $this->getMockBuilder('Eko\FeedBundle\Feed\FeedManager')
+        $this->feedManager = $this->getMockBuilder(FeedManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
+        $this->entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->filesystem = $this->getMockBuilder('Symfony\Component\Filesystem\Filesystem')
+        $this->filesystem = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -87,12 +93,12 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
         // Given
         $this->service->setRootDir('/unit/test/');
         $this->service->setFilename('feed.rss');
-        $this->service->setEntity('Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity');
+        $this->service->setEntity(FakeItemInterfaceEntity::class);
         $this->service->setDirection('ASC');
 
-        $entity = $this->createMock('Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity');
+        $entity = $this->createMock(FakeItemInterfaceEntity::class);
 
-        $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+        $repository = $this->getMockBuilder(EntityRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -100,7 +106,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->entityManager->expects($this->once())->method('getRepository')->will($this->returnValue($repository));
 
-        $feed = $this->getMockBuilder('Eko\FeedBundle\Feed\Feed')
+        $feed = $this->getMockBuilder(Feed::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -134,7 +140,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setFilename('feed.rss');
         $this->service->setDirection('ASC');
 
-        $feed = $this->getMockBuilder('Eko\FeedBundle\Feed\Feed')
+        $feed = $this->getMockBuilder(Feed::class)
             ->disableOriginalConstructor()
             ->getMock();
 

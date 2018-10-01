@@ -20,7 +20,9 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * RSSFormatterTest.
@@ -53,14 +55,14 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock(RouterInterface::class);
 
         $router->expects($this->any())
             ->method('generate')
             ->with('fake_route', [], UrlGeneratorInterface::ABSOLUTE_URL)
             ->will($this->returnValue('http://github.com/eko/FeedBundle/article/fake/url?utm_source=mysource&utm_medium=mymedium&utm_campaign=mycampaign&utm_content=mycontent'));
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
@@ -399,12 +401,12 @@ EOF
             ],
         ];
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
 
         $formatters = ['rss' => new RssFormatter($translator, 'test')];
 
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock(RouterInterface::class);
 
         $manager = new FeedManager($router, $config, $formatters);
 

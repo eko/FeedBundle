@@ -20,7 +20,9 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * AtomFormatterTest.
@@ -53,7 +55,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
@@ -81,7 +83,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),
@@ -282,6 +284,29 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if a custom group item field can contain another group items field.
+     */
+    public function testAddCustomGroupItemFieldContainingAnotherGroup()
+    {
+        $feed = $this->manager->get('article');
+        $feed->add(new FakeItemInterfaceEntity());
+        $feed->addItemField(
+            new GroupItemField(
+                'links',
+                array(
+                    new GroupItemField('link', new ItemField('category', 'getFeedCategoriesCustom')),
+                    new GroupItemField('link', new ItemField('category', 'getFeedCategoriesCustom'))
+                )
+            )
+        );
+
+        $output = $feed->render('atom');
+        $output = str_replace(array("\r", "\n", "  "), '', $output);
+
+        $this->assertContains('<links><link><category>category 1</category><category>category 2</category><category>category 3</category></link><link><category>category 1</category><category>category 2</category><category>category 3</category></link></links>', $output);
+    }
+
+    /**
      * Check if a custom group item field with attributes from method is properly rendered.
      */
     public function testAddCustomGroupItemFieldWithAttributesFromMethod()
@@ -432,7 +457,7 @@ EOF
             ],
         ];
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
 
         $formatters = ['atom' => new AtomFormatter($translator, 'test')];
@@ -456,7 +481,7 @@ EOF
      */
     private function getMockRouter()
     {
-        $mockRouter = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $mockRouter = $this->createMock(RouterInterface::class);
 
         $mockRouter->expects($this->any())
             ->method('generate')

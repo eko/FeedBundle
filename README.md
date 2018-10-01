@@ -231,6 +231,23 @@ $feed->addItemField(
 );
 ```
 
+or even, nested group item field in a group, like this:
+
+```php
+$feed->addItemField(
+    new GroupItemField('authors', array(
+        new GroupItemField('author', array(
+            new ItemField('name', 'Vincent', array('cdata' => true)),
+            new ItemField('email', 'vincent@test.com')
+        )),
+        new GroupItemField('author', array(
+            new ItemField('name', 'Audrey', array('cdata' => true)),
+            new ItemField('email', 'audrey@test.com')
+        ))
+    )
+);
+```
+
 ##### Add a group of custom channel fields
 
 As you can do for item fields, you can also add a custom group of channel fields like this:

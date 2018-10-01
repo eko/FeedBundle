@@ -34,7 +34,7 @@ class DefaultHydrator implements HydratorInterface
 
             if (!$entity instanceof ItemInterface) {
                 throw new \RuntimeException(
-                    sprintf('Entity "%s" does not implement required %s.', $entityName, 'Eko\FeedBundle\Item\Reader\ItemInterface')
+                    sprintf('Entity "%s" does not implement required %s.', $entityName, ItemInterface::class)
                 );
             }
 
