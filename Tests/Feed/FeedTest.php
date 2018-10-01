@@ -14,6 +14,8 @@ use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * FeedTest.
@@ -46,9 +48,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock(RouterInterface::class);
 
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $formatters = [
             'rss'  => new RssFormatter($translator, 'test'),

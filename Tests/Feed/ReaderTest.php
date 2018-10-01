@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\Reader;
 use Eko\FeedBundle\Hydrator\DefaultHydrator;
+use Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity;
 
 /**
  * ReaderTest.
@@ -58,15 +59,13 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testPopulate()
     {
-        $entityName = 'Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity';
-
         $reader = $this->reader->load(__DIR__.'/../DataFixtures/Feed.xml');
-        $items = $reader->populate($entityName);
+        $items = $reader->populate(FakeItemInterfaceEntity::class);
 
         $this->assertCount(1, $items, 'Should contain an array with the only feed element');
 
         foreach ($items as $item) {
-            $this->assertInstanceOf($entityName, $item, 'Should be an instance of populated entity name');
+            $this->assertInstanceOf(FakeItemInterfaceEntity::class, $item, 'Should be an instance of populated entity name');
 
             $this->assertEquals('PHP 5.4.11 and PHP 5.3.21 released!', $item->getTitle(), 'Should be correct title');
             $this->assertEquals('<div>', substr($item->getDescription(), 0, 5), 'Should be correct description');

@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "doctrine/orm": "~2.2,>=2.2.3|~2.5",
-        "phpunit/phpunit": "~4"
+        "phpunit/phpunit": "~5"
     },
     "suggest": {
         "doctrine/orm": "~2.2,>=2.2.3|~2.5"
