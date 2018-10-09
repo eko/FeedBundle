@@ -1,6 +1,6 @@
 {
     "name": "eko/feedbundle",
-    "type": "library",
+    "type": "symfony-bundle",
     "description": "A Symfony bundle to build RSS feeds from entities",
     "keywords": ["feed", "bundle", "rss", "atom"],
     "homepage": "http://github.com/eko/FeedBundle",
