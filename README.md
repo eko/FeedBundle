@@ -74,7 +74,7 @@ You can set link as route:
 ```yaml
 link:
     route_name: acme_blog_main_index
-    route_params: {id: 2} # necessary if route cantains required parameters
+    route_params: {id: 2} # necessary if route contains required parameters
 ```
 
 ### 2) Implement the ItemInterface
