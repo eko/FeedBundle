@@ -19,12 +19,13 @@ matrix:
       env: SYMFONY_VERSION=3.1.*
     - php: 7.2
       env: SYMFONY_VERSION=3.2.*
+    - php: 7.3
+      env: SYMFONY_VERSION=5.0.*
   allow_failures:
     - php: hhvm
 
 before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; else composer require "symfony/symfony:dev-master"; fi;
-  - if [ "$SYMFONY_VERSION" = "3.1.*@dev" ] || [ "$SYMFONY_VERSION" = "3.2.*@dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
 install:
   - composer update --dev --prefer-source $COMPOSER_FLAGS
