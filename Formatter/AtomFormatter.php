@@ -13,7 +13,7 @@ namespace Eko\FeedBundle\Formatter;
 use Eko\FeedBundle\Feed\Feed;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Atom formatter.

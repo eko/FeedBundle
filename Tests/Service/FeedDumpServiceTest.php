@@ -23,7 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
+class FeedDumpServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FeedManager
@@ -48,7 +48,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up a dump service.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->feedManager = $this->getMockBuilder(FeedManager::class)
             ->disableOriginalConstructor()
@@ -75,7 +75,7 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
         }
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
 
         $this->service->setOrderBy('unexistant-order');
         $this->service->dump();
@@ -133,7 +133,8 @@ class FeedDumpServiceTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Test skipped as Filesystem::dumpFile() is not available in this version.');
         }
 
-        $this->setExpectedException('\LogicException', 'An entity should be set OR you should use setItems() first');
+        $this->expectException('\LogicException');
+        $this->expectExceptionMessage('An entity should be set OR you should use setItems() first');
 
         // Given
         $this->service->setRootDir('/unit/test/');

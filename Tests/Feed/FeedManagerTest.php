@@ -14,7 +14,7 @@ use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * FeedManagerTest.
@@ -23,7 +23,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedManagerTest extends \PHPUnit_Framework_TestCase
+class FeedManagerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FeedManager A feed manager instance
@@ -33,7 +33,7 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up manager & configuration used in test cases.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $config = [
             'feeds' => [
@@ -81,10 +81,8 @@ class FeedManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonExistantFeedException()
     {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            "Specified feed 'unknown_feed_name' is not defined in your configuration."
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage("Specified feed 'unknown_feed_name' is not defined in your configuration.");
 
         $this->manager->get('unknown_feed_name');
     }

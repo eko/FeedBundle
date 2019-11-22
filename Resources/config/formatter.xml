@@ -4,20 +4,15 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="eko_feed.formatter.rss.class">Eko\FeedBundle\Formatter\RssFormatter</parameter>
-        <parameter key="eko_feed.formatter.atom.class">Eko\FeedBundle\Formatter\AtomFormatter</parameter>
-    </parameters>
-
     <services>
-        <service id="eko_feed.formatter.rss" class="%eko_feed.formatter.rss.class%">
+        <service id="Eko\FeedBundle\Formatter\RssFormatter" autowire="false">
             <tag name="eko_feed.formatter" format="rss"></tag>
 
             <argument type="service" id="translator" />
             <argument>%eko_feed.translation_domain%</argument>
         </service>
 
-        <service id="eko_feed.formatter.atom" class="%eko_feed.formatter.atom.class%">
+        <service id="Eko\FeedBundle\Formatter\AtomFormatter" autowire="false">
             <tag name="eko_feed.formatter" format="atom"></tag>
 
             <argument type="service" id="translator" />

@@ -10,6 +10,7 @@
 
 namespace Eko\FeedBundle\DependencyInjection\Compiler;
 
+use Eko\FeedBundle\Feed\FeedManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -35,7 +36,7 @@ class FeedFormatterPass implements CompilerPassInterface
             $formatters[$options['format']] = new Reference($identifier);
         }
 
-        $manager = $container->getDefinition('eko_feed.feed.manager');
+        $manager = $container->getDefinition(FeedManager::class);
         $manager->replaceArgument(2, $formatters);
     }
 }

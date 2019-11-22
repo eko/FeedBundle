@@ -15,7 +15,7 @@ use Eko\FeedBundle\Formatter\AtomFormatter;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * FeedTest.
@@ -24,7 +24,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class FeedTest extends \PHPUnit_Framework_TestCase
+class FeedTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FeedManager A feed manager instance
@@ -34,7 +34,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     /**
      * Set up.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $config = [
             'feeds' => [
@@ -144,10 +144,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $feed = $this->manager->get('article');
         $feed->add(new FakeItemInterfaceEntity());
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            "Unable to find a formatter service for format 'unknown_formatter'."
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage("Unable to find a formatter service for format 'unknown_formatter'.");
 
         $feed->render('unknown_formatter');
     }

@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('hydrator')->defaultValue('eko_feed.hydrator.default')->end()
+                ->scalarNode('hydrator')->defaultValue('Eko\FeedBundle\Hydrator\DefaultHydrator')->end()
                 ->scalarNode('translation_domain')->defaultNull()->end()
                 ->arrayNode('feeds')
                     ->requiresAtLeastOneElement()
