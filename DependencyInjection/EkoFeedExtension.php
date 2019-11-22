@@ -60,7 +60,7 @@ class EkoFeedExtension extends Extension
             throw new \RuntimeException(sprintf('Unable to load hydrator service "%s"', $config['hydrator']));
         }
 
-        $container->getDefinition('eko_feed.feed.reader')
+        $container->getDefinition('Eko\FeedBundle\Feed\Reader')
             ->addMethodCall('setHydrator', [new Reference($config['hydrator'])]);
     }
 }

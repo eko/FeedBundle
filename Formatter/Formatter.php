@@ -17,7 +17,7 @@ use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Formatter.

@@ -4,22 +4,15 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="eko_feed.feed.manager.class">Eko\FeedBundle\Feed\FeedManager</parameter>
-        <parameter key="eko_feed.feed.class">Eko\FeedBundle\Feed\Feed</parameter>
-        <parameter key="eko_feed.feed.reader.class">Eko\FeedBundle\Feed\Reader</parameter>
-        <parameter key="eko_feed.feed.dump.class">Eko\FeedBundle\Service\FeedDumpService</parameter>
-    </parameters>
-
     <services>
-        <service id="eko_feed.feed.manager" class="%eko_feed.feed.manager.class%" public="true">
+        <service id="Eko\FeedBundle\Feed\FeedManager" public="true" autowire="false">
             <argument type="service" id="router" />
             <argument>%eko_feed.config%</argument>
             <argument />
         </service>
 
-        <service id="eko_feed.feed.dump" class="%eko_feed.feed.dump.class%" public="true">
-            <argument type="service" id="eko_feed.feed.manager" />
+        <service id="Eko\FeedBundle\Service\FeedDumpService" public="true" autowire="false">
+            <argument type="service" id="Eko\FeedBundle\Feed\FeedManager" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="filesystem" />
             <call method="setRootDir">
@@ -27,9 +20,9 @@
             </call>
         </service>
 
-        <service id="eko_feed.feed.reader" class="%eko_feed.feed.reader.class%" public="true" />
+        <service id="Eko\FeedBundle\Feed\Reader" public="true" autowire="false" />
 
-        <service id="eko_feed.feed" class="%eko_feed.feed.class%" public="true">
+        <service id="Eko\FeedBundle\Feed\Feed" public="true" autowire="false">
             <argument />
             <call method="setRouter">
                 <argument type="service" id="router" />

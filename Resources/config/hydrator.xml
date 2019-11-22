@@ -4,12 +4,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="eko_feed.hydrator.default.class">Eko\FeedBundle\Hydrator\DefaultHydrator</parameter>
-    </parameters>
-
     <services>
-        <service id="eko_feed.hydrator.default" class="%eko_feed.hydrator.default.class%" />
+        <service id="Eko\FeedBundle\Hydrator\DefaultHydrator" autowire="false" />
     </services>
 
 </container>

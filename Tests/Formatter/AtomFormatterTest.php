@@ -22,7 +22,7 @@ use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * AtomFormatterTest.
@@ -31,7 +31,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class AtomFormatterTest extends \PHPUnit_Framework_TestCase
+class AtomFormatterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FeedManager A feed manager instance
@@ -41,7 +41,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up elements used in test case.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $config = [
             'feeds' => [
@@ -94,10 +94,8 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $feed = $manager->get('article');
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Atom formatter requires an "author" parameter in configuration.'
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Atom formatter requires an "author" parameter in configuration.');
 
         $feed->set('author', null);
         $feed->render('atom');
@@ -113,8 +111,8 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
-        $this->assertContains('<link href="http://github.com/eko/FeedBundle" rel="self" type="application/rss+xml"/>', $output);
+        $this->assertStringContainsString('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
+        $this->assertStringContainsString('<link href="http://github.com/eko/FeedBundle" rel="self" type="application/rss+xml"/>', $output);
     }
 
     /**
@@ -131,7 +129,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $dom->loadXML($output);
 
         $this->assertEquals(0, count(libxml_get_errors()));
-        $this->assertContains('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
+        $this->assertStringContainsString('<feed xmlns="http://www.w3.org/2005/Atom">', $output);
     }
 
     /**
@@ -144,9 +142,9 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
-        $this->assertContains('<summary type="html"><![CDATA[Fake description or content]]></summary>', $output);
-        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url"/>', $output);
+        $this->assertStringContainsString('<title><![CDATA[Fake title]]></title>', $output);
+        $this->assertStringContainsString('<summary type="html"><![CDATA[Fake description or content]]></summary>', $output);
+        $this->assertStringContainsString('<link href="http://github.com/eko/FeedBundle/article/fake/url"/>', $output);
     }
 
     /**
@@ -160,7 +158,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<fake_channel_custom>My fake value</fake_channel_custom>', $output);
+        $this->assertStringContainsString('<fake_channel_custom>My fake value</fake_channel_custom>', $output);
     }
 
     /**
@@ -174,7 +172,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>My custom field</fake_custom>', $output);
     }
 
     /**
@@ -191,7 +189,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<fake_custom fake-value="My custom field"/>', $output);
+        $this->assertStringContainsString('<fake_custom fake-value="My custom field"/>', $output);
     }
 
     /**
@@ -215,7 +213,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+        $this->assertStringContainsString('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
     }
 
     /**
@@ -232,10 +230,10 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<images>', $output);
-        $this->assertContains('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
-        $this->assertContains('<link rel="enclosure" href="http://website.com/image2.png" type="image/png" length="600"/>', $output);
-        $this->assertContains('</images>', $output);
+        $this->assertStringContainsString('<images>', $output);
+        $this->assertStringContainsString('<link rel="enclosure" href="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+        $this->assertStringContainsString('<link rel="enclosure" href="http://website.com/image2.png" type="image/png" length="600"/>', $output);
+        $this->assertStringContainsString('</images>', $output);
     }
 
     /**
@@ -252,11 +250,11 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<categories>', $output);
-        $this->assertContains('<category>category 1</category>', $output);
-        $this->assertContains('<category>category 2</category>', $output);
-        $this->assertContains('<category>category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories>', $output);
+        $this->assertStringContainsString('<category>category 1</category>', $output);
+        $this->assertStringContainsString('<category>category 2</category>', $output);
+        $this->assertStringContainsString('<category>category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -276,11 +274,11 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<categories is-it-test="yes">', $output);
-        $this->assertContains('<category category-type="test">category 1</category>', $output);
-        $this->assertContains('<category category-type="test">category 2</category>', $output);
-        $this->assertContains('<category category-type="test">category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories is-it-test="yes">', $output);
+        $this->assertStringContainsString('<category category-type="test">category 1</category>', $output);
+        $this->assertStringContainsString('<category category-type="test">category 2</category>', $output);
+        $this->assertStringContainsString('<category category-type="test">category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -303,7 +301,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
         $output = $feed->render('atom');
         $output = str_replace(array("\r", "\n", "  "), '', $output);
 
-        $this->assertContains('<links><link><category>category 1</category><category>category 2</category><category>category 3</category></link><link><category>category 1</category><category>category 2</category><category>category 3</category></link></links>', $output);
+        $this->assertStringContainsString('<links><link><category>category 1</category><category>category 2</category><category>category 3</category></link><link><category>category 1</category><category>category 2</category><category>category 3</category></link></links>', $output);
     }
 
     /**
@@ -323,11 +321,11 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<categories my-group-key-attribute="my-group-value-attribute">', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 1</category>', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 2</category>', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories my-group-key-attribute="my-group-value-attribute">', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 1</category>', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 2</category>', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -346,10 +344,10 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<image>', $output);
-        $this->assertContains('<name>My test image</name>', $output);
-        $this->assertContains('<url>http://www.example.com/image.jpg</url>', $output);
-        $this->assertContains('</image>', $output);
+        $this->assertStringContainsString('<image>', $output);
+        $this->assertStringContainsString('<name>My test image</name>', $output);
+        $this->assertStringContainsString('<url>http://www.example.com/image.jpg</url>', $output);
+        $this->assertStringContainsString('</image>', $output);
     }
 
     /**
@@ -368,10 +366,10 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<image image-attribute="test">', $output);
-        $this->assertContains('<name name-attribute="test">My test image</name>', $output);
-        $this->assertContains('<url url-attribute="test">http://www.example.com/image.jpg</url>', $output);
-        $this->assertContains('</image>', $output);
+        $this->assertStringContainsString('<image image-attribute="test">', $output);
+        $this->assertStringContainsString('<name name-attribute="test">My test image</name>', $output);
+        $this->assertStringContainsString('<url url-attribute="test">http://www.example.com/image.jpg</url>', $output);
+        $this->assertStringContainsString('</image>', $output);
     }
 
     /**
@@ -388,7 +386,7 @@ class AtomFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('atom');
 
-        $this->assertContains(<<<'EOF'
+        $this->assertStringContainsString(<<<'EOF'
     <author>
       <name><![CDATA[John Doe]]></name>
       <email>john.doe@example.org</email>
@@ -408,7 +406,7 @@ EOF
 
         $output = $feed->render('atom');
 
-        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>My custom field</fake_custom>', $output);
     }
 
     /**
@@ -420,7 +418,7 @@ EOF
         $feed->add(new FakeRoutedItemInterfaceEntity());
 
         $output = $feed->render('atom');
-        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url#fake-anchor"/>', $output);
+        $this->assertStringContainsString('<link href="http://github.com/eko/FeedBundle/article/fake/url#fake-anchor"/>', $output);
     }
 
     /**
@@ -432,10 +430,8 @@ EOF
         $feed->add(new FakeRoutedItemInterfaceEntity());
         $feed->addItemField(new ItemField('fake_custom', 'getFeedDoNotExistsItemCustomMethod'));
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Method "getFeedDoNotExistsItemCustomMethod" should be defined in your entity.'
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Method "getFeedDoNotExistsItemCustomMethod" should be defined in your entity.');
 
         $feed->render('atom');
     }
@@ -471,7 +467,7 @@ EOF
         ]));
 
         $output = $feed->render('atom');
-        $this->assertContains('<fake_custom>translatable-value</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>translatable-value</fake_custom>', $output);
     }
 
     /**

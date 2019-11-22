@@ -21,7 +21,7 @@ use Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class ReaderTest extends \PHPUnit_Framework_TestCase
+class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Reader A feed reader instance
@@ -31,7 +31,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up elements used in test case.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->reader = new Reader();
         $this->reader->setHydrator(new DefaultHydrator());

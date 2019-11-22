@@ -22,7 +22,7 @@ use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * RSSFormatterTest.
@@ -31,7 +31,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class RSSFormatterTest extends \PHPUnit_Framework_TestCase
+class RSSFormatterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FeedManager A feed manager instance
@@ -41,7 +41,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up elements used in test case.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $config = [
             'feeds' => [
@@ -82,8 +82,8 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<rss version="2.0">', $output);
-        $this->assertContains('<channel>', $output);
+        $this->assertStringContainsString('<rss version="2.0">', $output);
+        $this->assertStringContainsString('<channel>', $output);
     }
 
     /**
@@ -100,7 +100,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
         $dom->loadXML($output);
 
         $this->assertEquals(0, count(libxml_get_errors()));
-        $this->assertContains('<rss version="2.0">', $output);
+        $this->assertStringContainsString('<rss version="2.0">', $output);
     }
 
     /**
@@ -113,9 +113,9 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<title><![CDATA[Fake title]]></title>', $output);
-        $this->assertContains('<description><![CDATA[Fake description or content]]></description>', $output);
-        $this->assertContains('<link>http://github.com/eko/FeedBundle/article/fake/url</link>', $output);
+        $this->assertStringContainsString('<title><![CDATA[Fake title]]></title>', $output);
+        $this->assertStringContainsString('<description><![CDATA[Fake description or content]]></description>', $output);
+        $this->assertStringContainsString('<link>http://github.com/eko/FeedBundle/article/fake/url</link>', $output);
     }
 
     /**
@@ -129,7 +129,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<fake_custom_channel>My fake value</fake_custom_channel>', $output);
+        $this->assertStringContainsString('<fake_custom_channel>My fake value</fake_custom_channel>', $output);
     }
 
     /**
@@ -143,7 +143,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>My custom field</fake_custom>', $output);
     }
 
     /**
@@ -160,7 +160,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<fake_custom fake-value="My custom field"/>', $output);
+        $this->assertStringContainsString('<fake_custom fake-value="My custom field"/>', $output);
     }
 
     /**
@@ -184,7 +184,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<enclosure url="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+        $this->assertStringContainsString('<enclosure url="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
     }
 
     /**
@@ -201,10 +201,10 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<images>', $output);
-        $this->assertContains('<enclosure url="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
-        $this->assertContains('<enclosure url="http://website.com/image2.png" type="image/png" length="600"/>', $output);
-        $this->assertContains('</images>', $output);
+        $this->assertStringContainsString('<images>', $output);
+        $this->assertStringContainsString('<enclosure url="http://website.com/image.jpg" type="image/jpeg" length="500"/>', $output);
+        $this->assertStringContainsString('<enclosure url="http://website.com/image2.png" type="image/png" length="600"/>', $output);
+        $this->assertStringContainsString('</images>', $output);
     }
 
     /**
@@ -220,11 +220,11 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<categories>', $output);
-        $this->assertContains('<category>category 1</category>', $output);
-        $this->assertContains('<category>category 2</category>', $output);
-        $this->assertContains('<category>category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories>', $output);
+        $this->assertStringContainsString('<category>category 1</category>', $output);
+        $this->assertStringContainsString('<category>category 2</category>', $output);
+        $this->assertStringContainsString('<category>category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -244,11 +244,11 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<categories is-it-test="yes">', $output);
-        $this->assertContains('<category category-type="test">category 1</category>', $output);
-        $this->assertContains('<category category-type="test">category 2</category>', $output);
-        $this->assertContains('<category category-type="test">category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories is-it-test="yes">', $output);
+        $this->assertStringContainsString('<category category-type="test">category 1</category>', $output);
+        $this->assertStringContainsString('<category category-type="test">category 2</category>', $output);
+        $this->assertStringContainsString('<category category-type="test">category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -268,11 +268,11 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<categories my-group-key-attribute="my-group-value-attribute">', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 1</category>', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 2</category>', $output);
-        $this->assertContains('<category my-item-key-attribute="my-item-value-attribute">category 3</category>', $output);
-        $this->assertContains('</categories>', $output);
+        $this->assertStringContainsString('<categories my-group-key-attribute="my-group-value-attribute">', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 1</category>', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 2</category>', $output);
+        $this->assertStringContainsString('<category my-item-key-attribute="my-item-value-attribute">category 3</category>', $output);
+        $this->assertStringContainsString('</categories>', $output);
     }
 
     /**
@@ -291,10 +291,10 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<image>', $output);
-        $this->assertContains('<name>My test image</name>', $output);
-        $this->assertContains('<url>http://www.example.com/image.jpg</url>', $output);
-        $this->assertContains('</image>', $output);
+        $this->assertStringContainsString('<image>', $output);
+        $this->assertStringContainsString('<name>My test image</name>', $output);
+        $this->assertStringContainsString('<url>http://www.example.com/image.jpg</url>', $output);
+        $this->assertStringContainsString('</image>', $output);
     }
 
     /**
@@ -313,10 +313,10 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<image image-attribute="test">', $output);
-        $this->assertContains('<name name-attribute="test">My test image</name>', $output);
-        $this->assertContains('<url url-attribute="test">http://www.example.com/image.jpg</url>', $output);
-        $this->assertContains('</image>', $output);
+        $this->assertStringContainsString('<image image-attribute="test">', $output);
+        $this->assertStringContainsString('<name name-attribute="test">My test image</name>', $output);
+        $this->assertStringContainsString('<url url-attribute="test">http://www.example.com/image.jpg</url>', $output);
+        $this->assertStringContainsString('</image>', $output);
     }
 
     /**
@@ -333,7 +333,7 @@ class RSSFormatterTest extends \PHPUnit_Framework_TestCase
 
         $output = $feed->render('rss');
 
-        $this->assertContains(<<<'EOF'
+        $this->assertStringContainsString(<<<'EOF'
       <author>
         <name><![CDATA[John Doe]]></name>
         <email>john.doe@example.org</email>
@@ -353,7 +353,7 @@ EOF
 
         $output = $feed->render('rss');
 
-        $this->assertContains('<fake_custom>My custom field</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>My custom field</fake_custom>', $output);
     }
 
     /**
@@ -365,7 +365,7 @@ EOF
         $feed->add(new FakeRoutedItemInterfaceEntity());
 
         $output = $feed->render('atom');
-        $this->assertContains('<link href="http://github.com/eko/FeedBundle/article/fake/url?utm_source=mysource&amp;utm_medium=mymedium&amp;utm_campaign=mycampaign&amp;utm_content=mycontent#fake-anchor"/>', $output);
+        $this->assertStringContainsString('<link href="http://github.com/eko/FeedBundle/article/fake/url?utm_source=mysource&amp;utm_medium=mymedium&amp;utm_campaign=mycampaign&amp;utm_content=mycontent#fake-anchor"/>', $output);
     }
 
     /**
@@ -377,10 +377,8 @@ EOF
         $feed->add(new FakeRoutedItemInterfaceEntity());
         $feed->addItemField(new ItemField('fake_custom', 'getFeedDoNotExistsItemCustomMethod'));
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Method "getFeedDoNotExistsItemCustomMethod" should be defined in your entity.'
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Method "getFeedDoNotExistsItemCustomMethod" should be defined in your entity.');
 
         $feed->render('rss');
     }
@@ -417,6 +415,6 @@ EOF
         ]));
 
         $output = $feed->render('rss');
-        $this->assertContains('<fake_custom>translatable-value</fake_custom>', $output);
+        $this->assertStringContainsString('<fake_custom>translatable-value</fake_custom>', $output);
     }
 }
