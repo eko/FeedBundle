@@ -23,7 +23,7 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="filesystem" />
             <call method="setRootDir">
-                 <argument>%kernel.root_dir%</argument>
+                 <argument>%kernel.project_dir%</argument>
             </call>
         </service>
 
