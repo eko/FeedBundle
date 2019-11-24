@@ -1,5 +1,7 @@
-FeedBundle - A bundle to build RSS/Atom feeds from entities
-=========================================================
+FeedBundle
+==========
+
+A Symfony bundle to build RSS/Atom feeds from entities
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5620e128-834b-462c-b6fc-395609c57999/big.png)](https://insight.sensiolabs.com/projects/5620e128-834b-462c-b6fc-395609c57999)
 
@@ -20,41 +22,28 @@ Features
  * Dump your feeds into a file via a Symfony console command
 
 Installation
------------------------------------
+------------
 
-Add the package to your composer.json file
+Add the package to your `composer.json` file
 ```
 "eko/feedbundle": "dev-master",
 ```
 
-Add this to app/AppKernel.php
+Add this to to the `config/bundles.php` file:
 ```php
 <?php
-    public function registerBundles()
-    {
-        $bundles = array(
-            ...
-            new Eko\FeedBundle\EkoFeedBundle(),
-        );
 
-        ...
-
-        return $bundles;
-    }
+return [
+    // ...
+    Eko\FeedBundle\EkoFeedBundle::class => ['all' => true],
+];
 ```
 
-Add this to app/autoload.php
-```php
-<?php
-$loader->registerNamespaces(array(
-   ...
-    'Eko'             => __DIR__.'/../vendor/bundles'
-));
-```
+
 Configuration (only 3 quick steps!)
 -----------------------------------
 
-### 1) Edit app/config.yml
+### 1) Create a file: config/packages/eko_feed.yml
 
 The following configuration lines are required:
 
@@ -70,7 +59,8 @@ eko_feed:
             encoding:    'utf-8'
             author:      'Vincent Composieux' # Only required for Atom feeds
 ```
-You can set link as route:
+
+You can also set link as a Symfony route:
 ```yaml
 link:
     route_name: acme_blog_main_index
@@ -139,24 +129,43 @@ The action now takes place in your controller. Just declare a new action with th
 ```php
 <?php
 
-namespace Bundle\BlogBundle\Controller;
+namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Eko\FeedBundle\Feed\FeedManager;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class BlogController extends Controller
+class BlogController extends AbstractController
 {
     /**
+     * @var FeedManager
+     */
+    protected $feedManager;
+
+    /**
+     * Constructor.
+     * 
+     * @param FeedManager $feedManager
+     */
+    public function __construct(FeedManager $feedManager)
+    {
+        $this->feedManager = $feedManager;
+    }
+
+    /**
      * Generate the article feed
+     * 
+     * @Route("/feed.rss", name="app_feed")
      *
      * @return Response XML Feed
      */
-    public function feedAction()
+    public function feed()
     {
         $articles = $this->getDoctrine()->getRepository('BundleBlogBundle:Article')->findAll();
 
-        $feed = $this->get('eko_feed.feed.manager')->get('article');
+        $feed = $this->feedManager->get('article');
         $feed->addFromArray($articles);
 
         return new Response($feed->render('rss')); // or 'atom'
@@ -437,4 +446,3 @@ Contributors
  * Thomas P <thomas@scullwm.com> (Twitter: @scullwm)
 
  * Anyone want to contribute ? Do not hesitate, you will be listed here!
-
