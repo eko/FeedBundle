@@ -10,12 +10,12 @@
 
 namespace Eko\FeedBundle\Command;
 
+use Laminas\Loader\Exception\RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Loader\Exception\RuntimeException;
 
 /**
  * FeedDumpCommand.
