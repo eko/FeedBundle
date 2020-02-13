@@ -10,11 +10,12 @@
 
 namespace Eko\FeedBundle\DependencyInjection\Compiler;
 
+use Eko\FeedBundle\Service\FeedDumpService;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Check if the eko_feed.feed.dump is missing dependencies
+ * Check if the Eko\FeedBundle\Service\FeedDumpService is missing dependencies
  * and if so remove the service.
  *
  * @author Lukas Kahwe Smith <smith@pooteeweet.org>
@@ -27,7 +28,7 @@ class FeedDumpServicePass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasAlias('doctrine.orm.entity_manager')) {
-            $container->removeDefinition('eko_feed.feed.dump');
+            $container->removeDefinition(FeedDumpService::class);
         }
     }
 }
