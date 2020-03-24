@@ -39,6 +39,7 @@ class EkoFeedExtension extends Extension
         $loader->load('feed.xml');
         $loader->load('formatter.xml');
         $loader->load('hydrator.xml');
+        $loader->load('command.xml');
 
         $container->setParameter('eko_feed.config', $config);
         $container->setParameter('eko_feed.translation_domain', $config['translation_domain']);

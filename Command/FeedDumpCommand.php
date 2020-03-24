@@ -10,12 +10,13 @@
 
 namespace Eko\FeedBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Eko\FeedBundle\Service\FeedDumpService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Loader\Exception\RuntimeException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * FeedDumpCommand.
@@ -24,18 +25,35 @@ use Zend\Loader\Exception\RuntimeException;
  *
  * @author Vincent Composieux <composieux@ekino.com>
  */
-class FeedDumpCommand extends ContainerAwareCommand
+class FeedDumpCommand extends Command
 {
+    protected static $defaultName = 'eko:feed:dump';
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var FeedDumpService|null
+     */
+    private $feedDumpService;
+
+    public function __construct(RouterInterface $router, FeedDumpService $feedDumpService = null)
+    {
+        $this->router = $router;
+        $this->feedDumpService = $feedDumpService;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-        parent::configure();
-
         $this
             ->setDescription('Generate (dump) a feed in an XML file')
-            ->setName('eko:feed:dump')
             ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Feed name defined in eko_feed configuration')
             ->addOption('entity', null, InputOption::VALUE_REQUIRED, 'Entity to use to generate the feed')
             ->addOption('filename', null, InputOption::VALUE_REQUIRED, 'Defines feed filename')
@@ -49,10 +67,13 @@ class FeedDumpCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (!$this->getContainer()->has('eko_feed.feed.dump')) {
-            throw new RuntimeException('The "eko_feed.feed.dump" service used in this command requires Doctrine ORM to be configured.');
+        if (null === $this->feedDumpService) {
+            throw new \RuntimeException(sprintf(
+                'The "%s" service used in this command requires Doctrine ORM to be configured.',
+                FeedDumpService::class
+            ));
         }
 
         $name = $input->getOption('name');
@@ -63,10 +84,9 @@ class FeedDumpCommand extends ContainerAwareCommand
         $direction = $input->getOption('direction');
         $orderBy = $input->getOption('orderBy');
 
-        $this->getContainer()->get('router')->getContext()->setHost($input->getArgument('host'));
+        $this->router->getContext()->setHost($input->getArgument('host'));
 
-        $feedDumpService = $this->getContainer()->get('eko_feed.feed.dump');
-        $feedDumpService
+        $this->feedDumpService
                 ->setName($name)
                 ->setEntity($entity)
                 ->setFilename($filename)
@@ -75,9 +95,11 @@ class FeedDumpCommand extends ContainerAwareCommand
                 ->setDirection($direction)
                 ->setOrderBy($orderBy);
 
-        $feedDumpService->dump();
+        $this->feedDumpService->dump();
 
         $output->writeln('<comment>done!</comment>');
-        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $feedDumpService->getRootDir().$filename));
+        $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $this->feedDumpService->getRootDir().$filename));
+
+        return 0;
     }
 }

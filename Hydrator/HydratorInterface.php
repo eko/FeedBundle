@@ -10,7 +10,7 @@
 
 namespace Eko\FeedBundle\Hydrator;
 
-use Zend\Feed\Reader\Feed\FeedInterface;
+use Laminas\Feed\Reader\Feed\FeedInterface;
 
 /**
  * HydratorInterface.

@@ -13,6 +13,8 @@ namespace Eko\FeedBundle\Tests\Feed;
 use Eko\FeedBundle\Feed\Reader;
 use Eko\FeedBundle\Hydrator\DefaultHydrator;
 use Eko\FeedBundle\Tests\Entity\Reader\FakeItemInterfaceEntity;
+use Laminas\Feed\Reader\Collection\Author;
+use Laminas\Feed\Reader\Feed\FeedInterface;
 
 /**
  * ReaderTest.
@@ -45,12 +47,12 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         $feed = $this->reader->load(__DIR__.'/../DataFixtures/Feed.xml')->get();
 
         $this->assertNotNull($feed, 'Returned feed should not be null');
-        $this->assertInstanceOf('\Zend\Feed\Reader\Feed\FeedInterface', $feed, 'Should return an AbstractFeed instance');
+        $this->assertInstanceOf(FeedInterface::class, $feed, 'Should return an AbstractFeed instance');
 
         foreach ($feed as $entry) {
             $this->assertEquals('PHP 5.4.11 and PHP 5.3.21 released!', $entry->getTitle(), 'Should be equal');
             $this->assertEquals('http://php.net/index.php#id2013-01-17-1', $entry->getLink(), 'Should be equal');
-            $this->assertInstanceOf('\Zend\Feed\Reader\Collection\Author', $entry->getAuthors(), 'Should be an instance of Author');
+            $this->assertInstanceOf(Author::class, $entry->getAuthors(), 'Should be an instance of Author');
         }
     }
 

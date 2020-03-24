@@ -15,9 +15,9 @@
         "php": "^7.0",
         "symfony/framework-bundle": "^4.0|^5.0",
         "symfony/translation": "^4.0|^5.0",
-        "zendframework/zend-feed": ">=2.0",
-        "zendframework/zend-servicemanager": ">=2.0",
-        "zendframework/zend-http": ">=2.0"
+        "laminas/laminas-feed": "^2.0",
+        "laminas/laminas-servicemanager": "^2.0",
+        "laminas/laminas-http": "^2.0"
     },
     "require-dev": {
         "doctrine/orm": "~2.7",

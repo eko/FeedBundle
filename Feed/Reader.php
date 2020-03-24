@@ -11,8 +11,8 @@
 namespace Eko\FeedBundle\Feed;
 
 use Eko\FeedBundle\Hydrator\HydratorInterface;
-use Zend\Feed\Reader\Feed\FeedInterface;
-use Zend\Feed\Reader\Reader as ZendReader;
+use Laminas\Feed\Reader\Feed\FeedInterface;
+use Laminas\Feed\Reader\Reader as ZendReader;
 
 /**
  * Reader.
