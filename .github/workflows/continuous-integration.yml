@@ -21,8 +21,8 @@ jobs:
           - "7.3"
           - "7.4"
         symfony-version:
-          - "4.0.x"
-          - "5.0.x"
+          - "4.4.x"
+          - "5.2.x"
         dependencies:
           - "highest"
         include:
