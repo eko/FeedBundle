@@ -23,7 +23,8 @@
         <service id="Eko\FeedBundle\Feed\Reader" public="true" autowire="false" />
 
         <service id="Eko\FeedBundle\Feed\Feed" public="true" autowire="false">
-            <argument />
+            <argument type="collection"/>
+            <argument type="collection"/>
             <call method="setRouter">
                 <argument type="service" id="router" />
             </call>
