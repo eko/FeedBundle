@@ -14,6 +14,9 @@ jobs:
     name: "PHPUnit"
     runs-on: "ubuntu-20.04"
 
+    env:
+      SYMFONY_REQUIRE: "${{ matrix.symfony-version }}"
+
     strategy:
       matrix:
         php-version:
@@ -21,9 +24,11 @@ jobs:
           - "7.3"
           - "7.4"
           - "8.0"
+          - "8.1"
         symfony-version:
           - "4.4.x"
-          - "5.2.x"
+          - "5.4.x"
+          - "6.0.x"
         dependencies:
           - "highest"
         include:
@@ -41,10 +46,7 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-version }}"
-          ini-values: "zend.assertions=1"
-
-      - name: "Install Symfony"
-        run: "composer require symfony/symfony:${{ matrix.symfony-version }} --no-update"
+          tools: "composer:v2,flex"
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
