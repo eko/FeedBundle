@@ -13,8 +13,8 @@
     ],
     "require": {
         "php": "^7.2 || ^8.0",
-        "symfony/framework-bundle": "^4.4|^5.2",
-        "symfony/translation": "^4.4|^5.2",
+        "symfony/framework-bundle": "^4.4|^5.3|^6.0",
+        "symfony/translation": "^4.4|^5.3|^6.0",
         "laminas/laminas-feed": "^2.4"
     },
     "require-dev": {
