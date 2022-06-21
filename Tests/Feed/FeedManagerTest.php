@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Tests\Feed;
 
 use Eko\FeedBundle\Feed\FeedManager;
 use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\FormatterRegistry;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -51,12 +52,11 @@ class FeedManagerTest extends \PHPUnit\Framework\TestCase
 
         $translator = $this->createMock(TranslatorInterface::class);
 
-        $formatters = [
-            'rss'  => new RssFormatter($translator, 'test'),
-            'atom' => new AtomFormatter($translator, 'test'),
-        ];
+        $formatterRegistry = new FormatterRegistry();
+        $formatterRegistry->addFormatter('rss', new RssFormatter($translator, 'test'));
+        $formatterRegistry->addFormatter('atom', new AtomFormatter($translator, 'test'));
 
-        $this->manager = new FeedManager($router, $config, $formatters);
+        $this->manager = new FeedManager($router, $config, $formatterRegistry);
     }
 
     /**

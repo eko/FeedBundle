@@ -5,6 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Eko\FeedBundle\Formatter\FormatterRegistry" autowire="false" />
+
         <service id="Eko\FeedBundle\Formatter\RssFormatter" autowire="false">
             <tag name="eko_feed.formatter" format="rss"></tag>
 
