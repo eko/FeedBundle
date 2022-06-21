@@ -10,13 +10,13 @@
 
 namespace Eko\FeedBundle\DependencyInjection\Compiler;
 
-use Eko\FeedBundle\Feed\FeedManager;
+use Eko\FeedBundle\Formatter\FormatterRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Retrieve all formatters and inject them into the feed manager service.
+ * Retrieve all formatters and inject them into the formatter registry.
  *
  * @author Vincent Composieux <vincent.composieux@gail.com>
  */
@@ -27,16 +27,18 @@ class FeedFormatterPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $formatters = [];
-
         $services = $container->findTaggedServiceIds('eko_feed.formatter');
+        $registry = $container->getDefinition(FormatterRegistry::class);
 
         foreach ($services as $identifier => $options) {
             $options = current($options);
-            $formatters[$options['format']] = new Reference($identifier);
+            $registry->addMethodCall(
+                'addFormatter',
+                [
+                    $options['format'],
+                    new Reference($identifier),
+                ]
+            );
         }
-
-        $manager = $container->getDefinition(FeedManager::class);
-        $manager->replaceArgument(2, $formatters);
     }
 }

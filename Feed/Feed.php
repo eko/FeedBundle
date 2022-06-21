@@ -12,6 +12,7 @@ namespace Eko\FeedBundle\Feed;
 
 use Eko\FeedBundle\Field\Channel\ChannelFieldInterface;
 use Eko\FeedBundle\Field\Item\ItemFieldInterface;
+use Eko\FeedBundle\Formatter\FormatterRegistry;
 use Eko\FeedBundle\Item\Writer\ItemInterface;
 use Eko\FeedBundle\Item\Writer\ProxyItem;
 use Eko\FeedBundle\Item\Writer\RoutedItemInterface;
@@ -33,7 +34,7 @@ class Feed
     protected $config;
 
     /**
-     * @var array
+     * @var FormatterRegistry
      */
     protected $formatters;
 
@@ -60,10 +61,10 @@ class Feed
     /**
      * Constructor.
      *
-     * @param array $config     Configuration settings
-     * @param array $formatters An array of available formatters services
+     * @param array             $config     Configuration settings
+     * @param FormatterRegistry $formatters An array of available formatters services
      */
-    public function __construct(array $config, array $formatters)
+    public function __construct(array $config, FormatterRegistry $formatters)
     {
         $this->config = $config;
         $this->formatters = $formatters;
@@ -250,13 +251,13 @@ class Feed
      */
     public function render($format)
     {
-        if (!isset($this->formatters[$format])) {
+        if (!$this->formatters->supportsFormat($format)) {
             throw new \InvalidArgumentException(
                 sprintf("Unable to find a formatter service for format '%s'.", $format)
             );
         }
 
-        $formatter = $this->formatters[$format];
+        $formatter = $this->formatters->getFormatter($format);
         $formatter->setFeed($this);
 
         return $formatter->render();

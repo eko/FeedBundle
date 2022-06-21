@@ -10,6 +10,7 @@
 
 namespace Eko\FeedBundle\Feed;
 
+use Eko\FeedBundle\Formatter\FormatterRegistry;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -35,7 +36,7 @@ class FeedManager
     protected $router;
 
     /**
-     * @var array
+     * @var FormatterRegistry
      */
     protected $formatters;
 
@@ -47,11 +48,11 @@ class FeedManager
     /**
      * Constructor.
      *
-     * @param RouterInterface $router     A Symfony router instance
-     * @param array           $config     Configuration settings
-     * @param array           $formatters Feed formatters list
+     * @param RouterInterface   $router     A Symfony router instance
+     * @param array             $config     Configuration settings
+     * @param FormatterRegistry $formatters Feed formatters list
      */
-    public function __construct(RouterInterface $router, array $config, array $formatters)
+    public function __construct(RouterInterface $router, array $config, FormatterRegistry $formatters)
     {
         $this->config = $config;
         $this->router = $router;

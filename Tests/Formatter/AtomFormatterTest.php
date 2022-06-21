@@ -17,6 +17,7 @@ use Eko\FeedBundle\Field\Item\GroupItemField;
 use Eko\FeedBundle\Field\Item\ItemField;
 use Eko\FeedBundle\Field\Item\MediaItemField;
 use Eko\FeedBundle\Formatter\AtomFormatter;
+use Eko\FeedBundle\Formatter\FormatterRegistry;
 use Eko\FeedBundle\Formatter\RssFormatter;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeItemInterfaceEntity;
 use Eko\FeedBundle\Tests\Entity\Writer\FakeRoutedItemInterfaceEntity;
@@ -57,12 +58,11 @@ class AtomFormatterTest extends \PHPUnit\Framework\TestCase
 
         $translator = $this->createMock(TranslatorInterface::class);
 
-        $formatters = [
-            'rss'  => new RssFormatter($translator, 'test'),
-            'atom' => new AtomFormatter($translator, 'test'),
-        ];
+        $formatterRegistry = new FormatterRegistry();
+        $formatterRegistry->addFormatter('rss', new RssFormatter($translator, 'test'));
+        $formatterRegistry->addFormatter('atom', new AtomFormatter($translator, 'test'));
 
-        $this->manager = new FeedManager($this->getMockRouter(), $config, $formatters);
+        $this->manager = new FeedManager($this->getMockRouter(), $config, $formatterRegistry);
     }
 
     /**
@@ -85,12 +85,11 @@ class AtomFormatterTest extends \PHPUnit\Framework\TestCase
 
         $translator = $this->createMock(TranslatorInterface::class);
 
-        $formatters = [
-            'rss'  => new RssFormatter($translator, 'test'),
-            'atom' => new AtomFormatter($translator, 'test'),
-        ];
+        $formatterRegistry = new FormatterRegistry();
+        $formatterRegistry->addFormatter('rss', new RssFormatter($translator, 'test'));
+        $formatterRegistry->addFormatter('atom', new AtomFormatter($translator, 'test'));
 
-        $manager = new FeedManager($this->getMockRouter(), $config, $formatters);
+        $manager = new FeedManager($this->getMockRouter(), $config, $formatterRegistry);
 
         $feed = $manager->get('article');
 
@@ -456,9 +455,10 @@ EOF
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects($this->any())->method('trans')->will($this->returnValue('translatable-value'));
 
-        $formatters = ['atom' => new AtomFormatter($translator, 'test')];
+        $formatterRegistry = new FormatterRegistry();
+        $formatterRegistry->addFormatter('atom', new AtomFormatter($translator, 'test'));
 
-        $manager = new FeedManager($this->getMockRouter(), $config, $formatters);
+        $manager = new FeedManager($this->getMockRouter(), $config, $formatterRegistry);
 
         $feed = $manager->get('article');
         $feed->add(new FakeRoutedItemInterfaceEntity());
