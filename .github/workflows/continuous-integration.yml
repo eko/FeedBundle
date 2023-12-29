@@ -29,6 +29,7 @@ jobs:
           - "4.4.x"
           - "5.4.x"
           - "6.0.x"
+          - "7.0.x"
         dependencies:
           - "highest"
         include:
