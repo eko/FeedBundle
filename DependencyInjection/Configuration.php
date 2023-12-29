@@ -25,9 +25,9 @@ class Configuration implements ConfigurationInterface
     /**
      * Builds configuration tree.
      *
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder A tree builder instance
+     * @return TreeBuilder A tree builder instance
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('eko_feed');
 
