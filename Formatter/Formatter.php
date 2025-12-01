@@ -326,7 +326,7 @@ class Formatter
      * @param ItemFieldInterface $field   A feed field instance
      * @param ItemInterface|null $item    A feed item instance
      */
-    protected function addAttributes(\DOMElement $element, ItemFieldInterface $field, ItemInterface $item = null)
+    protected function addAttributes(\DOMElement $element, ItemFieldInterface $field, ?ItemInterface $item = null)
     {
         foreach ($field->getAttributes() as $key => $value) {
             if ($item) {

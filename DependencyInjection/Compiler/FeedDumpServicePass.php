@@ -25,7 +25,7 @@ class FeedDumpServicePass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasAlias('doctrine.orm.entity_manager')) {
             $container->removeDefinition(FeedDumpService::class);

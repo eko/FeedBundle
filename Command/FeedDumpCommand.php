@@ -39,7 +39,7 @@ class FeedDumpCommand extends Command
      */
     private $feedDumpService;
 
-    public function __construct(RouterInterface $router, FeedDumpService $feedDumpService = null)
+    public function __construct(RouterInterface $router, ?FeedDumpService $feedDumpService = null)
     {
         $this->router = $router;
         $this->feedDumpService = $feedDumpService;
@@ -50,7 +50,7 @@ class FeedDumpCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate (dump) a feed in an XML file')

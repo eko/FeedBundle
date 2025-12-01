@@ -31,7 +31,7 @@ class EkoFeedExtension extends Extension
      * @param array            $configs   An array of configuration settings
      * @param ContainerBuilder $container A container builder instance
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
@@ -55,7 +55,7 @@ class EkoFeedExtension extends Extension
      *
      * @throws \RuntimeException
      */
-    protected function configureHydrator(array $config, ContainerBuilder $container)
+    protected function configureHydrator(array $config, ContainerBuilder $container): void
     {
         if (!$container->hasDefinition($config['hydrator'])) {
             throw new \RuntimeException(sprintf('Unable to load hydrator service "%s"', $config['hydrator']));
