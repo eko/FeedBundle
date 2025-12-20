@@ -1,0 +1,32 @@
+services:
+    Eko\FeedBundle\Feed\FeedManager:
+        public: true
+        autowire: false
+        arguments:
+            - '@router'
+            - '%eko_feed.config%'
+            - []
+
+    Eko\FeedBundle\Service\FeedDumpService:
+        public: true
+        autowire: false
+        arguments:
+            - '@Eko\FeedBundle\Feed\FeedManager'
+            - '@doctrine.orm.entity_manager'
+            - '@filesystem'
+        calls:
+            - setRootDir: ['%kernel.project_dir%']
+
+    Eko\FeedBundle\Feed\Reader:
+        public: true
+        autowire: false
+
+    Eko\FeedBundle\Feed\Feed:
+        public: true
+        autowire: false
+        arguments:
+            - []
+            - []
+        calls:
+            - setRouter: ['@router']
+

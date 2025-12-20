@@ -20,26 +20,30 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "7.2"
-          - "7.3"
-          - "7.4"
           - "8.0"
           - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
         symfony-version:
           - "4.4.x"
           - "5.4.x"
           - "6.0.x"
           - "7.0.x"
+          - "8.0.x"
         dependencies:
           - "highest"
         include:
           - dependencies: "lowest"
-            php-version: "7.2"
+            php-version: "8.0"
             symfony-version: "4.4.*"
+          - dependencies: "highest"
+            php-version: "8.4"
+            symfony-version: "8.0.x"
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v6"
         with:
           fetch-depth: 2
 

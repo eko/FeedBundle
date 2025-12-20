@@ -1,0 +1,4 @@
+services:
+    Eko\FeedBundle\Hydrator\DefaultHydrator:
+        autowire: false
+
