@@ -11,6 +11,7 @@
 namespace Eko\FeedBundle\Command;
 
 use Eko\FeedBundle\Service\FeedDumpService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,9 +26,9 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author Vincent Composieux <composieux@ekino.com>
  */
+#[AsCommand('eko:feed:dump', 'Generate (dump) a feed in an XML file')]
 class FeedDumpCommand extends Command
 {
-    protected static $defaultName = 'eko:feed:dump';
 
     /**
      * @var RouterInterface
@@ -53,7 +54,6 @@ class FeedDumpCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Generate (dump) a feed in an XML file')
             ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Feed name defined in eko_feed configuration')
             ->addOption('entity', null, InputOption::VALUE_REQUIRED, 'Entity to use to generate the feed')
             ->addOption('filename', null, InputOption::VALUE_REQUIRED, 'Defines feed filename')
@@ -100,6 +100,6 @@ class FeedDumpCommand extends Command
         $output->writeln('<comment>done!</comment>');
         $output->writeln(sprintf('<info>Feed has been dumped and located in "%s"</info>', $this->feedDumpService->getRootDir().$filename));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

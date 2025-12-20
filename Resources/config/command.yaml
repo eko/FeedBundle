@@ -1,0 +1,9 @@
+services:
+    Eko\FeedBundle\Command\FeedDumpCommand:
+        autowire: false
+        tags:
+            - { name: 'console.command' }
+        arguments:
+            - '@router'
+            - '@?Eko\FeedBundle\Service\FeedDumpService'
+

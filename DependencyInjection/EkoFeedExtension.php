@@ -13,13 +13,14 @@ namespace Eko\FeedBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * EkoFeedExtension.
  *
- * This class loads services.xml file and tree configuration
+ * This class loads services.yaml files and tree configuration
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
@@ -35,11 +36,11 @@ class EkoFeedExtension extends Extension
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('feed.xml');
-        $loader->load('formatter.xml');
-        $loader->load('hydrator.xml');
-        $loader->load('command.xml');
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('feed.yaml');
+        $loader->load('formatter.yaml');
+        $loader->load('hydrator.yaml');
+        $loader->load('command.yaml');
 
         $container->setParameter('eko_feed.config', $config);
         $container->setParameter('eko_feed.translation_domain', $config['translation_domain']);

@@ -1,0 +1,17 @@
+services:
+    Eko\FeedBundle\Formatter\RssFormatter:
+        autowire: false
+        tags:
+            - { name: 'eko_feed.formatter', format: 'rss' }
+        arguments:
+            - '@translator'
+            - '%eko_feed.translation_domain%'
+
+    Eko\FeedBundle\Formatter\AtomFormatter:
+        autowire: false
+        tags:
+            - { name: 'eko_feed.formatter', format: 'atom' }
+        arguments:
+            - '@translator'
+            - '%eko_feed.translation_domain%'
+
